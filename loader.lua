@@ -7,9 +7,9 @@ _G.ForkyHUB.Games = {
         name = "Expedition Antarctica",
         url = "https://gitlab.com/forky1/forkyHUB/-/raw/main/artic.lua"
     },
-    [130342654546662] = {
-        name = "Sambung Kata",
-        url = ""
+    [129118369937980] = {
+        name = "Eagle Nation",
+        url = "https://gitlab.com/forky1/forkyHUB/-/raw/main/eagle.lua"
     },
     [121500015379301] = {
         name = "FishGod",
