@@ -3,9 +3,9 @@ repeat task.wait() until game:IsLoaded()
 _G.ForkyHUB = _G.ForkyHUB or {}
 
 _G.ForkyHUB.Games = {
-    [131623223084840] = {
-        name = "Escape Tsunami",
-        url = ""
+    [2693023319] = {
+        name = "Expedition Antarctica",
+        url = "https://gitlab.com/forky1/forkyHUB/-/raw/main/artic.lua"
     },
     [130342654546662] = {
         name = "Sambung Kata",
