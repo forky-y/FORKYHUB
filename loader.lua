@@ -36,6 +36,6 @@ end
 local gameData = _G.ForkyHUB.Games[game.PlaceId]
 
 local url = gameData and gameData.url
-    or "https://raw.githubusercontent.com/forkysementara/UI/refs/heads/main/run/forky.lua"
+    or "https://gitlab.com/forky1/forkyHUB/-/raw/main/main.lua"
 
 _G.ForkyHUB.Load(url)
