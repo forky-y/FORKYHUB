@@ -1,4 +1,5 @@
-repeat task.wait() until game:IsLoaded()
+-- Fixed for Xeno Executor
+repeat task.wait() until game.Loaded == true
 
 _G.ForkyHUB = _G.ForkyHUB or {}
 
@@ -29,13 +30,24 @@ _G.ForkyHUB.Games = {
     }
 }
 
-function _G.ForkyHUB.Load(url)
-    return loadstring(game:HttpGet(url))()
+-- Fixed load function for Xeno
+local function loadScript(url)
+    local success, result = pcall(function()
+        return loadstring(game:HttpGetAsync(url, true))()
+    end)
+    
+    if not success then
+        warn("Failed to load script: " .. tostring(result))
+        return false
+    end
+    return true
 end
 
 local gameData = _G.ForkyHUB.Games[game.PlaceId]
-
-local url = gameData and gameData.url
+local url = gameData and gameData.url ~= "" and gameData.url 
     or "https://gitlab.com/forky1/forkyHUB/-/raw/main/mt.lua"
 
-_G.ForkyHUB.Load(url)
+print("Loading ForkyHUB for:", gameData and gameData.name or "Unknown Game")
+print("URL:", url)
+
+loadScript(url)
