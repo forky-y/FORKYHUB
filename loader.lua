@@ -47,5 +47,4 @@ local placeId = game.PlaceId
 local gameData = _G.ForkyHUB.Games[placeId]
 local targetUrl = (gameData and gameData.url ~= "") and gameData.url or "https://gitlab.com/forky1/forkyHUB/-/raw/main/mt.lua"
 
--- Jalankan
 safeLoad(targetUrl)
