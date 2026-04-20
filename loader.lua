@@ -1,4 +1,3 @@
--- Memastikan game terunduh sempurna
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
@@ -40,7 +39,7 @@ local function safeLoad(url)
             warn("Script bermasalah (Syntax Error): " .. tostring(err))
         end
     else
-        warn("Gagal total: Xeno tidak bisa mengambil data dari GitLab. Cek koneksi atau link!")
+        warn("Gagal total: Cek koneksi atau link!")
     end
 end
 
