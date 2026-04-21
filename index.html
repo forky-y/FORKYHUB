@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForkyHUB | Ultimate Key System</title>
+    <title>ForkyHUB | Ultra Key System</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0b0f1a;
             --card: #151c2c;
             --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.5);
             --text: #ffffff;
             --text-dim: #94a3b8;
             --success: #10b981;
@@ -30,239 +29,271 @@
             padding: 20px;
         }
 
-        .container { width: 100%; max-width: 500px; }
+        .container { width: 100%; max-width: 600px; }
 
         .card {
             background: var(--card);
             border-radius: 24px;
-            padding: 35px;
+            padding: 30px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             position: relative;
-            overflow: hidden;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0.1;
-            pointer-events: none;
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        h1 { font-size: 32px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -1px; }
-        .subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 30px; }
+        h1 { font-size: 28px; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        .subtitle { color: var(--text-dim); font-size: 13px; margin-bottom: 25px; }
 
-        /* UI Components */
+        /* Status Box */
         .status-pill {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.2);
             padding: 15px;
             border-radius: 16px;
             text-align: left;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .status-pill label { display: block; font-size: 11px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; font-weight: 600; }
-        .status-pill b { font-family: monospace; font-size: 14px; color: var(--accent); word-break: break-all; }
+        .status-pill label { display: block; font-size: 10px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 4px; }
+        .status-pill b { font-family: monospace; font-size: 13px; color: var(--accent); word-break: break-all; }
 
+        /* Buttons */
         .btn {
             background: var(--accent);
             color: white;
             border: none;
-            padding: 16px;
+            padding: 14px;
             border-radius: 12px;
             font-weight: 700;
             width: 100%;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 15px;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            transition: 0.2s;
+            font-size: 14px;
+            margin-bottom: 10px;
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4); }
-        .btn:disabled { background: #334155; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn-danger { background: var(--danger); }
+        .btn-premium { background: var(--premium); }
+        .btn-outline { background: transparent; border: 1px solid #334155; }
 
+        /* Result Area */
         .result-box {
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             background: rgba(16, 185, 129, 0.1);
-            border: 2px dashed var(--success);
-            border-radius: 16px;
+            border: 1px dashed var(--success);
+            border-radius: 12px;
             display: none;
-            animation: slideUp 0.4s ease;
+            text-align: center;
         }
-        .result-box code { display: block; font-family: monospace; font-size: 18px; color: var(--success); margin: 15px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; }
+        code { display: block; font-family: monospace; font-size: 16px; color: var(--success); margin: 10px 0; padding: 10px; background: #000; border-radius: 8px; }
 
-        /* Admin Section */
+        /* Admin Layout */
         #admin-panel { display: none; }
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .input-field {
             width: 100%;
-            background: rgba(0,0,0,0.2);
+            background: #0b0f1a;
             border: 1px solid #334155;
             padding: 12px;
             border-radius: 10px;
             color: white;
-            margin-bottom: 15px;
             box-sizing: border-box;
             outline: none;
-        }
-        .input-field:focus { border-color: var(--accent); }
-
-        .db-container {
-            margin-top: 30px;
-            max-height: 300px;
-            overflow-y: auto;
-            text-align: left;
-        }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        th { color: var(--text-dim); padding: 10px; border-bottom: 1px solid #334155; text-align: left; }
-        td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-        footer { margin-top: 25px; text-align: center; font-size: 12px; color: var(--text-dim); }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            font-size: 13px;
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        /* Database Table */
+        .db-wrap { margin-top: 20px; overflow-x: auto; border-radius: 12px; border: 1px solid #334155; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; background: rgba(0,0,0,0.2); }
+        th { background: #1e293b; color: var(--text-dim); padding: 10px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        .action-icon { cursor: pointer; color: var(--danger); font-weight: bold; }
+
+        footer { margin-top: 25px; text-align: center; font-size: 11px; color: var(--text-dim); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .animate { animation: fadeIn 0.4s ease; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="client-page" class="card">
+    <div id="client-page" class="card animate">
+        <div class="badge" style="background: var(--accent);">Client Access</div>
         <h1>ForkyHUB</h1>
-        <p class="subtitle">Secure Key Management System</p>
+        <p class="subtitle">Dapatkan access key untuk melanjutkan.</p>
 
         <div class="status-pill">
-            <label>Detected Device ID</label>
-            <b id="hwid-val">Fetching HWID...</b>
+            <label>Current Hardware ID</label>
+            <b id="hwid-display">Loading...</b>
         </div>
 
-        <button id="get-btn" class="btn" onclick="fetchKey()">GENERATE TRIAL KEY</button>
+        <button id="get-key-btn" class="btn" onclick="requestKey()">AMBIL TRIAL KEY (6 JAM)</button>
 
-        <div id="key-res" class="result-box">
-            <small style="color: var(--text-dim)">Access Key (6 Hours):</small>
-            <code id="out-key">FREE-XXXX-XXXX</code>
-            <button class="btn" onclick="copy('out-key')" style="padding: 10px; font-size: 12px; background: #334155;">Copy to Clipboard</button>
+        <div id="res-key" class="result-box">
+            <small>Key Berhasil Dibuat:</small>
+            <code id="out-key">FREE-XXX</code>
+            <button class="btn" style="padding: 6px; font-size: 11px; background: #334155;" onclick="copyText('out-key')">Copy Key</button>
         </div>
     </div>
 
-    <div id="admin-panel" class="card">
-        <h1 style="color: var(--premium)">Admin Control</h1>
-        <p class="subtitle">Manage Premium Keys & Database</p>
+    <div id="admin-panel" class="card animate">
+        <div class="badge" style="background: var(--premium);">Admin Controller</div>
+        <h1>Master Panel</h1>
+        <p class="subtitle">Kelola database, durasi, dan keamanan sistem.</p>
 
-        <input type="password" id="adm-pass" class="input-field" placeholder="Admin Password">
-        <input type="number" id="adm-dur" class="input-field" placeholder="Duration (Hours) - Blank for Permanent">
-        
-        <button class="btn" style="background: var(--premium);" onclick="genPremium()">GENERATE PREMIUM</button>
+        <input type="password" id="adm-pass" class="input-field" placeholder="Admin Password" style="margin-bottom: 15px;">
 
-        <div id="adm-res" class="result-box" style="border-color: var(--premium); background: rgba(245, 158, 11, 0.1);">
-            <code id="out-adm" style="color: var(--premium)"></code>
-            <button class="btn" onclick="copy('out-adm')" style="padding: 10px; font-size: 12px; background: #334155;">Copy Key</button>
+        <div class="admin-grid">
+            <input type="number" id="adm-dur" class="input-field" placeholder="Durasi (Jam)">
+            <button class="btn btn-premium" style="margin:0" onclick="genPremium()">GENERATE</button>
         </div>
 
-        <div class="db-container">
-            <button class="btn" style="background: transparent; border: 1px solid #334155; margin-bottom: 10px;" onclick="listKeys()">REFRESH DATABASE</button>
+        <div id="res-adm" class="result-box" style="border-color: var(--premium); background: rgba(245,158,11,0.1);">
+            <code id="out-adm" style="color: var(--premium)"></code>
+            <button class="btn" style="padding: 6px; font-size: 11px; background: #334155;" onclick="copyText('out-adm')">Copy Premium</button>
+        </div>
+
+        <div class="admin-grid" style="margin-top: 10px;">
+            <button class="btn btn-outline" style="font-size: 11px;" onclick="setPower('ON')">🟢 POWER ON</button>
+            <button class="btn btn-danger" style="font-size: 11px;" onclick="setPower('OFF')">🔴 KILL SWITCH</button>
+        </div>
+
+        <div class="db-wrap">
+            <button class="btn" style="background:transparent; font-size: 11px; border-bottom: 1px solid #334155; border-radius:0" onclick="loadDB()">REFRESH DATABASE</button>
             <table>
                 <thead>
-                    <tr><th>Key</th><th>Status/HWID</th></tr>
+                    <tr><th>KEY</th><th>HWID</th><th>EXPIRE</th><th>X</th></tr>
                 </thead>
                 <tbody id="db-body">
-                    <tr><td colspan="2" style="text-align:center; padding:20px; color:var(--text-dim)">Enter password & refresh to view</td></tr>
+                    <tr><td colspan="4" style="text-align:center; padding:15px; color:var(--text-dim)">Klik Refresh...</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <p style="margin-top: 20px;"><a href="#" onclick="location.hash=''; location.reload()" style="color: var(--text-dim); text-decoration: none; font-size: 12px;">← Back to Home</a></p>
+        <p style="text-align:center; margin-top:15px;"><a href="#" onclick="goHome()" style="color:var(--text-dim); font-size:11px; text-decoration:none;">← Kembali</a></p>
     </div>
 
     <footer>
-        &copy; 2026 Create By <b>@agil69</b> &bull; ForkyHUB Solution
+        &copy; 2026 Created by <b>@agil69</b> &bull; ForkyHUB Professional
     </footer>
 </div>
 
 <script>
-    // --- GANTI DENGAN URL WORKER KAMU ---
+    // --- KONFIGURASI URL WORKER ---
     const API = "https://panel.forkyhub.workers.dev"; 
 
-    // Auto-Routing
+    const urlParams = new URLSearchParams(window.location.search);
+    const myHwid = urlParams.get('hwid');
+
+    // Init Page
     if(window.location.hash === "#admin") {
         document.getElementById('client-page').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
     }
 
-    // Grab HWID
-    const hwid = new URLSearchParams(window.location.search).get('hwid');
-    if(hwid) {
-        document.getElementById('hwid-val').innerText = hwid;
+    if(myHwid) {
+        document.getElementById('hwid-display').innerText = myHwid;
     } else {
-        document.getElementById('hwid-val').innerText = "ERROR: HWID NOT FOUND";
-        document.getElementById('hwid-val').style.color = "var(--danger)";
-        document.getElementById('get-btn').disabled = true;
+        document.getElementById('hwid-display').innerText = "HWID TIDAK DITEMUKAN";
+        document.getElementById('hwid-display').style.color = "var(--danger)";
+        document.getElementById('get-key-btn').disabled = true;
     }
 
-    // Client: Get Trial
-    async function fetchKey() {
-        const b = document.getElementById('get-btn');
-        b.innerText = "Processing..."; b.disabled = true;
+    // --- CLIENT FUNCTIONS ---
+    async function requestKey() {
+        const btn = document.getElementById('get-key-btn');
+        btn.innerText = "Processing..."; btn.disabled = true;
         try {
-            const r = await fetch(`${API}/getkey?hwid=${hwid}`);
+            const r = await fetch(`${API}/getkey?hwid=${myHwid}`);
             const t = await r.text();
+            if(t === "BANNED") return alert("HWID Kamu Diblokir!");
             document.getElementById('out-key').innerText = t;
-            document.getElementById('key-res').style.display = 'block';
-            b.innerText = "Key Generated!";
-        } catch { 
-            alert("API Error!"); b.innerText = "Try Again"; b.disabled = false;
-        }
+            document.getElementById('res-key').style.display = 'block';
+            btn.innerText = "Berhasil!";
+        } catch { alert("Koneksi Error!"); btn.innerText = "Coba Lagi"; btn.disabled = false; }
     }
 
-    // Admin: Gen Premium
+    // --- ADMIN FUNCTIONS ---
     async function genPremium() {
         const pass = document.getElementById('adm-pass').value;
         const dur = document.getElementById('adm-dur').value;
-        try {
-            const r = await fetch(`${API}/admin/generate`, {
-                method: 'POST',
-                body: JSON.stringify({adminPassword: pass, durationType: dur ? 'custom' : 'permanent', customHours: dur})
-            });
-            if(r.status === 401) return alert("Wrong Password!");
-            const d = await r.json();
-            document.getElementById('out-adm').innerText = d.key;
-            document.getElementById('adm-res').style.display = 'block';
-        } catch { alert("Error!"); }
+        const r = await fetch(`${API}/admin/generate`, {
+            method: 'POST',
+            body: JSON.stringify({adminPassword: pass, durationType: dur ? 'custom' : 'permanent', customHours: dur})
+        });
+        if(r.status === 401) return alert("Password Salah!");
+        const d = await r.json();
+        document.getElementById('out-adm').innerText = d.key;
+        document.getElementById('res-adm').style.display = 'block';
     }
 
-    // Admin: List Data
-    async function listKeys() {
+    async function setPower(val) {
         const pass = document.getElementById('adm-pass').value;
-        const body = document.getElementById('db-body');
-        body.innerHTML = '<tr><td colspan="2" style="text-align:center">Loading...</td></tr>';
+        const r = await fetch(`${API}/admin/status`, {
+            method: 'POST',
+            body: JSON.stringify({adminPassword: pass, status: val})
+        });
+        if(r.ok) alert("Sistem Power: " + val);
+    }
+
+    async function loadDB() {
+        const pass = document.getElementById('adm-pass').value;
+        const tbody = document.getElementById('db-body');
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Loading...</td></tr>';
+        
         try {
             const r = await fetch(`${API}/admin/list`, {
                 method: 'POST',
                 body: JSON.stringify({adminPassword: pass})
             });
             const d = await r.json();
-            body.innerHTML = d.map(i => `
-                <tr>
-                    <td style="color:var(--success)">${i.keyName}</td>
-                    <td style="color:${i.hwid==='EMPTY'?'#64748b':'#3b82f6'}">${i.hwid}</td>
-                </tr>
-            `).join('');
-        } catch { alert("Failed to fetch list. Check password!"); }
+            tbody.innerHTML = d.map(i => {
+                let sisa = "Permanent";
+                if(i.expiry) {
+                    const sec = i.expiry - Math.floor(Date.now()/1000);
+                    sisa = sec > 0 ? Math.round(sec/3600) + "h" : "Expired";
+                }
+                return `
+                    <tr>
+                        <td style="color:var(--success)">${i.key}</td>
+                        <td style="max-width:80px; overflow:hidden; text-overflow:ellipsis;">${i.hwid}</td>
+                        <td style="color:var(--premium)">${sisa}</td>
+                        <td class="action-icon" onclick="delKey('${i.key}')">🗑️</td>
+                    </tr>
+                `;
+            }).join('');
+        } catch { alert("Gagal memuat database. Cek password!"); }
     }
 
-    function copy(id) {
+    async function delKey(k) {
+        if(!confirm("Hapus key ini?")) return;
+        const pass = document.getElementById('adm-pass').value;
+        await fetch(`${API}/admin/delete`, {
+            method: 'POST',
+            body: JSON.stringify({adminPassword: pass, key: k})
+        });
+        loadDB();
+    }
+
+    function copyText(id) {
         navigator.clipboard.writeText(document.getElementById(id).innerText);
-        alert("Copied!");
+        alert("Copied to clipboard!");
+    }
+
+    function goHome() {
+        window.location.hash = "";
+        location.reload();
     }
 </script>
 
