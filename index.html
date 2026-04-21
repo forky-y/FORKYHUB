@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ForkyHUB Ultra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #060810;
+  --bg2:   #0b0d1a;
+  --bg3:   #10132a;
+  --bg4:   #181b33;
+  --line:  rgba(99,102,241,0.18);
+  --line2: rgba(99,102,241,0.35);
+  --acc:   #6366f1;
+  --acc2:  #818cf8;
+  --acc3:  #a5b4fc;
+  --glow:  rgba(99,102,241,0.4);
+  --ok:    #34d399;
+  --warn:  #fbbf24;
+  --err:   #f87171;
+  --txt:   #e2e8f0;
+  --txt2:  #94a3b8;
+  --txt3:  #475569;
+  --mono:  'DM Mono', monospace;
+  --sans:  'Syne', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--txt);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── GRID BG ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── GLOW ── */
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: .5;
+}
+.glow-orb.a { width:500px;height:500px;top:-150px;left:-100px;background:rgba(99,102,241,.25); }
+.glow-orb.b { width:400px;height:400px;bottom:-100px;right:-80px;background:rgba(129,140,248,.2); }
+
+/* ── WRAPPER ── */
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 860px; margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+/* ── HEADER ── */
+header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 40px;
+}
+.logo-mark {
+  display: flex; align-items: center; gap: 12px;
+}
+.logo-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--acc), var(--acc2));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.logo-text { font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
+.logo-text span { color: var(--acc3); }
+.ver-badge {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  background: var(--bg3); border: 1px solid var(--line2);
+  color: var(--acc3); padding: 3px 10px; border-radius: 100px;
+}
+
+/* ── SECTION TITLE ── */
+.sec-title {
+  font-size: 11px; font-family: var(--mono); font-weight: 500;
+  color: var(--txt3); text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 14px; padding-left: 2px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  margin-bottom: 20px;
+  transition: border-color .2s;
+}
+.card:hover { border-color: var(--line2); }
+
+/* ── STATUS BAR ── */
+.status-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  background: var(--bg3); border-radius: 10px;
+  font-family: var(--mono); font-size: 12px;
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+}
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--txt3); flex-shrink: 0;
+}
+.dot.ok    { background: var(--ok);   box-shadow: 0 0 6px var(--ok); }
+.dot.warn  { background: var(--warn); box-shadow: 0 0 6px var(--warn); }
+.dot.err   { background: var(--err);  box-shadow: 0 0 6px var(--err); }
+
+/* ── INPUT ── */
+.input-row { display: flex; gap: 10px; margin-bottom: 16px; }
+.ibox {
+  flex: 1; background: var(--bg3); border: 1px solid var(--line);
+  border-radius: 10px; padding: 0 14px;
+  height: 46px; font-family: var(--mono); font-size: 13px;
+  color: var(--txt); outline: none; transition: border-color .2s;
+}
+.ibox::placeholder { color: var(--txt3); }
+.ibox:focus { border-color: var(--acc); }
+
+/* ── BUTTONS ── */
+.btn {
+  height: 46px; padding: 0 20px; border-radius: 10px;
+  font-family: var(--sans); font-size: 14px; font-weight: 700;
+  cursor: pointer; border: none; outline: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform .1s, opacity .1s, background .15s;
+  white-space: nowrap;
+}
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--acc); color: #fff; }
+.btn-primary:hover { background: var(--acc2); }
+.btn-outline {
+  background: transparent; color: var(--acc3);
+  border: 1px solid var(--line2);
+}
+.btn-outline:hover { background: var(--bg3); }
+.btn-danger  { background: rgba(248,113,113,.15); color: var(--err); border: 1px solid rgba(248,113,113,.3); }
+.btn-danger:hover { background: rgba(248,113,113,.25); }
+.btn-ok      { background: rgba(52,211,153,.12); color: var(--ok); border: 1px solid rgba(52,211,153,.3); }
+.btn-ok:hover { background: rgba(52,211,153,.22); }
+.btn-sm { height: 34px; padding: 0 14px; font-size: 12px; border-radius: 8px; }
+.btn:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
+.btn-full { width: 100%; justify-content: center; }
+
+/* ── KEY DISPLAY ── */
+.key-box {
+  background: var(--bg3); border: 1px solid var(--line2);
+  border-radius: 12px; padding: 18px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 16px;
+}
+.key-value {
+  font-family: var(--mono); font-size: 16px; font-weight: 500;
+  color: var(--acc3); letter-spacing: .5px; word-break: break-all;
+}
+.key-sub {
+  font-family: var(--mono); font-size: 11px; color: var(--txt3);
+  margin-top: 4px;
+}
+
+/* ── COUNTDOWN ── */
+.countdown {
+  display: flex; gap: 10px; margin-top: 18px;
+}
+.cd-unit {
+  flex: 1; background: var(--bg3); border: 1px solid var(--line);
+  border-radius: 10px; padding: 12px 6px; text-align: center;
+}
+.cd-num {
+  font-size: 26px; font-weight: 800; color: var(--acc2);
+  font-family: var(--mono); line-height: 1;
+}
+.cd-lbl {
+  font-size: 10px; color: var(--txt3); font-family: var(--mono);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;
+}
+
+/* ── INFO ROW ── */
+.info-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.info-row:last-child { border-bottom: none; padding-bottom: 0; }
+.info-label { color: var(--txt3); font-family: var(--mono); }
+.info-val   { color: var(--txt); font-weight: 600; }
+.info-val.green { color: var(--ok); }
+.info-val.red   { color: var(--err); }
+.info-val.yellow { color: var(--warn); }
+.info-val.blue { color: var(--acc3); }
+
+/* ── TABLE ── */
+.tbl-wrap { overflow-x: auto; }
+table {
+  width: 100%; border-collapse: collapse; font-size: 12.5px;
+}
+th {
+  text-align: left; padding: 10px 12px;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  color: var(--txt3); text-transform: uppercase; letter-spacing: 1px;
+  background: var(--bg3); border-bottom: 1px solid var(--line);
+}
+td {
+  padding: 11px 12px; border-bottom: 1px solid var(--line);
+  font-family: var(--mono); color: var(--txt2);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(99,102,241,.04); }
+.pill {
+  display: inline-block; padding: 2px 9px; border-radius: 100px;
+  font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px;
+}
+.pill.trial   { background: rgba(251,191,36,.15);  color: var(--warn); }
+.pill.premium { background: rgba(99,102,241,.2);   color: var(--acc3); }
+.pill.locked  { background: rgba(52,211,153,.12);  color: var(--ok);   }
+.pill.free    { background: rgba(148,163,184,.1);  color: var(--txt2); }
+.pill.banned  { background: rgba(248,113,113,.15); color: var(--err);  }
+
+/* ── STATS GRID ── */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+  gap: 14px; margin-bottom: 20px;
+}
+.stat-card {
+  background: var(--bg3); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px 14px;
+}
+.stat-num {
+  font-size: 30px; font-weight: 800; font-family: var(--mono); line-height: 1;
+  color: var(--acc2);
+}
+.stat-lbl {
+  font-size: 11px; color: var(--txt3); font-family: var(--mono);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;
+}
+
+/* ── KILL SWITCH ── */
+.kill-card {
+  background: rgba(248,113,113,.06);
+  border: 1px solid rgba(248,113,113,.25);
+  border-radius: 14px; padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.kill-card.inactive {
+  background: rgba(52,211,153,.05);
+  border-color: rgba(52,211,153,.2);
+}
+.kill-title { font-size: 15px; font-weight: 700; }
+.kill-title.red  { color: var(--err); }
+.kill-title.green{ color: var(--ok);  }
+.kill-sub  { font-size: 12px; color: var(--txt3); font-family: var(--mono); margin-top: 3px; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: var(--bg2); border: 1px solid var(--line2);
+  color: var(--txt); font-family: var(--mono); font-size: 13px;
+  padding: 12px 22px; border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 999;
+  white-space: nowrap;
+}
+#toast.show { opacity: 1; }
+
+/* ── ADMIN LOGIN OVERLAY ── */
+#loginOverlay {
+  position: fixed; inset: 0;
+  background: rgba(6,8,16,.95);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+}
+.login-box {
+  background: var(--bg2); border: 1px solid var(--line2);
+  border-radius: 20px; padding: 40px; width: 360px; max-width: 95vw;
+  text-align: center;
+}
+.login-box h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.login-box p { font-size: 13px; color: var(--txt3); margin-bottom: 24px; font-family: var(--mono); }
+.login-box .ibox { width: 100%; margin-bottom: 12px; }
+
+/* ── NAV TABS ── */
+.tabs {
+  display: flex; gap: 4px;
+  background: var(--bg3); border-radius: 12px; padding: 4px;
+  margin-bottom: 24px;
+}
+.tab {
+  flex: 1; padding: 9px; text-align: center;
+  border-radius: 9px; cursor: pointer; font-size: 13px; font-weight: 600;
+  color: var(--txt3); transition: all .15s;
+}
+.tab.active { background: var(--bg2); color: var(--acc3); box-shadow: 0 1px 4px rgba(0,0,0,.4); }
+
+/* ── SEPARATOR ── */
+.sep { height: 1px; background: var(--line); margin: 20px 0; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:560px) {
+  .input-row { flex-direction: column; }
+  .key-box { flex-direction: column; align-items: flex-start; }
+  header { flex-direction: column; gap: 14px; align-items: flex-start; }
+  .kill-card { flex-direction: column; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.card, .stats-grid, .tabs { animation: fadeUp .35s ease both; }
+.card:nth-child(2) { animation-delay:.05s; }
+.card:nth-child(3) { animation-delay:.1s; }
+</style>
+</head>
+<body>
+<div class="glow-orb a"></div>
+<div class="glow-orb b"></div>
+
+<!-- Admin Login Overlay -->
+<div id="loginOverlay" style="display:none">
+  <div class="login-box">
+    <div style="font-size:32px;margin-bottom:12px">🔐</div>
+    <h2>Admin Panel</h2>
+    <p>ForkyHUB Ultra — masukkan password</p>
+    <input class="ibox" id="loginInput" type="password" placeholder="Admin password...">
+    <button class="btn btn-primary btn-full" onclick="doLogin()">Masuk</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<div class="wrap">
+  <header>
+    <div class="logo-mark">
+      <div class="logo-icon">🔑</div>
+      <div class="logo-text">Forky<span>HUB</span></div>
+    </div>
+    <div class="ver-badge">Ultra v3.0</div>
+  </header>
+
+  <!-- ═══════════════════════════════ USER PAGE ═══════════════ -->
+  <div id="userPage">
+    <div class="sec-title">Server Status</div>
+    <div class="status-bar">
+      <div class="dot" id="svrDot"></div>
+      <span id="svrTxt" style="color:var(--txt2)">Memeriksa server...</span>
+    </div>
+
+    <div class="sec-title">Ambil Trial Key (6 Jam Gratis)</div>
+    <div class="card">
+      <div style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.7">
+        Satu HWID = satu trial key. Key terkunci otomatis ke perangkat kamu.
+        Salin HWID dari script Roblox, lalu paste di sini.
+      </div>
+      <div class="input-row">
+        <input class="ibox" id="hwidInput" placeholder="HWID kamu (dari script Roblox)">
+        <button class="btn btn-primary" onclick="getTrial()">🎁 Ambil Trial</button>
+      </div>
+      <div id="trialResult" style="display:none">
+        <div class="key-box">
+          <div>
+            <div class="key-value" id="trialKeyVal">—</div>
+            <div class="key-sub" id="trialExpSub">—</div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="copyTxt('trialKeyVal')">📋 Copy</button>
+        </div>
+        <div class="countdown" id="trialCountdown">
+          <div class="cd-unit"><div class="cd-num" id="cdH">00</div><div class="cd-lbl">Jam</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cdM">00</div><div class="cd-lbl">Menit</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cdS">00</div><div class="cd-lbl">Detik</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Cek & Validasi Key</div>
+    <div class="card">
+      <div class="input-row">
+        <input class="ibox" id="chkKeyInput" placeholder="Key kamu (TRIAL-XXXX / PREM-XXXX)">
+        <input class="ibox" id="chkHwidInput" placeholder="HWID kamu" style="max-width:240px">
+        <button class="btn btn-outline" onclick="checkKey()">🔍 Cek</button>
+      </div>
+      <div id="checkResult" style="display:none">
+        <div class="sep"></div>
+        <div class="info-row"><span class="info-label">Status</span><span class="info-val" id="chkStatus">—</span></div>
+        <div class="info-row"><span class="info-label">Tipe</span><span class="info-val" id="chkType">—</span></div>
+        <div class="info-row"><span class="info-label">HWID Lock</span><span class="info-val" id="chkHwid">—</span></div>
+        <div class="info-row"><span class="info-label">Sisa Waktu</span><span class="info-val" id="chkRemain">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ ADMIN PAGE ═══════════════ -->
+  <div id="adminPage" style="display:none">
+    <div id="killBanner" class="kill-card inactive" style="display:none">
+      <div>
+        <div class="kill-title" id="killTitle">—</div>
+        <div class="kill-sub"  id="killSub">—</div>
+      </div>
+      <button class="btn btn-sm" id="killBtn" onclick="toggleKill()">—</button>
+    </div>
+
+    <!-- STATS -->
+    <div class="sec-title">Overview</div>
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card"><div class="stat-num" id="stTotal">—</div><div class="stat-lbl">Total Keys</div></div>
+      <div class="stat-card"><div class="stat-num" id="stPrem">—</div><div class="stat-lbl">Premium</div></div>
+      <div class="stat-card"><div class="stat-num" id="stTrial">—</div><div class="stat-lbl">Trial</div></div>
+      <div class="stat-card"><div class="stat-num" id="stLocked">—</div><div class="stat-lbl">HWID Locked</div></div>
+      <div class="stat-card"><div class="stat-num" id="stBan">—</div><div class="stat-lbl">Blacklist</div></div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('tabGen',this)">⚡ Generate</div>
+      <div class="tab" onclick="switchTab('tabKeys',this)">🗝 Keys</div>
+      <div class="tab" onclick="switchTab('tabBan',this)">🚫 Blacklist</div>
+      <div class="tab" onclick="switchTab('tabKill',this)">🔴 Kill Switch</div>
+    </div>
+
+    <!-- TAB: GENERATE KEY -->
+    <div id="tabGen">
+      <div class="card">
+        <div class="sec-title">Buat Premium / Trial Key</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+          <div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">TIPE</div>
+            <select class="ibox" id="genType" style="height:46px;cursor:pointer">
+              <option value="premium">Premium</option>
+              <option value="trial">Trial</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">DURASI (jam, kosong = permanen)</div>
+            <input class="ibox" id="genDur" type="number" placeholder="Contoh: 720 = 30 hari">
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">JUMLAH KEY</div>
+            <input class="ibox" id="genAmt" type="number" value="1" min="1" max="100">
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">CATATAN (opsional)</div>
+            <input class="ibox" id="genNote" placeholder="Nama buyer, order ID...">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="generateKeys()">✨ Generate Keys</button>
+
+        <div id="genResult" style="display:none;margin-top:20px">
+          <div class="sep"></div>
+          <div class="sec-title">Hasil Generate</div>
+          <div id="genResultList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: DATABASE VIEWER -->
+    <div id="tabKeys" style="display:none">
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:18px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)">
+          <div style="font-weight:700">Database Keys</div>
+          <button class="btn btn-outline btn-sm" onclick="loadKeys()">↻ Refresh</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th><th>Tipe</th><th>HWID</th><th>Expires</th><th>Note</th><th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="keysTbody"><tr><td colspan="6" style="text-align:center;color:var(--txt3);padding:24px">Klik Refresh untuk load data</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: BLACKLIST -->
+    <div id="tabBan" style="display:none">
+      <div class="card">
+        <div class="sec-title">Blacklist HWID</div>
+        <div class="input-row">
+          <input class="ibox" id="blHwid" placeholder="HWID yang akan diblokir">
+          <input class="ibox" id="blReason" placeholder="Alasan (opsional)" style="max-width:200px">
+          <button class="btn btn-danger" onclick="addBlacklist()">🚫 Blacklist</button>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:18px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)">
+          <div style="font-weight:700">Daftar Blacklist</div>
+          <button class="btn btn-outline btn-sm" onclick="loadBlacklist()">↻ Refresh</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>HWID</th><th>Alasan</th><th>Waktu</th></tr></thead>
+            <tbody id="banTbody"><tr><td colspan="3" style="text-align:center;color:var(--txt3);padding:24px">Klik Refresh</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: KILL SWITCH -->
+    <div id="tabKill" style="display:none">
+      <div class="card">
+        <div style="font-size:13px;color:var(--txt2);line-height:1.8;margin-bottom:20px">
+          Kill Switch mematikan <strong>seluruh validasi</strong> di Worker secara instan.
+          Semua user yang mencoba validasi key akan mendapat error.
+          Gunakan saat ada emergency (game update berisiko, exploit ban wave, dll).
+        </div>
+        <div class="input-row">
+          <input class="ibox" id="killMsgInput" placeholder="Pesan untuk user (opsional)">
+        </div>
+        <div style="display:flex;gap:12px">
+          <button class="btn btn-danger" onclick="setKill(true)">🔴 Aktifkan Kill Switch</button>
+          <button class="btn btn-ok"     onclick="setKill(false)">🟢 Nonaktifkan</button>
+        </div>
+        <div id="killStatus" style="margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--txt3)">Status: belum dicek</div>
+      </div>
+    </div>
+  </div><!-- /adminPage -->
+</div><!-- /wrap -->
+
+<script>
+// ================================================================
+//  CONFIG — ganti dengan URL Worker kamu
+// ================================================================
+const WORKER = "https://forkyhub-worker.YOUR_SUBDOMAIN.workers.dev";
+// Password admin disimpan hanya di memory session (tidak di localStorage)
+let ADMIN_TOKEN = null;
+let killActive  = false;
+let cdInterval  = null;
+
+// ─── Route: #admin → admin mode ─────────────────────────────────
+function boot() {
+  if (location.hash === "#admin") {
+    document.getElementById("userPage").style.display = "none";
+    document.getElementById("adminPage").style.display = "block";
+    showLogin();
+  } else {
+    checkServerStatus();
+  }
+}
+window.addEventListener("hashchange", boot);
+boot();
+
+// ─── SERVER STATUS ───────────────────────────────────────────────
+async function checkServerStatus() {
+  const dot = document.getElementById("svrDot");
+  const txt = document.getElementById("svrTxt");
+  try {
+    const r = await fetch(`${WORKER}/status`);
+    const d = await r.json();
+    if (d.kill) {
+      dot.className = "dot err";
+      txt.textContent = "⚠️ Script dinonaktifkan oleh admin: " + (d.message || "Maintenance");
+      txt.style.color = "var(--err)";
+    } else {
+      dot.className = "dot ok";
+      txt.textContent = "Server online — " + new Date(d.ts).toLocaleTimeString("id-ID");
+      txt.style.color = "var(--ok)";
+    }
+  } catch {
+    dot.className = "dot err";
+    txt.textContent = "Server tidak bisa dihubungi — cek URL Worker";
+    txt.style.color = "var(--err)";
+  }
+}
+
+// ─── GET TRIAL ───────────────────────────────────────────────────
+async function getTrial() {
+  const hwid = document.getElementById("hwidInput").value.trim();
+  if (!hwid) { toast("⚠ Masukkan HWID dulu!"); return; }
+  try {
+    const r = await fetch(`${WORKER}/trial?hwid=${encodeURIComponent(hwid)}`);
+    const d = await r.json();
+    if (!d.ok) { toast("❌ " + (d.message || d.error)); return; }
+    document.getElementById("trialKeyVal").textContent = d.key;
+    document.getElementById("trialExpSub").textContent = d.expiresAt
+      ? "Berlaku hingga " + new Date(d.expiresAt).toLocaleString("id-ID")
+      : "Permanen";
+    document.getElementById("trialResult").style.display = "block";
+    if (d.expiresAt) startCountdown(d.expiresAt);
+    copyToClip(d.key);
+    toast("✅ Key berhasil diambil & dicopy!");
+  } catch { toast("❌ Gagal menghubungi server"); }
+}
+
+// ─── CHECK KEY ───────────────────────────────────────────────────
+async function checkKey() {
+  const key  = document.getElementById("chkKeyInput").value.trim();
+  const hwid = document.getElementById("chkHwidInput").value.trim();
+  if (!key || !hwid) { toast("⚠ Isi key dan HWID"); return; }
+  try {
+    const r = await fetch(`${WORKER}/validate?key=${encodeURIComponent(key)}&hwid=${encodeURIComponent(hwid)}`);
+    const d = await r.json();
+    const el = document.getElementById("checkResult");
+    el.style.display = "block";
+    document.getElementById("chkStatus").textContent = d.valid ? "✅ Valid" : "❌ " + (d.error || "Tidak valid");
+    document.getElementById("chkStatus").className = "info-val " + (d.valid ? "green" : "red");
+    document.getElementById("chkType").textContent  = d.type ? d.type.toUpperCase() : "—";
+    document.getElementById("chkHwid").textContent  = d.hwid ? d.hwid.slice(0,20) + "…" : "Belum terkunci";
+    document.getElementById("chkHwid").className    = "info-val " + (d.hwid ? "yellow" : "blue");
+    document.getElementById("chkRemain").textContent = d.remainMs != null
+      ? fmtMs(d.remainMs) : (d.expiresAt ? "Expired" : "Permanen");
+  } catch { toast("❌ Gagal menghubungi server"); }
+}
+
+// ─── COUNTDOWN ───────────────────────────────────────────────────
+function startCountdown(expiresAt) {
+  if (cdInterval) clearInterval(cdInterval);
+  function tick() {
+    const rem = Math.max(0, expiresAt - Date.now());
+    const h = Math.floor(rem / 3600000);
+    const m = Math.floor((rem % 3600000) / 60000);
+    const s = Math.floor((rem % 60000) / 1000);
+    document.getElementById("cdH").textContent = String(h).padStart(2,"0");
+    document.getElementById("cdM").textContent = String(m).padStart(2,"0");
+    document.getElementById("cdS").textContent = String(s).padStart(2,"0");
+    if (rem <= 0) clearInterval(cdInterval);
+  }
+  tick(); cdInterval = setInterval(tick, 1000);
+}
+function fmtMs(ms) {
+  const h = Math.floor(ms/3600000);
+  const m = Math.floor((ms%3600000)/60000);
+  const s = Math.floor((ms%60000)/1000);
+  if (h > 24) return Math.floor(h/24) + " hari " + (h%24) + " jam";
+  return `${h}j ${m}m ${s}d`;
+}
+
+// ================================================================
+//  ADMIN
+// ================================================================
+function showLogin() {
+  document.getElementById("loginOverlay").style.display = "flex";
+  document.getElementById("loginInput").focus();
+  document.getElementById("loginInput").onkeydown = (e) => { if (e.key === "Enter") doLogin(); };
+}
+function doLogin() {
+  const pw = document.getElementById("loginInput").value;
+  ADMIN_TOKEN = pw;
+  document.getElementById("loginOverlay").style.display = "none";
+  loadAdminData();
+}
+
+async function apiFetch(path, opts = {}) {
+  const res = await fetch(WORKER + path, {
+    ...opts,
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${ADMIN_TOKEN}`, ...(opts.headers || {}) },
+  });
+  return res.json();
+}
+
+async function loadAdminData() {
+  await Promise.all([loadStats(), loadKillStatus()]);
+}
+
+async function loadStats() {
+  try {
+    const d = await apiFetch("/admin/stats");
+    if (!d.ok) { toast("❌ Password salah atau Worker error"); return; }
+    const s = d.stats;
+    document.getElementById("stTotal").textContent  = s.total;
+    document.getElementById("stPrem").textContent   = s.premium;
+    document.getElementById("stTrial").textContent  = s.trial;
+    document.getElementById("stLocked").textContent = s.locked;
+    document.getElementById("stBan").textContent    = s.blacklisted;
+    killActive = s.killActive;
+    updateKillUI();
+  } catch { toast("❌ Gagal load stats"); }
+}
+
+async function loadKillStatus() {
+  try {
+    const d = await fetch(`${WORKER}/status`).then(r => r.json());
+    killActive = d.kill;
+    updateKillUI();
+    const ks = document.getElementById("killStatus");
+    ks.textContent = "Kill Switch: " + (d.kill ? "🔴 AKTIF — " + (d.message || "Tanpa pesan") : "🟢 Tidak aktif");
+    ks.style.color = d.kill ? "var(--err)" : "var(--ok)";
+  } catch {}
+}
+
+function updateKillUI() {
+  const banner = document.getElementById("killBanner");
+  banner.style.display = "flex";
+  banner.className = "kill-card " + (killActive ? "" : "inactive");
+  document.getElementById("killTitle").textContent = killActive ? "⚠️ Kill Switch AKTIF — Script dimatikan" : "✅ Script Berjalan Normal";
+  document.getElementById("killTitle").className   = "kill-title " + (killActive ? "red" : "green");
+  document.getElementById("killSub").textContent   = killActive ? "Semua validasi diblokir" : "Semua sistem online";
+  document.getElementById("killBtn").textContent   = killActive ? "🟢 Hidupkan Kembali" : "🔴 Aktifkan Kill Switch";
+  document.getElementById("killBtn").className     = "btn btn-sm " + (killActive ? "btn-ok" : "btn-danger");
+}
+
+function toggleKill() { setKill(!killActive); }
+
+async function setKill(active) {
+  const msg = document.getElementById("killMsgInput")?.value || "";
+  try {
+    const d = await apiFetch("/admin/killswitch", { method: "POST", body: JSON.stringify({ active, message: msg }) });
+    if (d.ok) {
+      killActive = active;
+      updateKillUI();
+      await loadKillStatus();
+      toast(active ? "🔴 Kill Switch diaktifkan!" : "🟢 Script dihidupkan kembali!");
+    } else { toast("❌ " + d.error); }
+  } catch { toast("❌ Gagal"); }
+}
+
+// ─── GENERATE KEYS ───────────────────────────────────────────────
+async function generateKeys() {
+  const type = document.getElementById("genType").value;
+  const dur  = document.getElementById("genDur").value;
+  const amt  = document.getElementById("genAmt").value;
+  const note = document.getElementById("genNote").value;
+  try {
+    const d = await apiFetch("/admin/keygen", {
+      method: "POST",
+      body: JSON.stringify({ type, durationHours: dur ? Number(dur) : null, amount: Number(amt), note })
+    });
+    if (!d.ok) { toast("❌ " + d.error); return; }
+    const list = document.getElementById("genResultList");
+    list.innerHTML = d.keys.map(k => `
+      <div class="key-box" style="margin-bottom:10px">
+        <div>
+          <div class="key-value">${k.key}</div>
+          <div class="key-sub">${k.expiresAt ? "Berlaku hingga " + new Date(k.expiresAt).toLocaleString("id-ID") : "Permanen"} · ${k.type}</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="copyToClip('${k.key}');toast('📋 Dicopy!')">📋</button>
+      </div>`).join("");
+    document.getElementById("genResult").style.display = "block";
+    toast(`✅ ${d.keys.length} key berhasil dibuat!`);
+    loadStats();
+  } catch { toast("❌ Gagal generate"); }
+}
+
+// ─── LOAD KEYS TABLE ─────────────────────────────────────────────
+async function loadKeys() {
+  const tbody = document.getElementById("keysTbody");
+  tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--txt3)">Loading...</td></tr>`;
+  try {
+    const d = await apiFetch("/admin/keys");
+    if (!d.ok) { toast("❌ " + d.error); return; }
+    if (!d.keys.length) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--txt3)">Belum ada key</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = d.keys.map(k => {
+      const exp = k.expiresAt ? new Date(k.expiresAt).toLocaleString("id-ID",{dateStyle:"short",timeStyle:"short"}) : "Permanen";
+      const hwid = k.hwid ? `<span class="pill locked">${k.hwid.slice(0,12)}…</span>` : `<span class="pill free">Bebas</span>`;
+      return `<tr>
+        <td style="font-weight:600;color:var(--acc3)">${k.key}</td>
+        <td><span class="pill ${k.type}">${k.type}</span></td>
+        <td>${hwid}</td>
+        <td>${exp}</td>
+        <td style="color:var(--txt3)">${k.note || "—"}</td>
+        <td>
+          <div style="display:flex;gap:6px">
+            <button class="btn btn-outline btn-sm" onclick="resetHwid('${k.key}')">↺ Reset HWID</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteKey('${k.key}')">✕</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join("");
+  } catch { toast("❌ Gagal load keys"); }
+}
+
+async function deleteKey(key) {
+  if (!confirm(`Hapus key ${key}?`)) return;
+  const d = await apiFetch("/admin/delete", { method: "DELETE", body: JSON.stringify({ key }) });
+  if (d.ok) { toast("🗑 Key dihapus"); loadKeys(); loadStats(); }
+  else toast("❌ " + d.error);
+}
+
+async function resetHwid(key) {
+  const d = await apiFetch("/admin/resetHwid", { method: "POST", body: JSON.stringify({ key }) });
+  if (d.ok) { toast("🔄 HWID direset!"); loadKeys(); }
+  else toast("❌ " + d.error);
+}
+
+// ─── BLACKLIST ────────────────────────────────────────────────────
+async function addBlacklist() {
+  const hwid   = document.getElementById("blHwid").value.trim();
+  const reason = document.getElementById("blReason").value.trim();
+  if (!hwid) { toast("⚠ Masukkan HWID"); return; }
+  const d = await apiFetch("/admin/blacklist", { method: "POST", body: JSON.stringify({ hwid, reason }) });
+  if (d.ok) { toast("🚫 HWID diblacklist!"); document.getElementById("blHwid").value = ""; loadBlacklist(); loadStats(); }
+  else toast("❌ " + d.error);
+}
+
+async function loadBlacklist() {
+  const tbody = document.getElementById("banTbody");
+  tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--txt3)">Loading...</td></tr>`;
+  const d = await apiFetch("/admin/blacklist");
+  if (!d.ok || !d.list.length) {
+    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--txt3)">Kosong</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = d.list.map(b => `<tr>
+    <td style="color:var(--err)">${b.hwid}</td>
+    <td>${b.reason || "—"}</td>
+    <td>${new Date(b.bannedAt).toLocaleString("id-ID")}</td>
+  </tr>`).join("");
+}
+
+// ─── TABS ────────────────────────────────────────────────────────
+function switchTab(id, el) {
+  ["tabGen","tabKeys","tabBan","tabKill"].forEach(t => document.getElementById(t).style.display = "none");
+  document.getElementById(id).style.display = "block";
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  el.classList.add("active");
+  if (id === "tabKeys") loadKeys();
+  if (id === "tabBan")  loadBlacklist();
+  if (id === "tabKill") loadKillStatus();
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────
+function copyTxt(id) { copyToClip(document.getElementById(id).textContent); toast("📋 Dicopy!"); }
+function copyToClip(t) { try { navigator.clipboard.writeText(t); } catch { const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); } }
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg; el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
+}
+</script>
+</body>
+</html>
