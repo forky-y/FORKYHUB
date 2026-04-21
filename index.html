@@ -1,111 +1,250 @@
+import os
+
+html_content = """
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔑 ForkyHUB v3.0 - Key System</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ForkyHUB | Key System</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #22c55e;
+            --premium: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h1 { font-size: 24px; margin-bottom: 8px; font-weight: 800; letter-spacing: -0.5px; }
+        .subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 24px; }
+
+        .info-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            text-align: left;
+        }
+
+        .info-box span { display: block; color: var(--text-dim); margin-bottom: 4px; }
+        .info-box b { color: var(--text-main); word-break: break-all; }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+        }
+
+        .btn:hover { background-color: var(--accent-hover); transform: translateY(-1px); }
+        .btn:disabled { background-color: #475569; cursor: not-allowed; }
+
+        .result-box {
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px dashed var(--success);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result-box code {
+            display: block;
+            font-family: monospace;
+            font-size: 16px;
+            color: var(--success);
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        /* ADMIN PANEL STYLES */
+        #admin-section { display: none; }
+        .admin-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: white;
+            box-sizing: border-box;
+        }
+        .premium-btn { background-color: var(--premium); }
+        .premium-btn:hover { background-color: #d97706; }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-dim);
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- HEADER -->
-        <div class="header">
-            <h1>🔑 <span class="brand">ForkyHUB</span> v3.0</h1>
-            <p>🤖 Auto HWID Detection • Real Roblox HWID • Time-Based Keys</p>
+
+<div class="container">
+    <div id="client-section" class="card">
+        <h1>ForkyHUB System</h1>
+        <p class="subtitle">Dapatkan akses trial 6 jam secara otomatis</p>
+        
+        <div class="info-box">
+            <span>HWID TERDETEKSI:</span>
+            <b id="hwid-display">Mencari HWID...</b>
         </div>
 
-        <!-- TABS -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('user')">
-                <span>👤</span> User Panel
-            </button>
-            <button class="tab-btn" onclick="showTab('admin')">
-                <span>⚙️</span> Admin Panel
-            </button>
-        </div>
+        <button id="get-key-btn" class="btn" onclick="handleGetKey()">GET TRIAL KEY</button>
 
-        <!-- USER PANEL -->
-        <div id="user" class="tab-content active">
-            <div class="card">
-                <h2>🤖 Auto Detect HWID & Verify Key</h2>
-                
-                <!-- HWID DETECTION GRID -->
-                <div class="hwid-grid">
-                    <button class="btn btn-primary" onclick="detectCanvasHWID()">
-                        <span>🖌️</span> Canvas Fingerprint
-                    </button>
-                    <button class="btn btn-success" onclick="detectWebGLHWID()">
-                        <span>🎮</span> WebGL + GPU
-                    </button>
-                    <button class="btn btn-secondary" onclick="detectFullHWID()">
-                        <span>🔍</span> Full System
-                    </button>
-                    <button class="btn btn-danger" onclick="detectRobloxHWID()">
-                        <span>🟦</span> Roblox Style
-                    </button>
-                </div>
-
-                <div class="input-group">
-                    <label>🖥️ <span id="hwidLabel">Click Detect</span> HWID:</label>
-                    <input type="text" id="userHwid" readonly class="hwid-input">
-                    <small>Copy untuk Roblox executor</small>
-                </div>
-
-                <div class="input-group">
-                    <label>🔑 Key:</label>
-                    <input type="text" id="userKey" placeholder="ForkyHUB-XXXXXXX">
-                </div>
-
-                <div class="btn-row">
-                    <button class="btn btn-primary" onclick="verifyUserKey()">✅ Auto Verify</button>
-                    <button class="btn btn-success" onclick="getRobloxScript()">📜 Get Script</button>
-                </div>
-
-                <div id="userStatus" class="status"></div>
-                <div id="activatedKey" class="result-box"></div>
-            </div>
-        </div>
-
-        <!-- ADMIN PANEL -->
-        <div id="admin" class="tab-content">
-            <div class="card">
-                <h2>🎁 Generate Time-Based Keys</h2>
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>📦 Key Type:</label>
-                        <select id="keyType">
-                            <option value="trial-6h">Trial (6 Jam)</option>
-                            <option value="trial-24h">Trial (1 Hari)</option>
-                            <option value="basic-3d">Basic (3 Hari)</option>
-                            <option value="premium-7d">Premium (7 Hari)</option>
-                            <option value="vip-30d">VIP (30 Hari)</option>
-                            <option value="custom">🎨 Custom Days</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label>🔢 Amount:</label>
-                        <input type="number" id="keyAmount" value="1" min="1" max="100">
-                    </div>
-                </div>
-                <div class="input-group custom-days" id="customDaysGroup" style="display:none;">
-                    <label>📅 Custom Days:</label>
-                    <input type="number" id="customDays" value="7" min="1" max="365">
-                </div>
-                <button class="btn btn-success btn-large" onclick="generateKeys()">✨ Generate Keys</button>
-                <div id="adminStatus" class="status"></div>
-                <div id="generatedKeys"></div>
-            </div>
-
-            <div class="card">
-                <h2>📋 Key Manager</h2>
-                <div class="input-group">
-                    <input type="text" id="searchKey" placeholder="🔍 Search keys..." onkeyup="filterKeys()">
-                </div>
-                <div id="keyList" class="key-grid"></div>
-            </div>
+        <div id="result-area" class="result-box">
+            <small style="color: var(--text-dim)">Key Berhasil Dibuat:</small>
+            <code id="key-output">ForkyHUB-FREE-XXXXXX</code>
+            <button class="btn" style="padding: 8px; font-size: 12px;" onclick="copyKey()">Salin Key</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="admin-section" class="card">
+        <h1 style="color: var(--premium)">Admin Panel</h1>
+        <p class="subtitle">Buat Premium/Permanent Key</p>
+        
+        <input type="password" id="admin-pass" class="admin-input" placeholder="Password Admin">
+        <input type="number" id="key-duration" class="admin-input" placeholder="Durasi (Jam) - Kosongkan jika Permanen">
+        
+        <button class="btn premium-btn" onclick="handleAdminGen()">GENERATE PREMIUM KEY</button>
+        
+        <div id="admin-result" class="result-box" style="border-color: var(--premium); background: rgba(245, 158, 11, 0.1);">
+            <code id="admin-key-output" style="color: var(--premium)"></code>
+        </div>
+        <p><a href="#" onclick="showClient()" style="color: var(--text-dim); font-size: 12px;">Kembali ke Get Key</a></p>
+    </div>
+
+    <footer>
+        Created by @agil69 &copy; 2026
+    </footer>
+</div>
+
+<script>
+    // --- KONFIGURASI ---
+    const WORKER_URL = "https://panel.forkyhub.workers.dev"; // GANTI DENGAN URL CLOUDFLARE WORKER KAMU
+
+    // --- LOGIKA CLIENT ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentHwid = urlParams.get('hwid');
+
+    if (currentHwid) {
+        document.getElementById('hwid-display').innerText = currentHwid;
+    } else {
+        document.getElementById('hwid-display').innerText = "HWID Tidak Ditemukan! (Gunakan Script)";
+        document.getElementById('get-key-btn').disabled = true;
+    }
+
+    async function handleGetKey() {
+        const btn = document.getElementById('get-key-btn');
+        btn.innerText = "Memproses...";
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(`${WORKER_URL}/getkey?hwid=${currentHwid}`);
+            const key = await response.text();
+            
+            document.getElementById('key-output').innerText = key;
+            document.getElementById('result-area').style.display = 'block';
+            btn.innerText = "Selesai!";
+        } catch (err) {
+            alert("Gagal menghubungi server. Pastikan URL Worker benar dan CORS aktif.");
+            btn.innerText = "Coba Lagi";
+            btn.disabled = false;
+        }
+    }
+
+    function copyKey() {
+        const keyText = document.getElementById('key-output').innerText;
+        navigator.clipboard.writeText(keyText);
+        alert("Key disalin ke clipboard!");
+    }
+
+    // --- LOGIKA ADMIN ---
+    async function handleAdminGen() {
+        const pass = document.getElementById('admin-pass').value;
+        const hours = document.getElementById('key-duration').value;
+
+        if(!pass) return alert("Masukkan password!");
+
+        try {
+            const response = await fetch(`${WORKER_URL}/admin/generate`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    adminPassword: pass,
+                    durationType: hours ? "custom" : "permanent",
+                    customHours: parseInt(hours)
+                })
+            });
+
+            if (response.status === 401) return alert("Password Salah!");
+            
+            const data = await response.json();
+            document.getElementById('admin-key-output').innerText = data.key;
+            document.getElementById('admin-result').style.display = 'block';
+        } catch (err) {
+            alert("Terjadi kesalahan sistem.");
+        }
+    }
+
+    // --- ROUTING SEDERHANA ---
+    if (window.location.hash === "#admin") {
+        document.getElementById('client-section').style.display = 'none';
+        document.getElementById('admin-section').style.display = 'block';
+    }
+
+    function showClient() {
+        window.location.hash = "";
+        location.reload();
+    }
+</script>
+
 </body>
 </html>
+"""
+
+# Simpan ke file index.html
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
