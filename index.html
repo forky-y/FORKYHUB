@@ -3,30 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForkyHUB - Auto HWID Detection</title>
-    <script src="https://cdn.jsdelivr.net/npm/@zip.js/zip.js@2.3.5/dist/zip.min.js"></script>
-    <style>
-        /* [SAME STYLE AS BEFORE - COPY FROM PREVIOUS] */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #2a2a4a 50%, #1e3c72 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        /* ... [KOPI STYLE LENGKAP DARI SEBELUMNYA] ... */
-    </style>
+    <title>🔑 ForkyHUB v3.0 - Key System</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
+        <!-- HEADER -->
         <div class="header">
-            <h1>🔑 ForkyHUB v3.0</h1>
-            <p>🤖 AUTO HWID DETECTION • Real Roblox HWID • Time-Based Keys</p>
+            <h1>🔑 <span class="brand">ForkyHUB</span> v3.0</h1>
+            <p>🤖 Auto HWID Detection • Real Roblox HWID • Time-Based Keys</p>
         </div>
 
+        <!-- TABS -->
         <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('user')">👤 User Panel</button>
-            <button class="tab-btn" onclick="showTab('admin')">⚙️ Admin Panel</button>
+            <button class="tab-btn active" onclick="showTab('user')">
+                <span>👤</span> User Panel
+            </button>
+            <button class="tab-btn" onclick="showTab('admin')">
+                <span>⚙️</span> Admin Panel
+            </button>
         </div>
 
         <!-- USER PANEL -->
@@ -34,26 +29,26 @@
             <div class="card">
                 <h2>🤖 Auto Detect HWID & Verify Key</h2>
                 
-                <!-- HWID DETECTION BUTTONS -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                <!-- HWID DETECTION GRID -->
+                <div class="hwid-grid">
                     <button class="btn btn-primary" onclick="detectCanvasHWID()">
-                        🖌️ Canvas Fingerprint
+                        <span>🖌️</span> Canvas Fingerprint
                     </button>
                     <button class="btn btn-success" onclick="detectWebGLHWID()">
-                        🎮 WebGL + GPU
+                        <span>🎮</span> WebGL + GPU
                     </button>
                     <button class="btn btn-secondary" onclick="detectFullHWID()">
-                        🔍 Full System Scan
+                        <span>🔍</span> Full System
                     </button>
                     <button class="btn btn-danger" onclick="detectRobloxHWID()">
-                        🟦 Roblox Style HWID
+                        <span>🟦</span> Roblox Style
                     </button>
                 </div>
 
                 <div class="input-group">
-                    <label>🖥️ <span id="hwidLabel">Detected</span> HWID:</label>
-                    <input type="text" id="userHwid" readonly style="font-family: monospace; font-size: 14px;">
-                    <small style="color: #666;">Copy atau klik untuk Roblox HWID</small>
+                    <label>🖥️ <span id="hwidLabel">Click Detect</span> HWID:</label>
+                    <input type="text" id="userHwid" readonly class="hwid-input">
+                    <small>Copy untuk Roblox executor</small>
                 </div>
 
                 <div class="input-group">
@@ -61,168 +56,56 @@
                     <input type="text" id="userKey" placeholder="ForkyHUB-XXXXXXX">
                 </div>
 
-                <button class="btn btn-primary" onclick="verifyUserKey()">✅ Auto Verify</button>
-                <button class="btn btn-success" onclick="getRobloxScript()">📜 Get Roblox Script</button>
-                <div id="userStatus"></div>
-                <div id="activatedKey"></div>
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="verifyUserKey()">✅ Auto Verify</button>
+                    <button class="btn btn-success" onclick="getRobloxScript()">📜 Get Script</button>
+                </div>
+
+                <div id="userStatus" class="status"></div>
+                <div id="activatedKey" class="result-box"></div>
             </div>
         </div>
 
-        <!-- [ADMIN PANEL SAMA SEPERTI SEBELUMNYA] -->
+        <!-- ADMIN PANEL -->
         <div id="admin" class="tab-content">
-            <!-- COPY ADMIN PANEL DARI SEBELUMNYA -->
+            <div class="card">
+                <h2>🎁 Generate Time-Based Keys</h2>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>📦 Key Type:</label>
+                        <select id="keyType">
+                            <option value="trial-6h">Trial (6 Jam)</option>
+                            <option value="trial-24h">Trial (1 Hari)</option>
+                            <option value="basic-3d">Basic (3 Hari)</option>
+                            <option value="premium-7d">Premium (7 Hari)</option>
+                            <option value="vip-30d">VIP (30 Hari)</option>
+                            <option value="custom">🎨 Custom Days</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>🔢 Amount:</label>
+                        <input type="number" id="keyAmount" value="1" min="1" max="100">
+                    </div>
+                </div>
+                <div class="input-group custom-days" id="customDaysGroup" style="display:none;">
+                    <label>📅 Custom Days:</label>
+                    <input type="number" id="customDays" value="7" min="1" max="365">
+                </div>
+                <button class="btn btn-success btn-large" onclick="generateKeys()">✨ Generate Keys</button>
+                <div id="adminStatus" class="status"></div>
+                <div id="generatedKeys"></div>
+            </div>
+
+            <div class="card">
+                <h2>📋 Key Manager</h2>
+                <div class="input-group">
+                    <input type="text" id="searchKey" placeholder="🔍 Search keys..." onkeyup="filterKeys()">
+                </div>
+                <div id="keyList" class="key-grid"></div>
+            </div>
         </div>
     </div>
 
-    <script>
-        // ========== AUTO HWID DETECTION FUNCTIONS ==========
-        
-        // 1. Canvas Fingerprint (Paling akurat untuk Roblox)
-        async function detectCanvasHWID() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 256;
-            canvas.height = 60;
-            
-            ctx.textBaseline = 'alphabetic';
-            ctx.fillStyle = '#f60';
-            ctx.fillRect(125, 1, 62, 20);
-            ctx.fillStyle = '#069';
-            ctx.font = '11pt Arial';
-            ctx.fillText('ForkyHUB Canvas Test 🖌️', 2, 15);
-            ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
-            ctx.fillText('ForkyHUB Canvas Test 🖌️', 4, 17);
-            
-            const data = canvas.toDataURL();
-            const hash = await sha256(data);
-            document.getElementById('userHwid').value = 'CANVAS_' + hash.slice(0, 12).toUpperCase();
-            document.getElementById('hwidLabel').textContent = 'Canvas Fingerprint';
-            showStatus('user', '✅ Canvas HWID detected (Roblox Compatible)', 'success');
-        }
-
-        // 2. WebGL + GPU Detection
-        function detectWebGLHWID() {
-            const canvas = document.createElement('canvas');
-            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-            
-            if (!gl) {
-                showStatus('user', '❌ WebGL not supported', 'error');
-                return;
-            }
-            
-            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-            const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : '';
-            const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : '';
-            
-            const hash = sha256(renderer + vendor).slice(0, 12).toUpperCase();
-            document.getElementById('userHwid').value = 'GPU_' + hash;
-            document.getElementById('hwidLabel').textContent = 'WebGL/GPU';
-            showStatus('user', `✅ GPU Detected: ${renderer.substring(0, 30)}...`, 'success');
-        }
-
-        // 3. Full System Fingerprint
-        async function detectFullHWID() {
-            const getFingerprint = async () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                ctx.textBaseline = 'top';
-                ctx.font = '14px Arial';
-                ctx.fillText(navigator.userAgent, 2, 2);
-                ctx.fillText(navigator.language, 2, 20);
-                ctx.fillText(screen.width + 'x' + screen.height, 2, 38);
-                ctx.fillText(new Date().getTimezoneOffset(), 2, 56);
-                
-                return await sha256(canvas.toDataURL());
-            };
-            
-            const fp = await getFingerprint();
-            document.getElementById('userHwid').value = 'FULL_' + fp.slice(0, 12).toUpperCase();
-            document.getElementById('hwidLabel').textContent = 'Full System';
-            showStatus('user', '✅ Complete system fingerprint', 'success');
-        }
-
-        // 4. ROBLOX-STYLE HWID (Paling mirip Roblox executor)
-        function detectRobloxHWID() {
-            // Simulasi Roblox executor HWID generation
-            const userAgent = navigator.userAgent;
-            const platform = navigator.platform;
-            const language = navigator.language;
-            const resolution = screen.width + 'x' + screen.height;
-            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            
-            // Roblox-style hash
-            const robloxData = userAgent + platform + language + resolution + timezone;
-            const hash = sha256(robloxData).slice(0, 16).toUpperCase();
-            
-            document.getElementById('userHwid').value = 'ROBLOX_' + hash;
-            document.getElementById('hwidLabel').textContent = 'Roblox Style';
-            showStatus('user', '✅ Roblox-compatible HWID generated!', 'success');
-        }
-
-        // SHA256 Helper
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        // ========== ENHANCED VERIFY + ROBLOX SCRIPT ==========
-        async function verifyUserKey() {
-            const hwid = document.getElementById('userHwid').value;
-            const key = document.getElementById('userKey').value.trim().toUpperCase();
-
-            if (!hwid || !key) {
-                showStatus('user', '❌ Detect HWID & masukkan key dulu!', 'error');
-                return;
-            }
-
-            // [SAME VERIFY LOGIC AS BEFORE]
-            // ... verify code ...
-
-            // Generate Roblox-ready script
-            const activatedKey = `ACTIVATED_${key}_${hwid}_${Date.now()}`;
-            showRobloxScript(activatedKey);
-        }
-
-        function getRobloxScript() {
-            const hwid = document.getElementById('userHwid').value;
-            const key = document.getElementById('userKey').value.trim().toUpperCase();
-            if (hwid && key) {
-                const activatedKey = `ACTIVATED_${key}_${hwid}_${Date.now()}`;
-                showRobloxScript(activatedKey);
-            }
-        }
-
-        function showRobloxScript(activatedKey) {
-            const script = `-- ForkyHUB Key System
--- HWID: ${document.getElementById('userHwid').value}
--- Key: ${activatedKey}
-
-local key = "${activatedKey}"
-local response = game:HttpGet("https://your-site.com/api.php?key=" .. key)
-
-if response:find('"status":"VALID"') then
-    loadstring(game:HttpGet("https://pastebin.com/raw/your-main-script"))()
-    print("✅ ForkyHUB Activated!")
-else
-    game.Players.LocalPlayer:Kick("❌ Key invalid/expired! Visit ForkyHUB")
-end`;
-
-            document.getElementById('activatedKey').innerHTML = `
-                <div class="key-display">${activatedKey}</div>
-                <textarea readonly style="width:100%; height:200px; margin-top:1rem; font-family:monospace; padding:1rem; border-radius:10px; border:2px solid #ff6b6b;">${script}</textarea>
-                <button class="btn btn-success" onclick="navigator.clipboard.writeText('${script}')">📋 Copy Full Script</button>
-            `;
-            document.getElementById('activatedKey').style.display = 'block';
-        }
-
-        // Initialize
-        window.onload = function() {
-            detectCanvasHWID(); // Auto detect on load
-        };
-
-        // [PASTE ALL PREVIOUS FUNCTIONS: showStatus, keyDatabase, generateKeys, etc.]
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
