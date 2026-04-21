@@ -346,7 +346,7 @@ tr:hover td { background: rgba(99,102,241,.04); }
   <div class="login-box">
     <div style="font-size:32px;margin-bottom:12px">🔐</div>
     <h2>Admin Panel</h2>
-    <p>HUB Ultra — masukkan password</p>
+    <p>ForkyHUB Ultra — masukkan password</p>
     <input class="ibox" id="loginInput" type="password" placeholder="Admin password...">
     <button class="btn btn-primary btn-full" onclick="doLogin()">Masuk</button>
   </div>
@@ -359,7 +359,7 @@ tr:hover td { background: rgba(99,102,241,.04); }
   <header>
     <div class="logo-mark">
       <div class="logo-icon">🔑</div>
-      <div class="logo-text"><span>HUB</span></div>
+      <div class="logo-text">Forky<span>HUB</span></div>
     </div>
     <div class="ver-badge">Ultra v3.0</div>
   </header>
@@ -375,12 +375,11 @@ tr:hover td { background: rgba(99,102,241,.04); }
     <div class="sec-title">Ambil Trial Key (6 Jam Gratis)</div>
     <div class="card">
       <div style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.7">
-        Satu HWID = satu trial key. Key terkunci otomatis ke perangkat kamu.
-        Salin HWID dari script Roblox, lalu paste di sini.
+        Klik tombol di bawah untuk dapat trial key gratis 6 jam.
+        Key akan otomatis terkunci ke perangkat kamu saat pertama kali dipakai di script.
       </div>
       <div class="input-row">
-        <input class="ibox" id="hwidInput" placeholder="HWID kamu (dari script Roblox)">
-        <button class="btn btn-primary" onclick="getTrial()">🎁 Ambil Trial</button>
+        <button class="btn btn-primary" onclick="getTrial()">🎁 Ambil Trial Key Gratis</button>
       </div>
       <div id="trialResult" style="display:none">
         <div class="key-box">
@@ -591,10 +590,8 @@ async function checkServerStatus() {
 
 // ─── GET TRIAL ───────────────────────────────────────────────────
 async function getTrial() {
-  const hwid = document.getElementById("hwidInput").value.trim();
-  if (!hwid) { toast("⚠ Masukkan HWID dulu!"); return; }
   try {
-    const r = await fetch(`${WORKER}/trial?hwid=${encodeURIComponent(hwid)}`);
+    const r = await fetch(`${WORKER}/trial`);
     const d = await r.json();
     if (!d.ok) { toast("❌ " + (d.message || d.error)); return; }
     document.getElementById("trialKeyVal").textContent = d.key;
