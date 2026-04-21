@@ -3,247 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForkyHUB | Key System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>ForkyHUB | Ultimate Key System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
+            --bg: #0b0f1a;
+            --card: #151c2c;
             --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --text-main: #f8fafc;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --text: #ffffff;
             --text-dim: #94a3b8;
-            --success: #22c55e;
+            --success: #10b981;
             --premium: #f59e0b;
             --danger: #ef4444;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
             padding: 20px;
         }
 
-        .container { width: 100%; max-width: 450px; }
+        .container { width: 100%; max-width: 500px; }
 
         .card {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-            text-align: center;
+            background: var(--card);
+            border-radius: 24px;
+            padding: 35px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeIn 0.4s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
         }
 
-        h1 { font-size: 28px; margin-bottom: 5px; font-weight: 800; letter-spacing: -1px; }
-        .subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 25px; }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.1;
+            pointer-events: none;
+        }
 
-        .status-box {
-            background: rgba(0, 0, 0, 0.2);
+        h1 { font-size: 32px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -1px; }
+        .subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 30px; }
+
+        /* UI Components */
+        .status-pill {
+            background: rgba(0, 0, 0, 0.3);
             padding: 15px;
-            border-radius: 12px;
-            font-size: 13px;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--accent);
+            border-radius: 16px;
             text-align: left;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .status-box span { display: block; color: var(--text-dim); margin-bottom: 5px; font-size: 11px; text-transform: uppercase; }
-        .status-box b { color: var(--text-main); font-family: monospace; word-break: break-all; }
+        .status-pill label { display: block; font-size: 11px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; font-weight: 600; }
+        .status-pill b { font-family: monospace; font-size: 14px; color: var(--accent); word-break: break-all; }
 
         .btn {
-            background-color: var(--accent);
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: 600;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
             width: 100%;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 16px;
+            transition: all 0.2s;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
-        .btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); }
-        .btn:disabled { background-color: #475569; cursor: not-allowed; transform: none; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4); }
+        .btn:disabled { background: #334155; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        .result-area {
+        .result-box {
             margin-top: 25px;
             padding: 20px;
-            background: rgba(34, 197, 94, 0.1);
+            background: rgba(16, 185, 129, 0.1);
             border: 2px dashed var(--success);
-            border-radius: 12px;
+            border-radius: 16px;
             display: none;
+            animation: slideUp 0.4s ease;
         }
-        .result-area code {
-            display: block;
-            background: #000;
-            padding: 12px;
-            margin: 15px 0;
-            color: var(--success);
-            font-family: monospace;
-            font-size: 18px;
-            border-radius: 8px;
-        }
+        .result-box code { display: block; font-family: monospace; font-size: 18px; color: var(--success); margin: 15px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; }
 
-        /* Admin UI */
+        /* Admin Section */
         #admin-panel { display: none; }
-        .input-group { text-align: left; margin-bottom: 15px; }
-        .input-group label { display: block; margin-bottom: 5px; font-size: 12px; color: var(--text-dim); }
-        .admin-input {
+        .input-field {
             width: 100%;
-            padding: 12px;
-            background: #0f172a;
+            background: rgba(0,0,0,0.2);
             border: 1px solid #334155;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 10px;
             color: white;
+            margin-bottom: 15px;
             box-sizing: border-box;
+            outline: none;
         }
-        .btn-premium { background-color: var(--premium); margin-top: 10px; }
+        .input-field:focus { border-color: var(--accent); }
 
-        footer { margin-top: 25px; font-size: 11px; color: var(--text-dim); text-align: center; }
+        .db-container {
+            margin-top: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th { color: var(--text-dim); padding: 10px; border-bottom: 1px solid #334155; text-align: left; }
+        td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        footer { margin-top: 25px; text-align: center; font-size: 12px; color: var(--text-dim); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="get-key-page" class="card">
+    <div id="client-page" class="card">
         <h1>ForkyHUB</h1>
-        <p class="subtitle">Sistem Trial Key Otomatis</p>
-        
-        <div class="status-box">
-            <span>DETEKSI HWID:</span>
-            <b id="hwid-display">Mengecek Data...</b>
+        <p class="subtitle">Secure Key Management System</p>
+
+        <div class="status-pill">
+            <label>Detected Device ID</label>
+            <b id="hwid-val">Fetching HWID...</b>
         </div>
 
-        <button id="main-btn" class="btn" onclick="requestKey()">DAPATKAN FREE KEY</button>
+        <button id="get-btn" class="btn" onclick="fetchKey()">GENERATE TRIAL KEY</button>
 
-        <div id="result-box" class="result-area">
-            <small>Key Trial 6 Jam:</small>
-            <code id="key-display">ForkyHUB-FREE-XXXX</code>
-            <button class="btn" onclick="copyKey('key-display')" style="padding: 8px; font-size: 12px; background: #334155;">Salin Key</button>
+        <div id="key-res" class="result-box">
+            <small style="color: var(--text-dim)">Access Key (6 Hours):</small>
+            <code id="out-key">FREE-XXXX-XXXX</code>
+            <button class="btn" onclick="copy('out-key')" style="padding: 10px; font-size: 12px; background: #334155;">Copy to Clipboard</button>
         </div>
     </div>
 
     <div id="admin-panel" class="card">
-        <h1 style="color: var(--premium)">Admin Panel</h1>
-        <p class="subtitle">Generate Premium Key (Murni / Tanpa HWID)</p>
+        <h1 style="color: var(--premium)">Admin Control</h1>
+        <p class="subtitle">Manage Premium Keys & Database</p>
+
+        <input type="password" id="adm-pass" class="input-field" placeholder="Admin Password">
+        <input type="number" id="adm-dur" class="input-field" placeholder="Duration (Hours) - Blank for Permanent">
         
-        <div class="input-group">
-            <label>Admin Password</label>
-            <input type="password" id="admin-pass" class="admin-input" placeholder="Password rahasia...">
+        <button class="btn" style="background: var(--premium);" onclick="genPremium()">GENERATE PREMIUM</button>
+
+        <div id="adm-res" class="result-box" style="border-color: var(--premium); background: rgba(245, 158, 11, 0.1);">
+            <code id="out-adm" style="color: var(--premium)"></code>
+            <button class="btn" onclick="copy('out-adm')" style="padding: 10px; font-size: 12px; background: #334155;">Copy Key</button>
         </div>
 
-        <div class="input-group">
-            <label>Durasi (Jam)</label>
-            <input type="number" id="admin-duration" class="admin-input" placeholder="Contoh: 720 (Kosongkan jika Permanen)">
+        <div class="db-container">
+            <button class="btn" style="background: transparent; border: 1px solid #334155; margin-bottom: 10px;" onclick="listKeys()">REFRESH DATABASE</button>
+            <table>
+                <thead>
+                    <tr><th>Key</th><th>Status/HWID</th></tr>
+                </thead>
+                <tbody id="db-body">
+                    <tr><td colspan="2" style="text-align:center; padding:20px; color:var(--text-dim)">Enter password & refresh to view</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <button class="btn btn-premium" onclick="generatePremium()">GENERATE PREMIUM KEY</button>
-
-        <div id="admin-result" class="result-area" style="border-color: var(--premium); background: rgba(245, 158, 11, 0.1);">
-            <small style="color: var(--premium)">Key Berhasil Dibuat:</small>
-            <code id="premium-key-display" style="color: var(--premium)"></code>
-            <button class="btn" onclick="copyKey('premium-key-display')" style="padding: 8px; font-size: 12px; background: #334155;">Salin Key</button>
-        </div>
-        
-        <p style="margin-top: 20px;"><a href="#" onclick="goHome()" style="color: var(--text-dim); font-size: 12px; text-decoration: none;">← Kembali ke Beranda</a></p>
+        <p style="margin-top: 20px;"><a href="#" onclick="location.hash=''; location.reload()" style="color: var(--text-dim); text-decoration: none; font-size: 12px;">← Back to Home</a></p>
     </div>
 
     <footer>
-        Created by @agil69 &bull; ForkyHUB Script Solution
+        &copy; 2026 Create By <b>@agil69</b> &bull; ForkyHUB Solution
     </footer>
 </div>
 
 <script>
-    // GANTI DENGAN URL CLOUDFLARE WORKER KAMU
-    const WORKER_URL = "https://panel.forkyhub.workers.dev";
+    // --- GANTI DENGAN URL WORKER KAMU ---
+    const API = "https://panel.forkyhub.workers.dev"; 
 
-    // Deteksi HWID dari URL
-    const params = new URLSearchParams(window.location.search);
-    const userHwid = params.get('hwid');
-
-    if (userHwid) {
-        document.getElementById('hwid-display').innerText = userHwid;
-    } else {
-        document.getElementById('hwid-display').innerText = "KOSONG / TIDAK TERDETEKSI";
-        document.getElementById('hwid-display').style.color = "var(--danger)";
-        document.getElementById('main-btn').disabled = true;
-        document.getElementById('main-btn').innerText = "Buka Link dari Roblox!";
-    }
-
-    // Ambil Key Trial (Free)
-    async function requestKey() {
-        const btn = document.getElementById('main-btn');
-        btn.innerText = "Sabar...";
-        btn.disabled = true;
-
-        try {
-            const res = await fetch(`${WORKER_URL}/getkey?hwid=${userHwid}`);
-            const text = await res.text();
-            document.getElementById('key-display').innerText = text;
-            document.getElementById('result-box').style.display = 'block';
-            btn.innerText = "Berhasil!";
-        } catch (e) {
-            alert("Error: Gagal koneksi ke server!");
-            btn.innerText = "Coba Lagi";
-            btn.disabled = false;
-        }
-    }
-
-    // Generate Key Premium (Tanpa HWID)
-    async function generatePremium() {
-        const pass = document.getElementById('admin-pass').value;
-        const hours = document.getElementById('admin-duration').value;
-
-        if(!pass) return alert("Isi password admin dulu!");
-
-        try {
-            const res = await fetch(`${WORKER_URL}/admin/generate`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    adminPassword: pass,
-                    durationType: hours ? "custom" : "permanent",
-                    customHours: parseInt(hours)
-                })
-            });
-
-            if(res.status === 401) return alert("Password Salah!");
-            
-            const data = await res.json();
-            document.getElementById('premium-key-display').innerText = data.key;
-            document.getElementById('admin-result').style.display = 'block';
-        } catch (e) {
-            alert("Sistem Error!");
-        }
-    }
-
-    function copyKey(id) {
-        const key = document.getElementById(id).innerText;
-        navigator.clipboard.writeText(key);
-        alert("Key berhasil di-copy!");
-    }
-
-    // Routing ke Admin Panel (ketik #admin di URL)
+    // Auto-Routing
     if(window.location.hash === "#admin") {
-        document.getElementById('get-key-page').style.display = 'none';
+        document.getElementById('client-page').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
     }
 
-    function goHome() {
-        window.location.hash = "";
-        location.reload();
+    // Grab HWID
+    const hwid = new URLSearchParams(window.location.search).get('hwid');
+    if(hwid) {
+        document.getElementById('hwid-val').innerText = hwid;
+    } else {
+        document.getElementById('hwid-val').innerText = "ERROR: HWID NOT FOUND";
+        document.getElementById('hwid-val').style.color = "var(--danger)";
+        document.getElementById('get-btn').disabled = true;
+    }
+
+    // Client: Get Trial
+    async function fetchKey() {
+        const b = document.getElementById('get-btn');
+        b.innerText = "Processing..."; b.disabled = true;
+        try {
+            const r = await fetch(`${API}/getkey?hwid=${hwid}`);
+            const t = await r.text();
+            document.getElementById('out-key').innerText = t;
+            document.getElementById('key-res').style.display = 'block';
+            b.innerText = "Key Generated!";
+        } catch { 
+            alert("API Error!"); b.innerText = "Try Again"; b.disabled = false;
+        }
+    }
+
+    // Admin: Gen Premium
+    async function genPremium() {
+        const pass = document.getElementById('adm-pass').value;
+        const dur = document.getElementById('adm-dur').value;
+        try {
+            const r = await fetch(`${API}/admin/generate`, {
+                method: 'POST',
+                body: JSON.stringify({adminPassword: pass, durationType: dur ? 'custom' : 'permanent', customHours: dur})
+            });
+            if(r.status === 401) return alert("Wrong Password!");
+            const d = await r.json();
+            document.getElementById('out-adm').innerText = d.key;
+            document.getElementById('adm-res').style.display = 'block';
+        } catch { alert("Error!"); }
+    }
+
+    // Admin: List Data
+    async function listKeys() {
+        const pass = document.getElementById('adm-pass').value;
+        const body = document.getElementById('db-body');
+        body.innerHTML = '<tr><td colspan="2" style="text-align:center">Loading...</td></tr>';
+        try {
+            const r = await fetch(`${API}/admin/list`, {
+                method: 'POST',
+                body: JSON.stringify({adminPassword: pass})
+            });
+            const d = await r.json();
+            body.innerHTML = d.map(i => `
+                <tr>
+                    <td style="color:var(--success)">${i.keyName}</td>
+                    <td style="color:${i.hwid==='EMPTY'?'#64748b':'#3b82f6'}">${i.hwid}</td>
+                </tr>
+            `).join('');
+        } catch { alert("Failed to fetch list. Check password!"); }
+    }
+
+    function copy(id) {
+        navigator.clipboard.writeText(document.getElementById(id).innerText);
+        alert("Copied!");
     }
 </script>
 
