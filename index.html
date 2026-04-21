@@ -30,10 +30,7 @@
             padding: 20px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 450px;
-        }
+        .container { width: 100%; max-width: 450px; }
 
         .card {
             background-color: var(--card-bg);
@@ -42,13 +39,12 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease;
+            animation: fadeIn 0.4s ease;
         }
 
-        h1 { font-size: 28px; margin-bottom: 5px; font-weight: 800; }
+        h1 { font-size: 28px; margin-bottom: 5px; font-weight: 800; letter-spacing: -1px; }
         .subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 25px; }
 
-        /* Status Box */
         .status-box {
             background: rgba(0, 0, 0, 0.2);
             padding: 15px;
@@ -58,10 +54,9 @@
             border-left: 5px solid var(--accent);
             text-align: left;
         }
-        .status-box span { display: block; color: var(--text-dim); margin-bottom: 5px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
-        .status-box b { color: var(--text-main); font-family: monospace; word-break: break-all; font-size: 14px; }
+        .status-box span { display: block; color: var(--text-dim); margin-bottom: 5px; font-size: 11px; text-transform: uppercase; }
+        .status-box b { color: var(--text-main); font-family: monospace; word-break: break-all; }
 
-        /* Buttons */
         .btn {
             background-color: var(--accent);
             color: white;
@@ -73,12 +68,10 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 16px;
-            margin-top: 10px;
         }
         .btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); }
         .btn:disabled { background-color: #475569; cursor: not-allowed; transform: none; }
 
-        /* Result Section */
         .result-area {
             margin-top: 25px;
             padding: 20px;
@@ -86,7 +79,6 @@
             border: 2px dashed var(--success);
             border-radius: 12px;
             display: none;
-            animation: fadeIn 0.5s ease;
         }
         .result-area code {
             display: block;
@@ -94,7 +86,7 @@
             padding: 12px;
             margin: 15px 0;
             color: var(--success);
-            font-family: 'Courier New', Courier, monospace;
+            font-family: monospace;
             font-size: 18px;
             border-radius: 8px;
         }
@@ -110,12 +102,9 @@
             border: 1px solid #334155;
             border-radius: 8px;
             color: white;
-            outline: none;
             box-sizing: border-box;
         }
-        .admin-input:focus { border-color: var(--premium); }
-        .btn-premium { background-color: var(--premium); }
-        .btn-premium:hover { background-color: #d97706; }
+        .btn-premium { background-color: var(--premium); margin-top: 10px; }
 
         footer { margin-top: 25px; font-size: 11px; color: var(--text-dim); text-align: center; }
 
@@ -130,44 +119,45 @@
 <div class="container">
     <div id="get-key-page" class="card">
         <h1>ForkyHUB</h1>
-        <p class="subtitle">Sistem Key Otomatis untuk Roblox</p>
+        <p class="subtitle">Sistem Trial Key Otomatis</p>
         
         <div class="status-box">
-            <span>HWID ANDA (OTOMATIS):</span>
-            <b id="hwid-display">Loading HWID...</b>
+            <span>DETEKSI HWID:</span>
+            <b id="hwid-display">Mengecek Data...</b>
         </div>
 
-        <button id="main-btn" class="btn" onclick="requestKey()">AMBIL TRIAL KEY (6 JAM)</button>
+        <button id="main-btn" class="btn" onclick="requestKey()">DAPATKAN FREE KEY</button>
 
         <div id="result-box" class="result-area">
-            <small>Key Berhasil Dibuat!</small>
+            <small>Key Trial 6 Jam:</small>
             <code id="key-display">ForkyHUB-FREE-XXXX</code>
-            <button class="btn" onclick="copyToClipboard()" style="padding: 8px; font-size: 12px; background: #334155;">Salin Key</button>
+            <button class="btn" onclick="copyKey('key-display')" style="padding: 8px; font-size: 12px; background: #334155;">Salin Key</button>
         </div>
     </div>
 
     <div id="admin-panel" class="card">
         <h1 style="color: var(--premium)">Admin Panel</h1>
-        <p class="subtitle">Buat Key Premium / Permanent</p>
+        <p class="subtitle">Generate Premium Key (Murni / Tanpa HWID)</p>
         
         <div class="input-group">
             <label>Admin Password</label>
-            <input type="password" id="admin-pass" class="admin-input" placeholder="Masukkan password...">
+            <input type="password" id="admin-pass" class="admin-input" placeholder="Password rahasia...">
         </div>
 
         <div class="input-group">
-            <label>Durasi (Dalam Jam)</label>
-            <input type="number" id="admin-duration" class="admin-input" placeholder="Contoh: 24 (Kosongkan jika Permanen)">
+            <label>Durasi (Jam)</label>
+            <input type="number" id="admin-duration" class="admin-input" placeholder="Contoh: 720 (Kosongkan jika Permanen)">
         </div>
 
-        <button class="btn btn-premium" onclick="generatePremium()">BUAT KEY PREMIUM</button>
+        <button class="btn btn-premium" onclick="generatePremium()">GENERATE PREMIUM KEY</button>
 
         <div id="admin-result" class="result-area" style="border-color: var(--premium); background: rgba(245, 158, 11, 0.1);">
-            <small style="color: var(--premium)">Premium Key:</small>
+            <small style="color: var(--premium)">Key Berhasil Dibuat:</small>
             <code id="premium-key-display" style="color: var(--premium)"></code>
+            <button class="btn" onclick="copyKey('premium-key-display')" style="padding: 8px; font-size: 12px; background: #334155;">Salin Key</button>
         </div>
         
-        <p style="margin-top: 20px;"><a href="#" onclick="goHome()" style="color: var(--text-dim); font-size: 12px; text-decoration: none;">← Kembali</a></p>
+        <p style="margin-top: 20px;"><a href="#" onclick="goHome()" style="color: var(--text-dim); font-size: 12px; text-decoration: none;">← Kembali ke Beranda</a></p>
     </div>
 
     <footer>
@@ -176,48 +166,47 @@
 </div>
 
 <script>
-    // --- GANTI URL INI DENGAN LINK CLOUDFLARE WORKER KAMU ---
+    // GANTI DENGAN URL CLOUDFLARE WORKER KAMU
     const WORKER_URL = "https://panel.forkyhub.workers.dev";
 
-    // 1. Ambil HWID dari URL (/?hwid=...)
+    // Deteksi HWID dari URL
     const params = new URLSearchParams(window.location.search);
     const userHwid = params.get('hwid');
 
     if (userHwid) {
         document.getElementById('hwid-display').innerText = userHwid;
     } else {
-        document.getElementById('hwid-display').innerText = "HWID TIDAK DITEMUKAN!";
+        document.getElementById('hwid-display').innerText = "KOSONG / TIDAK TERDETEKSI";
         document.getElementById('hwid-display').style.color = "var(--danger)";
         document.getElementById('main-btn').disabled = true;
-        document.getElementById('main-btn').innerText = "Buka Lewat Script Roblox";
+        document.getElementById('main-btn').innerText = "Buka Link dari Roblox!";
     }
 
-    // 2. Fungsi Ambil Key Trial
+    // Ambil Key Trial (Free)
     async function requestKey() {
         const btn = document.getElementById('main-btn');
-        btn.innerText = "Processing...";
+        btn.innerText = "Sabar...";
         btn.disabled = true;
 
         try {
             const res = await fetch(`${WORKER_URL}/getkey?hwid=${userHwid}`);
             const text = await res.text();
-            
             document.getElementById('key-display').innerText = text;
             document.getElementById('result-box').style.display = 'block';
-            btn.innerText = "Key Diterima!";
+            btn.innerText = "Berhasil!";
         } catch (e) {
-            alert("Error: Gagal terhubung ke Backend!");
+            alert("Error: Gagal koneksi ke server!");
             btn.innerText = "Coba Lagi";
             btn.disabled = false;
         }
     }
 
-    // 3. Fungsi Buat Premium (Admin)
+    // Generate Key Premium (Tanpa HWID)
     async function generatePremium() {
         const pass = document.getElementById('admin-pass').value;
         const hours = document.getElementById('admin-duration').value;
 
-        if(!pass) return alert("Password wajib diisi!");
+        if(!pass) return alert("Isi password admin dulu!");
 
         try {
             const res = await fetch(`${WORKER_URL}/admin/generate`, {
@@ -230,24 +219,23 @@
                 })
             });
 
-            if(res.status === 401) return alert("Password Admin Salah!");
+            if(res.status === 401) return alert("Password Salah!");
             
             const data = await res.json();
             document.getElementById('premium-key-display').innerText = data.key;
             document.getElementById('admin-result').style.display = 'block';
         } catch (e) {
-            alert("Terjadi kesalahan sistem!");
+            alert("Sistem Error!");
         }
     }
 
-    // 4. Salin Key
-    function copyToClipboard() {
-        const key = document.getElementById('key-display').innerText;
+    function copyKey(id) {
+        const key = document.getElementById(id).innerText;
         navigator.clipboard.writeText(key);
-        alert("Key berhasil disalin ke clipboard!");
+        alert("Key berhasil di-copy!");
     }
 
-    // 5. Routing Admin (Simple)
+    // Routing ke Admin Panel (ketik #admin di URL)
     if(window.location.hash === "#admin") {
         document.getElementById('get-key-page').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
