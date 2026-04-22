@@ -7,843 +7,866 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:    #060810;
-  --bg2:   #0b0d1a;
-  --bg3:   #10132a;
-  --bg4:   #181b33;
-  --line:  rgba(99,102,241,0.18);
-  --line2: rgba(99,102,241,0.35);
-  --acc:   #6366f1;
-  --acc2:  #818cf8;
-  --acc3:  #a5b4fc;
-  --glow:  rgba(99,102,241,0.4);
-  --ok:    #34d399;
-  --warn:  #fbbf24;
-  --err:   #f87171;
-  --txt:   #e2e8f0;
-  --txt2:  #94a3b8;
-  --txt3:  #475569;
-  --mono:  'DM Mono', monospace;
-  --sans:  'Syne', sans-serif;
+:root{
+  --bg:#060810;--bg2:#0b0d1a;--bg3:#10132a;--bg4:#181b33;
+  --line:rgba(99,102,241,.18);--line2:rgba(99,102,241,.35);
+  --acc:#6366f1;--acc2:#818cf8;--acc3:#a5b4fc;
+  --ok:#34d399;--warn:#fbbf24;--err:#f87171;--info:#38bdf8;
+  --txt:#e2e8f0;--txt2:#94a3b8;--txt3:#475569;
+  --mono:'DM Mono',monospace;--sans:'Syne',sans-serif;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans);
-  background: var(--bg);
-  color: var(--txt);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;opacity:.4}
+.orb.a{width:500px;height:500px;top:-150px;left:-100px;background:rgba(99,102,241,.25)}
+.orb.b{width:400px;height:400px;bottom:-100px;right:-80px;background:rgba(129,140,248,.2)}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 20px 60px}
 
-/* ── GRID BG ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-  z-index: 0;
-}
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 24px;border-bottom:1px solid var(--line);margin-bottom:32px}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--acc),var(--acc2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-txt{font-size:20px;font-weight:800;letter-spacing:-.5px}
+.logo-txt span{color:var(--acc3)}
+.ver{font-family:var(--mono);font-size:11px;background:var(--bg3);border:1px solid var(--line2);color:var(--acc3);padding:3px 10px;border-radius:100px}
 
-/* ── GLOW ── */
-.glow-orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 0;
-  opacity: .5;
-}
-.glow-orb.a { width:500px;height:500px;top:-150px;left:-100px;background:rgba(99,102,241,.25); }
-.glow-orb.b { width:400px;height:400px;bottom:-100px;right:-80px;background:rgba(129,140,248,.2); }
+/* ANNOUNCEMENT BANNER */
+#annBanner{display:none;padding:12px 18px;border-radius:12px;margin-bottom:20px;font-size:13px;line-height:1.6;border:1px solid;animation:fadeUp .3s ease}
+#annBanner.info   {background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.3);color:var(--info)}
+#annBanner.warn   {background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.3);color:var(--warn)}
+#annBanner.danger {background:rgba(248,113,113,.08);border-color:rgba(248,113,113,.3);color:var(--err)}
 
-/* ── WRAPPER ── */
-.wrap {
-  position: relative; z-index: 1;
-  max-width: 860px; margin: 0 auto;
-  padding: 0 20px 60px;
-}
+/* STATUS SCRIPTS */
+.script-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:24px}
+.script-card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;transition:border-color .2s}
+.script-card:hover{border-color:var(--line2)}
+.sc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sc-dot.working  {background:var(--ok);  box-shadow:0 0 6px var(--ok)}
+.sc-dot.high_risk{background:var(--warn);box-shadow:0 0 6px var(--warn)}
+.sc-dot.ban_wave {background:var(--err); box-shadow:0 0 6px var(--err)}
+.sc-dot.offline  {background:var(--txt3)}
+.sc-name{font-size:13px;font-weight:600;flex:1}
+.sc-status{font-size:10px;font-family:var(--mono);opacity:.7}
 
-/* ── HEADER ── */
-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 28px 0 24px;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 40px;
-}
-.logo-mark {
-  display: flex; align-items: center; gap: 12px;
-}
-.logo-icon {
-  width: 38px; height: 38px;
-  background: linear-gradient(135deg, var(--acc), var(--acc2));
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-}
-.logo-text { font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
-.logo-text span { color: var(--acc3); }
-.ver-badge {
-  font-family: var(--mono); font-size: 11px; font-weight: 500;
-  background: var(--bg3); border: 1px solid var(--line2);
-  color: var(--acc3); padding: 3px 10px; border-radius: 100px;
-}
+/* CARD */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:18px;transition:border-color .2s;animation:fadeUp .35s ease both}
+.card:hover{border-color:var(--line2)}
+.sec{font-size:11px;font-family:var(--mono);color:var(--txt3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
 
-/* ── SECTION TITLE ── */
-.sec-title {
-  font-size: 11px; font-family: var(--mono); font-weight: 500;
-  color: var(--txt3); text-transform: uppercase; letter-spacing: 1.5px;
-  margin-bottom: 14px; padding-left: 2px;
-}
+/* STATUS BAR */
+.sbar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg3);border-radius:10px;font-family:var(--mono);font-size:12px;margin-bottom:20px;border:1px solid var(--line)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--txt3);flex-shrink:0}
+.dot.ok  {background:var(--ok);box-shadow:0 0 6px var(--ok)}
+.dot.err {background:var(--err);box-shadow:0 0 6px var(--err)}
+.dot.warn{background:var(--warn);box-shadow:0 0 6px var(--warn)}
 
-/* ── CARD ── */
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 28px 28px 24px;
-  margin-bottom: 20px;
-  transition: border-color .2s;
-}
-.card:hover { border-color: var(--line2); }
+/* INPUT */
+.ibox{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:0 14px;height:44px;font-family:var(--mono);font-size:13px;color:var(--txt);outline:none;transition:border-color .2s;width:100%}
+.ibox::placeholder{color:var(--txt3)}
+.ibox:focus{border-color:var(--acc)}
+.irow{display:flex;gap:10px;margin-bottom:12px}
+.irow .ibox{flex:1}
+select.ibox{cursor:pointer}
 
-/* ── STATUS BAR ── */
-.status-bar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 16px;
-  background: var(--bg3); border-radius: 10px;
-  font-family: var(--mono); font-size: 12px;
-  margin-bottom: 24px;
-  border: 1px solid var(--line);
-}
-.dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--txt3); flex-shrink: 0;
-}
-.dot.ok    { background: var(--ok);   box-shadow: 0 0 6px var(--ok); }
-.dot.warn  { background: var(--warn); box-shadow: 0 0 6px var(--warn); }
-.dot.err   { background: var(--err);  box-shadow: 0 0 6px var(--err); }
+/* BUTTONS */
+.btn{height:44px;padding:0 20px;border-radius:10px;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;border:none;outline:none;display:inline-flex;align-items:center;gap:8px;transition:transform .1s,opacity .15s,background .15s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-p{background:var(--acc);color:#fff}.btn-p:hover{background:var(--acc2)}
+.btn-o{background:transparent;color:var(--acc3);border:1px solid var(--line2)}.btn-o:hover{background:var(--bg3)}
+.btn-d{background:rgba(248,113,113,.12);color:var(--err);border:1px solid rgba(248,113,113,.3)}.btn-d:hover{background:rgba(248,113,113,.22)}
+.btn-ok{background:rgba(52,211,153,.12);color:var(--ok);border:1px solid rgba(52,211,153,.3)}.btn-ok:hover{background:rgba(52,211,153,.22)}
+.btn-w{background:rgba(251,191,36,.12);color:var(--warn);border:1px solid rgba(251,191,36,.3)}.btn-w:hover{background:rgba(251,191,36,.22)}
+.btn-sm{height:34px;padding:0 14px;font-size:12px;border-radius:8px}
+.btn-full{width:100%;justify-content:center}
+.btn:disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
 
-/* ── INPUT ── */
-.input-row { display: flex; gap: 10px; margin-bottom: 16px; }
-.ibox {
-  flex: 1; background: var(--bg3); border: 1px solid var(--line);
-  border-radius: 10px; padding: 0 14px;
-  height: 46px; font-family: var(--mono); font-size: 13px;
-  color: var(--txt); outline: none; transition: border-color .2s;
-}
-.ibox::placeholder { color: var(--txt3); }
-.ibox:focus { border-color: var(--acc); }
+/* KEY BOX */
+.kbox{background:var(--bg3);border:1px solid var(--line2);border-radius:12px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.kval{font-family:var(--mono);font-size:15px;font-weight:500;color:var(--acc3);word-break:break-all}
+.ksub{font-family:var(--mono);font-size:11px;color:var(--txt3);margin-top:3px}
 
-/* ── BUTTONS ── */
-.btn {
-  height: 46px; padding: 0 20px; border-radius: 10px;
-  font-family: var(--sans); font-size: 14px; font-weight: 700;
-  cursor: pointer; border: none; outline: none;
-  display: inline-flex; align-items: center; gap: 8px;
-  transition: transform .1s, opacity .1s, background .15s;
-  white-space: nowrap;
-}
-.btn:active { transform: scale(.97); }
-.btn-primary { background: var(--acc); color: #fff; }
-.btn-primary:hover { background: var(--acc2); }
-.btn-outline {
-  background: transparent; color: var(--acc3);
-  border: 1px solid var(--line2);
-}
-.btn-outline:hover { background: var(--bg3); }
-.btn-danger  { background: rgba(248,113,113,.15); color: var(--err); border: 1px solid rgba(248,113,113,.3); }
-.btn-danger:hover { background: rgba(248,113,113,.25); }
-.btn-ok      { background: rgba(52,211,153,.12); color: var(--ok); border: 1px solid rgba(52,211,153,.3); }
-.btn-ok:hover { background: rgba(52,211,153,.22); }
-.btn-sm { height: 34px; padding: 0 14px; font-size: 12px; border-radius: 8px; }
-.btn:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
-.btn-full { width: 100%; justify-content: center; }
+/* COUNTDOWN */
+.cd{display:flex;gap:10px;margin-top:16px}
+.cdu{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:12px 6px;text-align:center}
+.cdn{font-size:26px;font-weight:800;color:var(--acc2);font-family:var(--mono);line-height:1}
+.cdl{font-size:10px;color:var(--txt3);font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
 
-/* ── KEY DISPLAY ── */
-.key-box {
-  background: var(--bg3); border: 1px solid var(--line2);
-  border-radius: 12px; padding: 18px 20px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; margin-bottom: 16px;
-}
-.key-value {
-  font-family: var(--mono); font-size: 16px; font-weight: 500;
-  color: var(--acc3); letter-spacing: .5px; word-break: break-all;
-}
-.key-sub {
-  font-family: var(--mono); font-size: 11px; color: var(--txt3);
-  margin-top: 4px;
-}
+/* STATS GRID */
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:18px}
+.sc{background:var(--bg3);border:1px solid var(--line);border-radius:12px;padding:14px}
+.sn{font-size:28px;font-weight:800;font-family:var(--mono);color:var(--acc2);line-height:1}
+.sl{font-size:10px;color:var(--txt3);font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
 
-/* ── COUNTDOWN ── */
-.countdown {
-  display: flex; gap: 10px; margin-top: 18px;
-}
-.cd-unit {
-  flex: 1; background: var(--bg3); border: 1px solid var(--line);
-  border-radius: 10px; padding: 12px 6px; text-align: center;
-}
-.cd-num {
-  font-size: 26px; font-weight: 800; color: var(--acc2);
-  font-family: var(--mono); line-height: 1;
-}
-.cd-lbl {
-  font-size: 10px; color: var(--txt3); font-family: var(--mono);
-  text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;
-}
+/* TABLE */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:10px 12px;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;background:var(--bg3);border-bottom:1px solid var(--line)}
+td{padding:10px 12px;border-bottom:1px solid var(--line);font-family:var(--mono);color:var(--txt2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(99,102,241,.04)}
+.pill{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.pill.trial  {background:rgba(251,191,36,.15);color:var(--warn)}
+.pill.premium{background:rgba(99,102,241,.2);color:var(--acc3)}
+.pill.locked {background:rgba(52,211,153,.12);color:var(--ok)}
+.pill.free   {background:rgba(148,163,184,.1);color:var(--txt2)}
+.pill.exp    {background:rgba(248,113,113,.12);color:var(--err)}
 
-/* ── INFO ROW ── */
-.info-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 0; border-bottom: 1px solid var(--line);
-  font-size: 13px;
-}
-.info-row:last-child { border-bottom: none; padding-bottom: 0; }
-.info-label { color: var(--txt3); font-family: var(--mono); }
-.info-val   { color: var(--txt); font-weight: 600; }
-.info-val.green { color: var(--ok); }
-.info-val.red   { color: var(--err); }
-.info-val.yellow { color: var(--warn); }
-.info-val.blue { color: var(--acc3); }
+/* TABS */
+.tabs{display:flex;gap:4px;background:var(--bg3);border-radius:12px;padding:4px;margin-bottom:22px;overflow-x:auto}
+.tab{flex-shrink:0;padding:9px 14px;text-align:center;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;color:var(--txt3);transition:all .15s;white-space:nowrap}
+.tab.active{background:var(--bg2);color:var(--acc3);box-shadow:0 1px 4px rgba(0,0,0,.4)}
 
-/* ── TABLE ── */
-.tbl-wrap { overflow-x: auto; }
-table {
-  width: 100%; border-collapse: collapse; font-size: 12.5px;
-}
-th {
-  text-align: left; padding: 10px 12px;
-  font-family: var(--mono); font-size: 11px; font-weight: 500;
-  color: var(--txt3); text-transform: uppercase; letter-spacing: 1px;
-  background: var(--bg3); border-bottom: 1px solid var(--line);
-}
-td {
-  padding: 11px 12px; border-bottom: 1px solid var(--line);
-  font-family: var(--mono); color: var(--txt2);
-  vertical-align: middle;
-}
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(99,102,241,.04); }
-.pill {
-  display: inline-block; padding: 2px 9px; border-radius: 100px;
-  font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px;
-}
-.pill.trial   { background: rgba(251,191,36,.15);  color: var(--warn); }
-.pill.premium { background: rgba(99,102,241,.2);   color: var(--acc3); }
-.pill.locked  { background: rgba(52,211,153,.12);  color: var(--ok);   }
-.pill.free    { background: rgba(148,163,184,.1);  color: var(--txt2); }
-.pill.banned  { background: rgba(248,113,113,.15); color: var(--err);  }
+/* KILL CARD */
+.kcard{border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.kcard.off{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2)}
+.kcard.on {background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25)}
 
-/* ── STATS GRID ── */
-.stats-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
-  gap: 14px; margin-bottom: 20px;
-}
-.stat-card {
-  background: var(--bg3); border: 1px solid var(--line);
-  border-radius: 12px; padding: 16px 14px;
-}
-.stat-num {
-  font-size: 30px; font-weight: 800; font-family: var(--mono); line-height: 1;
-  color: var(--acc2);
-}
-.stat-lbl {
-  font-size: 11px; color: var(--txt3); font-family: var(--mono);
-  text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;
-}
+/* SEARCH BAR */
+.search-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.search-row .ibox{max-width:260px}
 
-/* ── KILL SWITCH ── */
-.kill-card {
-  background: rgba(248,113,113,.06);
-  border: 1px solid rgba(248,113,113,.25);
-  border-radius: 14px; padding: 20px 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-.kill-card.inactive {
-  background: rgba(52,211,153,.05);
-  border-color: rgba(52,211,153,.2);
-}
-.kill-title { font-size: 15px; font-weight: 700; }
-.kill-title.red  { color: var(--err); }
-.kill-title.green{ color: var(--ok);  }
-.kill-sub  { font-size: 12px; color: var(--txt3); font-family: var(--mono); margin-top: 3px; }
+/* FILTER PILLS */
+.filter-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.fpill{padding:5px 12px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--line);color:var(--txt3);transition:all .15s;font-family:var(--mono)}
+.fpill.active{background:var(--acc);border-color:var(--acc);color:#fff}
 
-/* ── TOAST ── */
-#toast {
-  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-  background: var(--bg2); border: 1px solid var(--line2);
-  color: var(--txt); font-family: var(--mono); font-size: 13px;
-  padding: 12px 22px; border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,.5);
-  opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 999;
-  white-space: nowrap;
-}
-#toast.show { opacity: 1; }
+/* LOGIN OVERLAY */
+#loginOverlay{position:fixed;inset:0;background:rgba(6,8,16,.96);display:flex;align-items:center;justify-content:center;z-index:100}
+.lbox{background:var(--bg2);border:1px solid var(--line2);border-radius:20px;padding:40px;width:360px;max-width:95vw;text-align:center}
+.lbox h2{font-size:22px;font-weight:800;margin-bottom:6px}
+.lbox p{font-size:12px;color:var(--txt3);margin-bottom:22px;font-family:var(--mono)}
 
-/* ── ADMIN LOGIN OVERLAY ── */
-#loginOverlay {
-  position: fixed; inset: 0;
-  background: rgba(6,8,16,.95);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 100;
-}
-.login-box {
-  background: var(--bg2); border: 1px solid var(--line2);
-  border-radius: 20px; padding: 40px; width: 360px; max-width: 95vw;
-  text-align: center;
-}
-.login-box h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
-.login-box p { font-size: 13px; color: var(--txt3); margin-bottom: 24px; font-family: var(--mono); }
-.login-box .ibox { width: 100%; margin-bottom: 12px; }
+/* SEP */
+.sep{height:1px;background:var(--line);margin:18px 0}
 
-/* ── NAV TABS ── */
-.tabs {
-  display: flex; gap: 4px;
-  background: var(--bg3); border-radius: 12px; padding: 4px;
-  margin-bottom: 24px;
-}
-.tab {
-  flex: 1; padding: 9px; text-align: center;
-  border-radius: 9px; cursor: pointer; font-size: 13px; font-weight: 600;
-  color: var(--txt3); transition: all .15s;
-}
-.tab.active { background: var(--bg2); color: var(--acc3); box-shadow: 0 1px 4px rgba(0,0,0,.4); }
+/* TOAST */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--bg2);border:1px solid var(--line2);color:var(--txt);font-family:var(--mono);font-size:12px;padding:10px 20px;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.5);opacity:0;transition:opacity .25s;pointer-events:none;z-index:999;white-space:nowrap}
+#toast.show{opacity:1}
 
-/* ── SEPARATOR ── */
-.sep { height: 1px; background: var(--line); margin: 20px 0; }
+/* SCRIPT STATUS EDITOR */
+.script-editor-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:center}
 
-/* ── RESPONSIVE ── */
-@media(max-width:560px) {
-  .input-row { flex-direction: column; }
-  .key-box { flex-direction: column; align-items: flex-start; }
-  header { flex-direction: column; gap: 14px; align-items: flex-start; }
-  .kill-card { flex-direction: column; }
-}
+/* CHECK */
+.chk{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;font-family:var(--mono);color:var(--txt2)}
+.chk input{width:14px;height:14px;accent-color:var(--acc);cursor:pointer}
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(16px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-.card, .stats-grid, .tabs { animation: fadeUp .35s ease both; }
-.card:nth-child(2) { animation-delay:.05s; }
-.card:nth-child(3) { animation-delay:.1s; }
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:560px){.irow{flex-direction:column}.search-row .ibox{max-width:100%}.script-editor-row{grid-template-columns:1fr 1fr;gap:6px}}
 </style>
 </head>
 <body>
-<div class="glow-orb a"></div>
-<div class="glow-orb b"></div>
+<div class="orb a"></div><div class="orb b"></div>
 
-<!-- Admin Login Overlay -->
+<!-- Login Overlay (admin) -->
 <div id="loginOverlay" style="display:none">
-  <div class="login-box">
+  <div class="lbox">
     <div style="font-size:32px;margin-bottom:12px">🔐</div>
     <h2>Admin Panel</h2>
     <p>ForkyHUB Ultra — masukkan password</p>
-    <input class="ibox" id="loginInput" type="password" placeholder="Admin password...">
-    <button class="btn btn-primary btn-full" onclick="doLogin()">Masuk</button>
+    <input class="ibox" id="loginPw" type="password" placeholder="Password...">
+    <button class="btn btn-p btn-full" style="margin-top:10px" onclick="doLogin()">Masuk</button>
   </div>
 </div>
-
-<!-- Toast -->
 <div id="toast"></div>
 
 <div class="wrap">
   <header>
-    <div class="logo-mark">
+    <div class="logo-wrap">
       <div class="logo-icon">🔑</div>
-      <div class="logo-text">Forky<span>HUB</span></div>
+      <div class="logo-txt">Forky<span>HUB</span></div>
     </div>
-    <div class="ver-badge">Ultra v3.0</div>
+    <div class="ver">Ultra v4.0</div>
   </header>
 
-  <!-- ═══════════════════════════════ USER PAGE ═══════════════ -->
+  <!-- ANNOUNCEMENT BANNER -->
+  <div id="annBanner"></div>
+
+  <!-- ══════════════════ USER PAGE ══════════════════ -->
   <div id="userPage">
-    <div class="sec-title">Server Status</div>
-    <div class="status-bar">
-      <div class="dot" id="svrDot"></div>
-      <span id="svrTxt" style="color:var(--txt2)">Memeriksa server...</span>
-    </div>
+    <!-- Script Status -->
+    <div class="sec" id="scriptSecLabel" style="display:none">Status Script</div>
+    <div class="script-grid" id="scriptGrid"></div>
 
-    <div class="sec-title">Ambil Trial Key (6 Jam Gratis)</div>
+    <!-- Server Status -->
+    <div class="sec">Server Status</div>
+    <div class="sbar"><div class="dot" id="svrDot"></div><span id="svrTxt" style="color:var(--txt2)">Memeriksa server...</span></div>
+
+    <!-- Get Trial -->
+    <div class="sec">Ambil Trial Key</div>
     <div class="card">
-      <div style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.7">
-        Klik tombol di bawah untuk dapat trial key gratis 6 jam.
-      </div>
-      <div class="input-row">
-        <button class="btn btn-primary" onclick="getTrial()">🎁 Ambil Trial Key Gratis</button>
-      </div>
-      <div id="trialResult" style="display:none">
-        <div class="key-box">
-          <div>
-            <div class="key-value" id="trialKeyVal">—</div>
-            <div class="key-sub" id="trialExpSub">—</div>
-          </div>
-          <button class="btn btn-outline btn-sm" onclick="copyTxt('trialKeyVal')">📋 Copy</button>
+      <div style="font-size:13px;color:var(--txt2);margin-bottom:14px;line-height:1.7">Klik tombol di bawah untuk mendapatkan trial key gratis. Key akan otomatis terkunci ke perangkat kamu saat pertama kali dipakai.</div>
+      <button class="btn btn-p" onclick="doGetTrial()">🎁 Ambil Trial Key</button>
+      <div id="trialResult" style="display:none;margin-top:18px">
+        <div class="kbox">
+          <div><div class="kval" id="trialKey">—</div><div class="ksub" id="trialExp">—</div></div>
+          <button class="btn btn-o btn-sm" onclick="cp('trialKey')">📋 Copy</button>
         </div>
-        <div class="countdown" id="trialCountdown">
-          <div class="cd-unit"><div class="cd-num" id="cdH">00</div><div class="cd-lbl">Jam</div></div>
-          <div class="cd-unit"><div class="cd-num" id="cdM">00</div><div class="cd-lbl">Menit</div></div>
-          <div class="cd-unit"><div class="cd-num" id="cdS">00</div><div class="cd-lbl">Detik</div></div>
-        </div>
+        <div class="cd"><div class="cdu"><div class="cdn" id="cdH">00</div><div class="cdl">Jam</div></div><div class="cdu"><div class="cdn" id="cdM">00</div><div class="cdl">Menit</div></div><div class="cdu"><div class="cdn" id="cdS">00</div><div class="cdl">Detik</div></div></div>
       </div>
     </div>
 
-    <div class="sec-title">Cek & Validasi Key</div>
+    <!-- Check Key -->
+    <div class="sec">Cek Key</div>
     <div class="card">
-      <div class="input-row">
-        <input class="ibox" id="chkKeyInput" placeholder="Key kamu (FORKYHUB-TRIAL-XXXX / FORKYHUB-PREM-XXXX)">
-        <input class="ibox" id="chkHwidInput" placeholder="HWID kamu" style="max-width:240px">
-        <button class="btn btn-outline" onclick="checkKey()">🔍 Cek</button>
+      <div class="irow">
+        <input class="ibox" id="chkKey" placeholder="Key kamu (FORKYHUB-TRIAL-... / FORKYHUB-PREM-...)">
+        <input class="ibox" id="chkHwid" placeholder="HWID kamu" style="max-width:220px">
+        <button class="btn btn-o" onclick="doCheckKey()">🔍 Cek</button>
       </div>
-      <div id="checkResult" style="display:none">
+      <div id="chkResult" style="display:none">
         <div class="sep"></div>
-        <div class="info-row"><span class="info-label">Status</span><span class="info-val" id="chkStatus">—</span></div>
-        <div class="info-row"><span class="info-label">Tipe</span><span class="info-val" id="chkType">—</span></div>
-        <div class="info-row"><span class="info-label">HWID Lock</span><span class="info-val" id="chkHwid">—</span></div>
-        <div class="info-row"><span class="info-label">Sisa Waktu</span><span class="info-val" id="chkRemain">—</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
+          <div style="color:var(--txt3);font-family:var(--mono)">Status</div><div id="cr_status">—</div>
+          <div style="color:var(--txt3);font-family:var(--mono)">Tipe</div><div id="cr_type">—</div>
+          <div style="color:var(--txt3);font-family:var(--mono)">HWID</div><div id="cr_hwid">—</div>
+          <div style="color:var(--txt3);font-family:var(--mono)">Sisa Waktu</div><div id="cr_remain">—</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════ ADMIN PAGE ═══════════════ -->
+  <!-- ══════════════════ ADMIN PAGE ══════════════════ -->
   <div id="adminPage" style="display:none">
-    <div id="killBanner" class="kill-card inactive" style="display:none">
-      <div>
-        <div class="kill-title" id="killTitle">—</div>
-        <div class="kill-sub"  id="killSub">—</div>
-      </div>
-      <button class="btn btn-sm" id="killBtn" onclick="toggleKill()">—</button>
+    <!-- Kill Switch Banner -->
+    <div id="killBanner" class="kcard off" style="display:none">
+      <div><div id="killTitle" style="font-size:15px;font-weight:700">—</div><div id="killSub" style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-top:3px">—</div></div>
+      <button class="btn btn-sm" id="killBannerBtn" onclick="toggleKill()">—</button>
     </div>
 
-    <!-- STATS -->
-    <div class="sec-title">Overview</div>
-    <div class="stats-grid" id="statsGrid">
-      <div class="stat-card"><div class="stat-num" id="stTotal">—</div><div class="stat-lbl">Total Keys</div></div>
-      <div class="stat-card"><div class="stat-num" id="stPrem">—</div><div class="stat-lbl">Premium</div></div>
-      <div class="stat-card"><div class="stat-num" id="stTrial">—</div><div class="stat-lbl">Trial</div></div>
-      <div class="stat-card"><div class="stat-num" id="stLocked">—</div><div class="stat-lbl">HWID Locked</div></div>
-      <div class="stat-card"><div class="stat-num" id="stBan">—</div><div class="stat-lbl">Blacklist</div></div>
+    <!-- Stats -->
+    <div class="sg">
+      <div class="sc"><div class="sn" id="st_total">—</div><div class="sl">Total Keys</div></div>
+      <div class="sc"><div class="sn" id="st_prem">—</div><div class="sl">Premium</div></div>
+      <div class="sc"><div class="sn" id="st_trial">—</div><div class="sl">Trial</div></div>
+      <div class="sc"><div class="sn" id="st_locked">—</div><div class="sl">HWID Locked</div></div>
+      <div class="sc"><div class="sn" id="st_exp">—</div><div class="sl">Expired</div></div>
+      <div class="sc"><div class="sn" id="st_ban">—</div><div class="sl">Blacklist</div></div>
     </div>
 
-    <!-- TABS -->
+    <!-- Tabs -->
     <div class="tabs">
-      <div class="tab active" onclick="switchTab('tabGen',this)">⚡ Generate</div>
-      <div class="tab" onclick="switchTab('tabKeys',this)">🗝 Keys</div>
-      <div class="tab" onclick="switchTab('tabBan',this)">🚫 Blacklist</div>
-      <div class="tab" onclick="switchTab('tabKill',this)">🔴 Kill Switch</div>
+      <div class="tab active" onclick="switchTab('tGen',this)">⚡ Generate</div>
+      <div class="tab" onclick="switchTab('tKeys',this)">🗝 Keys</div>
+      <div class="tab" onclick="switchTab('tBan',this)">🚫 Blacklist</div>
+      <div class="tab" onclick="switchTab('tKill',this)">🔴 Kill Switch</div>
+      <div class="tab" onclick="switchTab('tAnn',this)">📢 Announcement</div>
+      <div class="tab" onclick="switchTab('tCfg',this)">⚙️ Config</div>
+      <div class="tab" onclick="switchTab('tScripts',this)">📋 Script Status</div>
     </div>
 
-    <!-- TAB: GENERATE KEY -->
-    <div id="tabGen">
+    <!-- TAB: GENERATE -->
+    <div id="tGen">
       <div class="card">
-        <div class="sec-title">Buat Premium / Trial Key</div>
+        <div class="sec">Buat Key</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
-          <div>
-            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">TIPE</div>
-            <select class="ibox" id="genType" style="height:46px;cursor:pointer">
+          <div><div style="font-size:10px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">TIPE</div>
+            <select class="ibox" id="gType"><option value="premium">Premium</option><option value="trial">Trial</option></select></div>
+          <div><div style="font-size:10px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">DURASI (jam, kosong=permanen)</div>
+            <input class="ibox" id="gDur" type="number" placeholder="720 = 30 hari"></div>
+          <div><div style="font-size:10px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">JUMLAH</div>
+            <input class="ibox" id="gAmt" type="number" value="1" min="1" max="100"></div>
+          <div><div style="font-size:10px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">CATATAN</div>
+            <input class="ibox" id="gNote" placeholder="Nama buyer, order ID..."></div>
+        </div>
+        <button class="btn btn-p" onclick="doGenKey()">✨ Generate Keys</button>
+        <div id="genOut" style="display:none;margin-top:18px">
+          <div class="sep"></div>
+          <div class="sec">Hasil</div>
+          <div id="genList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: KEYS -->
+    <div id="tKeys" style="display:none">
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div style="font-weight:700;font-size:15px">Database Keys</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-o btn-sm" onclick="loadKeys()">↻ Refresh</button>
+            <button class="btn btn-o btn-sm" onclick="exportCSV()">📥 Export CSV</button>
+            <button class="btn btn-d btn-sm" onclick="bulkDel('expired')">🗑 Hapus Expired</button>
+          </div>
+        </div>
+        <!-- Search + Filter -->
+        <div style="padding:12px 20px;border-bottom:1px solid var(--line)">
+          <div class="search-row">
+            <input class="ibox" id="srchKey" placeholder="🔍 Cari key / HWID / note..." oninput="renderKeys()">
+            <select class="ibox" id="srchType" onchange="renderKeys()" style="max-width:160px">
+              <option value="">Semua Tipe</option>
               <option value="premium">Premium</option>
               <option value="trial">Trial</option>
             </select>
+            <select class="ibox" id="srchStatus" onchange="renderKeys()" style="max-width:160px">
+              <option value="">Semua Status</option>
+              <option value="active">Aktif</option>
+              <option value="expired">Expired</option>
+              <option value="locked">HWID Locked</option>
+              <option value="free">HWID Kosong</option>
+            </select>
           </div>
-          <div>
-            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">DURASI (jam, kosong = permanen)</div>
-            <input class="ibox" id="genDur" type="number" placeholder="Contoh: 720 = 30 hari">
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">JUMLAH KEY</div>
-            <input class="ibox" id="genAmt" type="number" value="1" min="1" max="100">
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">CATATAN (opsional)</div>
-            <input class="ibox" id="genNote" placeholder="Nama buyer, order ID...">
-          </div>
-        </div>
-        <button class="btn btn-primary" onclick="generateKeys()">✨ Generate Keys</button>
-
-        <div id="genResult" style="display:none;margin-top:20px">
-          <div class="sep"></div>
-          <div class="sec-title">Hasil Generate</div>
-          <div id="genResultList"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: DATABASE VIEWER -->
-    <div id="tabKeys" style="display:none">
-      <div class="card" style="padding:0;overflow:hidden">
-        <div style="padding:18px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)">
-          <div style="font-weight:700">Database Keys</div>
-          <button class="btn btn-outline btn-sm" onclick="loadKeys()">↻ Refresh</button>
         </div>
         <div class="tbl-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Key</th><th>Tipe</th><th>HWID</th><th>Expires</th><th>Note</th><th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="keysTbody"><tr><td colspan="6" style="text-align:center;color:var(--txt3);padding:24px">Klik Refresh untuk load data</td></tr></tbody>
+            <thead><tr><th><input type="checkbox" id="chkAll" onchange="toggleAllChk(this)"></th><th>Key</th><th>Tipe</th><th>HWID</th><th>Expires</th><th>Sisa</th><th>Note</th><th>Aksi</th></tr></thead>
+            <tbody id="keysTbl"><tr><td colspan="8" style="text-align:center;padding:24px;color:var(--txt3)">Klik Refresh</td></tr></tbody>
           </table>
+        </div>
+        <div style="padding:12px 20px;border-top:1px solid var(--line);display:flex;gap:8px">
+          <button class="btn btn-d btn-sm" onclick="bulkDelSelected()">🗑 Hapus Terpilih</button>
+          <span id="selCount" style="font-size:12px;color:var(--txt3);font-family:var(--mono);align-self:center">0 terpilih</span>
+        </div>
+      </div>
+      <!-- Edit Duration Modal -->
+      <div id="editDurCard" style="display:none;margin-top:14px">
+        <div class="card">
+          <div class="sec">Edit Durasi Key</div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--acc3);margin-bottom:12px" id="editDurKey">—</div>
+          <div class="irow">
+            <select class="ibox" id="editDurMode" style="max-width:200px">
+              <option value="add">Tambah jam</option>
+              <option value="sub">Kurangi jam</option>
+              <option value="set">Set dari sekarang (jam)</option>
+              <option value="perm">Jadikan Permanen</option>
+            </select>
+            <input class="ibox" id="editDurVal" type="number" placeholder="Jumlah jam" style="max-width:160px">
+            <button class="btn btn-p" onclick="doEditDur()">✅ Simpan</button>
+            <button class="btn btn-o" onclick="document.getElementById('editDurCard').style.display='none'">✕ Batal</button>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- TAB: BLACKLIST -->
-    <div id="tabBan" style="display:none">
+    <div id="tBan" style="display:none">
       <div class="card">
-        <div class="sec-title">Blacklist HWID</div>
-        <div class="input-row">
-          <input class="ibox" id="blHwid" placeholder="HWID yang akan diblokir">
-          <input class="ibox" id="blReason" placeholder="Alasan (opsional)" style="max-width:200px">
-          <button class="btn btn-danger" onclick="addBlacklist()">🚫 Blacklist</button>
+        <div class="sec">Blacklist HWID</div>
+        <div class="irow">
+          <input class="ibox" id="blHwid" placeholder="HWID yang diblokir">
+          <input class="ibox" id="blReason" placeholder="Alasan" style="max-width:200px">
+          <button class="btn btn-d" onclick="doBlacklist()">🚫 Blacklist</button>
         </div>
       </div>
       <div class="card" style="padding:0;overflow:hidden">
-        <div style="padding:18px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between">
           <div style="font-weight:700">Daftar Blacklist</div>
-          <button class="btn btn-outline btn-sm" onclick="loadBlacklist()">↻ Refresh</button>
+          <button class="btn btn-o btn-sm" onclick="loadBlacklist()">↻ Refresh</button>
         </div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>HWID</th><th>Alasan</th><th>Waktu</th></tr></thead>
-            <tbody id="banTbody"><tr><td colspan="3" style="text-align:center;color:var(--txt3);padding:24px">Klik Refresh</td></tr></tbody>
-          </table>
-        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>HWID</th><th>Alasan</th><th>Waktu</th></tr></thead>
+          <tbody id="banTbl"><tr><td colspan="3" style="text-align:center;padding:24px;color:var(--txt3)">Klik Refresh</td></tr></tbody>
+        </table></div>
       </div>
     </div>
 
     <!-- TAB: KILL SWITCH -->
-    <div id="tabKill" style="display:none">
+    <div id="tKill" style="display:none">
       <div class="card">
-        <div style="font-size:13px;color:var(--txt2);line-height:1.8;margin-bottom:20px">
-          Kill Switch mematikan <strong>seluruh validasi</strong> di Worker secara instan.
-          Semua user yang mencoba validasi key akan mendapat error.
-          Gunakan saat ada emergency (game update berisiko, exploit ban wave, dll).
+        <div class="sec">Kill Switch</div>
+        <div style="font-size:13px;color:var(--txt2);line-height:1.8;margin-bottom:18px">Kill Switch mematikan <strong>seluruh validasi</strong> di Worker secara instan. Semua user yang mencoba validasi key akan mendapat error.</div>
+        <input class="ibox" id="killMsg" placeholder="Pesan untuk user (opsional)" style="margin-bottom:12px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-d" onclick="setKill(true)">🔴 Aktifkan Kill Switch</button>
+          <button class="btn btn-ok" onclick="setKill(false)">🟢 Nonaktifkan</button>
         </div>
-        <div class="input-row">
-          <input class="ibox" id="killMsgInput" placeholder="Pesan untuk user (opsional)">
-        </div>
-        <div style="display:flex;gap:12px">
-          <button class="btn btn-danger" onclick="setKill(true)">🔴 Aktifkan Kill Switch</button>
-          <button class="btn btn-ok"     onclick="setKill(false)">🟢 Nonaktifkan</button>
-        </div>
-        <div id="killStatus" style="margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--txt3)">Status: belum dicek</div>
+        <div id="killStatus" style="margin-top:16px;font-family:var(--mono);font-size:12px;color:var(--txt3)">Status: —</div>
       </div>
     </div>
+
+    <!-- TAB: ANNOUNCEMENT -->
+    <div id="tAnn" style="display:none">
+      <div class="card">
+        <div class="sec">Kelola Announcement</div>
+        <div style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.7">Pesan ini akan muncul sebagai banner di halaman user (atas halaman).</div>
+        <div class="irow" style="margin-bottom:10px">
+          <select class="ibox" id="annType" style="max-width:160px">
+            <option value="info">ℹ️ Info (Biru)</option>
+            <option value="warn">⚠️ Warning (Kuning)</option>
+            <option value="danger">🔴 Danger (Merah)</option>
+          </select>
+          <label class="chk"><input type="checkbox" id="annActive" checked> Aktifkan</label>
+        </div>
+        <textarea class="ibox" id="annText" placeholder="Teks announcement..." style="height:80px;padding:10px;resize:vertical;line-height:1.6"></textarea>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn btn-p" onclick="saveAnn()">💾 Simpan Announcement</button>
+          <button class="btn btn-o" onclick="clearAnn()">✕ Hapus Banner</button>
+        </div>
+        <div class="sep"></div>
+        <div class="sec">Preview</div>
+        <div id="annPreview" class="info" style="padding:12px 16px;border-radius:10px;font-size:13px;border:1px solid;display:none"></div>
+      </div>
+    </div>
+
+    <!-- TAB: CONFIG -->
+    <div id="tCfg" style="display:none">
+      <div class="card">
+        <div class="sec">Konfigurasi Sistem</div>
+        <div style="margin-bottom:18px">
+          <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:8px">DURASI TRIAL KEY (JAM)</div>
+          <div class="irow">
+            <input class="ibox" id="cfgTrialHours" type="number" value="6" min="1" style="max-width:160px">
+            <button class="btn btn-p" onclick="saveCfg()">💾 Simpan</button>
+          </div>
+          <div style="font-size:12px;color:var(--txt3);margin-top:6px;font-family:var(--mono)">Default: 6 jam. Ubah ini untuk semua trial key yang dibuat setelah ini.</div>
+        </div>
+        <div id="cfgStatus" style="font-size:12px;font-family:var(--mono);color:var(--txt3)">—</div>
+      </div>
+    </div>
+
+    <!-- TAB: SCRIPT STATUS -->
+    <div id="tScripts" style="display:none">
+      <div class="card">
+        <div class="sec">Kelola Status Script</div>
+        <div style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.7">Daftar ini muncul di halaman user dan halaman login. Tambah, edit, atau hapus script sesuai kebutuhan.</div>
+        <div id="scriptEditorList"></div>
+        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn btn-o" onclick="addScriptRow()">➕ Tambah Script</button>
+          <button class="btn btn-p" onclick="saveScripts()">💾 Simpan Semua</button>
+        </div>
+      </div>
+      <!-- Preview -->
+      <div class="card" style="margin-top:0">
+        <div class="sec">Preview (tampilan user)</div>
+        <div class="script-grid" id="scriptPreview"></div>
+      </div>
+    </div>
+
   </div><!-- /adminPage -->
 </div><!-- /wrap -->
 
 <script>
-// ================================================================
-//  CONFIG — ganti dengan URL Worker kamu
-// ================================================================
+// ── CONFIG ──────────────────────────────────────────────────────
 const WORKER = "https://forkyhub-worker.forkyhub.workers.dev";
-// Password admin disimpan hanya di memory session (tidak di localStorage)
 let ADMIN_TOKEN = null;
 let killActive  = false;
-let cdInterval  = null;
+let allKeys     = [];
+let cdInt       = null;
+let editDurTarget = null;
 
-// ─── Route: #admin → admin mode ─────────────────────────────────
+// ── BOOT ────────────────────────────────────────────────────────
 function boot() {
   if (location.hash === "#admin") {
-    document.getElementById("userPage").style.display = "none";
+    document.getElementById("userPage").style.display  = "none";
     document.getElementById("adminPage").style.display = "block";
-    showLogin();
+    document.getElementById("loginOverlay").style.display = "flex";
+    document.getElementById("loginPw").onkeydown = e => { if (e.key === "Enter") doLogin(); };
   } else {
-    checkServerStatus();
+    loadPublic();
+    checkStatus();
   }
 }
 window.addEventListener("hashchange", boot);
 boot();
 
-// ─── SERVER STATUS ───────────────────────────────────────────────
-async function checkServerStatus() {
+// ── PUBLIC DATA (announcement + scripts + trial hours) ──────────
+async function loadPublic() {
+  try {
+    const d = await fetch(`${WORKER}/public`).then(r => r.json());
+    if (!d.ok) return;
+    // Announcement
+    if (d.announcement?.active && d.announcement?.text) {
+      const el = document.getElementById("annBanner");
+      el.className = d.announcement.type || "info";
+      el.textContent = d.announcement.text;
+      el.style.display = "block";
+    }
+    // Script status
+    if (d.scripts?.length) {
+      renderScriptGrid(d.scripts, "scriptGrid");
+      document.getElementById("scriptSecLabel").style.display = "block";
+    }
+  } catch {}
+}
+
+function renderScriptGrid(scripts, targetId) {
+  const statusLabel = { working: "Working ✓", high_risk: "High Risk ⚠", ban_wave: "Ban Wave ✗", offline: "Offline —" };
+  document.getElementById(targetId).innerHTML = scripts.map(s => `
+    <div class="script-card">
+      <div class="sc-dot ${s.status}"></div>
+      <div><div class="sc-name">${s.name}</div><div class="sc-status">${statusLabel[s.status] || s.status}${s.note ? " · " + s.note : ""}</div></div>
+    </div>`).join("");
+}
+
+// ── SERVER STATUS ────────────────────────────────────────────────
+async function checkStatus() {
   const dot = document.getElementById("svrDot");
   const txt = document.getElementById("svrTxt");
   try {
-    const r = await fetch(`${WORKER}/status`);
-    const d = await r.json();
+    const d = await fetch(`${WORKER}/status`).then(r => r.json());
     if (d.kill) {
-      dot.className = "dot err";
-      txt.textContent = "⚠️ Script dinonaktifkan oleh admin: " + (d.message || "Maintenance");
-      txt.style.color = "var(--err)";
+      dot.className = "dot err"; txt.style.color = "var(--err)";
+      txt.textContent = "⚠️ Script dinonaktifkan: " + (d.message || "Maintenance");
     } else {
-      dot.className = "dot ok";
+      dot.className = "dot ok"; txt.style.color = "var(--ok)";
       txt.textContent = "Server online — " + new Date(d.ts).toLocaleTimeString("id-ID");
-      txt.style.color = "var(--ok)";
     }
-  } catch {
-    dot.className = "dot err";
-    txt.textContent = "Server tidak bisa dihubungi — cek URL Worker";
-    txt.style.color = "var(--err)";
-  }
+  } catch { dot.className = "dot err"; txt.style.color = "var(--err)"; txt.textContent = "Server tidak bisa dihubungi"; }
 }
 
-// ─── GET TRIAL ───────────────────────────────────────────────────
-async function getTrial() {
+// ── GET TRIAL ────────────────────────────────────────────────────
+async function doGetTrial() {
   try {
-    const r = await fetch(`${WORKER}/trial`);
-    const d = await r.json();
+    const d = await fetch(`${WORKER}/trial`).then(r => r.json());
     if (!d.ok) { toast("❌ " + (d.message || d.error)); return; }
-    document.getElementById("trialKeyVal").textContent = d.key;
-    document.getElementById("trialExpSub").textContent = d.expiresAt
-      ? "Berlaku hingga " + new Date(d.expiresAt).toLocaleString("id-ID")
-      : "Permanen";
+    document.getElementById("trialKey").textContent = d.key;
+    document.getElementById("trialExp").textContent = d.expiresAt ? "Berlaku hingga " + new Date(d.expiresAt).toLocaleString("id-ID") : "Permanen";
     document.getElementById("trialResult").style.display = "block";
-    if (d.expiresAt) startCountdown(d.expiresAt);
-    copyToClip(d.key);
-    toast("✅ Key berhasil diambil & dicopy!");
+    if (d.expiresAt) startCD(d.expiresAt);
+    cpText(d.key); toast("✅ Key diambil & dicopy!");
   } catch { toast("❌ Gagal menghubungi server"); }
 }
 
-// ─── CHECK KEY ───────────────────────────────────────────────────
-async function checkKey() {
-  const key  = document.getElementById("chkKeyInput").value.trim();
-  const hwid = document.getElementById("chkHwidInput").value.trim();
+function startCD(exp) {
+  if (cdInt) clearInterval(cdInt);
+  const tick = () => {
+    const r = Math.max(0, exp - Date.now());
+    document.getElementById("cdH").textContent = String(Math.floor(r/3600000)).padStart(2,"0");
+    document.getElementById("cdM").textContent = String(Math.floor((r%3600000)/60000)).padStart(2,"0");
+    document.getElementById("cdS").textContent = String(Math.floor((r%60000)/1000)).padStart(2,"0");
+    if (r <= 0) clearInterval(cdInt);
+  };
+  tick(); cdInt = setInterval(tick, 1000);
+}
+
+// ── CHECK KEY ────────────────────────────────────────────────────
+async function doCheckKey() {
+  const key  = document.getElementById("chkKey").value.trim();
+  const hwid = document.getElementById("chkHwid").value.trim();
   if (!key || !hwid) { toast("⚠ Isi key dan HWID"); return; }
   try {
-    const r = await fetch(`${WORKER}/validate?key=${encodeURIComponent(key)}&hwid=${encodeURIComponent(hwid)}`);
-    const d = await r.json();
-    const el = document.getElementById("checkResult");
-    el.style.display = "block";
-    document.getElementById("chkStatus").textContent = d.valid ? "✅ Valid" : "❌ " + (d.error || "Tidak valid");
-    document.getElementById("chkStatus").className = "info-val " + (d.valid ? "green" : "red");
-    document.getElementById("chkType").textContent  = d.type ? d.type.toUpperCase() : "—";
-    document.getElementById("chkHwid").textContent  = d.hwid ? d.hwid.slice(0,20) + "…" : "Belum terkunci";
-    document.getElementById("chkHwid").className    = "info-val " + (d.hwid ? "yellow" : "blue");
-    document.getElementById("chkRemain").textContent = d.remainMs != null
-      ? fmtMs(d.remainMs) : (d.expiresAt ? "Expired" : "Permanen");
-  } catch { toast("❌ Gagal menghubungi server"); }
-}
-
-// ─── COUNTDOWN ───────────────────────────────────────────────────
-function startCountdown(expiresAt) {
-  if (cdInterval) clearInterval(cdInterval);
-  function tick() {
-    const rem = Math.max(0, expiresAt - Date.now());
-    const h = Math.floor(rem / 3600000);
-    const m = Math.floor((rem % 3600000) / 60000);
-    const s = Math.floor((rem % 60000) / 1000);
-    document.getElementById("cdH").textContent = String(h).padStart(2,"0");
-    document.getElementById("cdM").textContent = String(m).padStart(2,"0");
-    document.getElementById("cdS").textContent = String(s).padStart(2,"0");
-    if (rem <= 0) clearInterval(cdInterval);
-  }
-  tick(); cdInterval = setInterval(tick, 1000);
-}
-function fmtMs(ms) {
-  const h = Math.floor(ms/3600000);
-  const m = Math.floor((ms%3600000)/60000);
-  const s = Math.floor((ms%60000)/1000);
-  if (h > 24) return Math.floor(h/24) + " hari " + (h%24) + " jam";
-  return `${h}j ${m}m ${s}d`;
+    const d = await fetch(`${WORKER}/validate?key=${encodeURIComponent(key)}&hwid=${encodeURIComponent(hwid)}`).then(r => r.json());
+    document.getElementById("chkResult").style.display = "block";
+    const fmtMs = ms => { if(!ms||ms<=0) return "Expired"; const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000); return h>=24?`${Math.floor(h/24)}d ${h%24}h`:`${h}h ${m}m ${s}s`; };
+    document.getElementById("cr_status").innerHTML = d.valid ? `<span style="color:var(--ok)">✅ Valid</span>` : `<span style="color:var(--err)">❌ ${d.error||"Invalid"}</span>`;
+    document.getElementById("cr_type").textContent   = d.type ? d.type.toUpperCase() : "—";
+    document.getElementById("cr_hwid").textContent   = d.hwid ? d.hwid.slice(0,20)+"…" : "Belum terkunci";
+    document.getElementById("cr_remain").textContent = d.remainMs != null ? fmtMs(d.remainMs) : (d.expiresAt ? "Expired" : "Permanen");
+  } catch { toast("❌ Gagal"); }
 }
 
 // ================================================================
 //  ADMIN
 // ================================================================
-function showLogin() {
-  document.getElementById("loginOverlay").style.display = "flex";
-  document.getElementById("loginInput").focus();
-  document.getElementById("loginInput").onkeydown = (e) => { if (e.key === "Enter") doLogin(); };
-}
-function doLogin() {
-  const pw = document.getElementById("loginInput").value;
-  ADMIN_TOKEN = pw;
+async function doLogin() {
+  ADMIN_TOKEN = document.getElementById("loginPw").value;
   document.getElementById("loginOverlay").style.display = "none";
-  loadAdminData();
+  await loadAdminAll();
 }
 
 async function apiFetch(path, opts = {}) {
-  const res = await fetch(WORKER + path, {
+  const r = await fetch(WORKER + path, {
     ...opts,
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${ADMIN_TOKEN}`, ...(opts.headers || {}) },
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${ADMIN_TOKEN}`, ...(opts.headers||{}) },
   });
-  return res.json();
+  return r.json();
 }
 
-async function loadAdminData() {
-  await Promise.all([loadStats(), loadKillStatus()]);
-}
+async function loadAdminAll() { await Promise.all([loadStats(), loadKillStatus(), loadCfg()]); }
 
 async function loadStats() {
-  try {
-    const d = await apiFetch("/admin/stats");
-    if (!d.ok) { toast("❌ Password salah atau Worker error"); return; }
-    const s = d.stats;
-    document.getElementById("stTotal").textContent  = s.total;
-    document.getElementById("stPrem").textContent   = s.premium;
-    document.getElementById("stTrial").textContent  = s.trial;
-    document.getElementById("stLocked").textContent = s.locked;
-    document.getElementById("stBan").textContent    = s.blacklisted;
-    killActive = s.killActive;
-    updateKillUI();
-  } catch { toast("❌ Gagal load stats"); }
+  const d = await apiFetch("/admin/stats");
+  if (!d.ok) { toast("❌ Password salah / Worker error"); return; }
+  const s = d.stats;
+  document.getElementById("st_total").textContent  = s.total;
+  document.getElementById("st_prem").textContent   = s.premium;
+  document.getElementById("st_trial").textContent  = s.trial;
+  document.getElementById("st_locked").textContent = s.locked;
+  document.getElementById("st_exp").textContent    = s.expired;
+  document.getElementById("st_ban").textContent    = s.blacklisted;
+  killActive = s.killActive;
+  updateKillUI();
 }
 
 async function loadKillStatus() {
-  try {
-    const d = await fetch(`${WORKER}/status`).then(r => r.json());
-    killActive = d.kill;
-    updateKillUI();
-    const ks = document.getElementById("killStatus");
-    ks.textContent = "Kill Switch: " + (d.kill ? "🔴 AKTIF — " + (d.message || "Tanpa pesan") : "🟢 Tidak aktif");
-    ks.style.color = d.kill ? "var(--err)" : "var(--ok)";
-  } catch {}
+  const d = await fetch(`${WORKER}/status`).then(r => r.json());
+  killActive = d.kill;
+  updateKillUI();
+  const el = document.getElementById("killStatus");
+  el.textContent = "Kill Switch: " + (d.kill ? "🔴 AKTIF — " + (d.message || "Tanpa pesan") : "🟢 Tidak aktif");
+  el.style.color = d.kill ? "var(--err)" : "var(--ok)";
+}
+
+async function loadCfg() {
+  const d = await apiFetch("/admin/stats");
+  if (d.ok) document.getElementById("cfgTrialHours").value = d.stats.trialHours || 6;
 }
 
 function updateKillUI() {
-  const banner = document.getElementById("killBanner");
-  banner.style.display = "flex";
-  banner.className = "kill-card " + (killActive ? "" : "inactive");
+  const b = document.getElementById("killBanner");
+  b.style.display = "flex";
+  b.className = "kcard " + (killActive ? "on" : "off");
   document.getElementById("killTitle").textContent = killActive ? "⚠️ Kill Switch AKTIF — Script dimatikan" : "✅ Script Berjalan Normal";
-  document.getElementById("killTitle").className   = "kill-title " + (killActive ? "red" : "green");
   document.getElementById("killSub").textContent   = killActive ? "Semua validasi diblokir" : "Semua sistem online";
-  document.getElementById("killBtn").textContent   = killActive ? "🟢 Hidupkan Kembali" : "🔴 Aktifkan Kill Switch";
-  document.getElementById("killBtn").className     = "btn btn-sm " + (killActive ? "btn-ok" : "btn-danger");
+  document.getElementById("killBannerBtn").textContent = killActive ? "🟢 Hidupkan" : "🔴 Matikan";
+  document.getElementById("killBannerBtn").className   = "btn btn-sm " + (killActive ? "btn-ok" : "btn-d");
 }
 
 function toggleKill() { setKill(!killActive); }
 
 async function setKill(active) {
-  const msg = document.getElementById("killMsgInput")?.value || "";
-  try {
-    const d = await apiFetch("/admin/killswitch", { method: "POST", body: JSON.stringify({ active, message: msg }) });
-    if (d.ok) {
-      killActive = active;
-      updateKillUI();
-      await loadKillStatus();
-      toast(active ? "🔴 Kill Switch diaktifkan!" : "🟢 Script dihidupkan kembali!");
-    } else { toast("❌ " + d.error); }
-  } catch { toast("❌ Gagal"); }
+  const msg = document.getElementById("killMsg").value;
+  const d = await apiFetch("/admin/killswitch", { method: "POST", body: JSON.stringify({ active, message: msg }) });
+  if (d.ok) { killActive = active; updateKillUI(); await loadKillStatus(); toast(active ? "🔴 Kill Switch aktif!" : "🟢 Script hidup kembali!"); }
+  else toast("❌ " + d.error);
 }
 
-// ─── GENERATE KEYS ───────────────────────────────────────────────
-async function generateKeys() {
-  const type = document.getElementById("genType").value;
-  const dur  = document.getElementById("genDur").value;
-  const amt  = document.getElementById("genAmt").value;
-  const note = document.getElementById("genNote").value;
-  try {
-    const d = await apiFetch("/admin/keygen", {
-      method: "POST",
-      body: JSON.stringify({ type, durationHours: dur ? Number(dur) : null, amount: Number(amt), note })
-    });
-    if (!d.ok) { toast("❌ " + d.error); return; }
-    const list = document.getElementById("genResultList");
-    list.innerHTML = d.keys.map(k => `
-      <div class="key-box" style="margin-bottom:10px">
-        <div>
-          <div class="key-value">${k.key}</div>
-          <div class="key-sub">${k.expiresAt ? "Berlaku hingga " + new Date(k.expiresAt).toLocaleString("id-ID") : "Permanen"} · ${k.type}</div>
-        </div>
-        <button class="btn btn-outline btn-sm" onclick="copyToClip('${k.key}');toast('📋 Dicopy!')">📋</button>
-      </div>`).join("");
-    document.getElementById("genResult").style.display = "block";
-    toast(`✅ ${d.keys.length} key berhasil dibuat!`);
-    loadStats();
-  } catch { toast("❌ Gagal generate"); }
+// ── GENERATE KEY ────────────────────────────────────────────────
+async function doGenKey() {
+  const d = await apiFetch("/admin/keygen", { method: "POST", body: JSON.stringify({
+    type: document.getElementById("gType").value,
+    durationHours: document.getElementById("gDur").value ? Number(document.getElementById("gDur").value) : null,
+    amount: Number(document.getElementById("gAmt").value) || 1,
+    note: document.getElementById("gNote").value,
+  })});
+  if (!d.ok) { toast("❌ " + d.error); return; }
+  document.getElementById("genList").innerHTML = d.keys.map(k => `
+    <div class="kbox" style="margin-bottom:8px">
+      <div><div class="kval">${k.key}</div><div class="ksub">${k.expiresAt ? new Date(k.expiresAt).toLocaleString("id-ID") : "Permanen"} · ${k.type}</div></div>
+      <button class="btn btn-o btn-sm" onclick="cpText('${k.key}');toast('📋 Copied!')">📋</button>
+    </div>`).join("");
+  document.getElementById("genOut").style.display = "block";
+  toast(`✅ ${d.keys.length} key dibuat!`);
+  loadStats();
 }
 
-// ─── LOAD KEYS TABLE ─────────────────────────────────────────────
+// ── KEYS TABLE ───────────────────────────────────────────────────
 async function loadKeys() {
-  const tbody = document.getElementById("keysTbody");
-  tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--txt3)">Loading...</td></tr>`;
-  try {
-    const d = await apiFetch("/admin/keys");
-    if (!d.ok) { toast("❌ " + d.error); return; }
-    if (!d.keys.length) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--txt3)">Belum ada key</td></tr>`;
-      return;
-    }
-    tbody.innerHTML = d.keys.map(k => {
-      const exp = k.expiresAt ? new Date(k.expiresAt).toLocaleString("id-ID",{dateStyle:"short",timeStyle:"short"}) : "Permanen";
-      const hwid = k.hwid ? `<span class="pill locked">${k.hwid.slice(0,12)}…</span>` : `<span class="pill free">Bebas</span>`;
-      return `<tr>
-        <td style="font-weight:600;color:var(--acc3)">${k.key}</td>
-        <td><span class="pill ${k.type}">${k.type}</span></td>
-        <td>${hwid}</td>
-        <td>${exp}</td>
-        <td style="color:var(--txt3)">${k.note || "—"}</td>
-        <td>
-          <div style="display:flex;gap:6px">
-            <button class="btn btn-outline btn-sm" onclick="resetHwid('${k.key}')">↺ Reset HWID</button>
-            <button class="btn btn-danger btn-sm" onclick="deleteKey('${k.key}')">✕</button>
-          </div>
-        </td>
-      </tr>`;
-    }).join("");
-  } catch { toast("❌ Gagal load keys"); }
+  document.getElementById("keysTbl").innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--txt3)">Loading...</td></tr>`;
+  const d = await apiFetch("/admin/keys");
+  if (!d.ok) { toast("❌ Gagal"); return; }
+  allKeys = d.keys;
+  renderKeys();
 }
 
-async function deleteKey(key) {
+function renderKeys() {
+  const q      = document.getElementById("srchKey").value.toLowerCase();
+  const fType  = document.getElementById("srchType").value;
+  const fStat  = document.getElementById("srchStatus").value;
+  const now    = Date.now();
+  const fmtMs  = ms => { if(!ms||ms<=0) return "—"; const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000); return h>=24?`${Math.floor(h/24)}d ${h%24}h`:`${h}h ${m}m`; };
+
+  const filtered = allKeys.filter(k => {
+    const exp = k.expiresAt && now > k.expiresAt;
+    if (q && !(k.key.toLowerCase().includes(q) || (k.hwid||"").toLowerCase().includes(q) || (k.note||"").toLowerCase().includes(q))) return false;
+    if (fType && k.type !== fType) return false;
+    if (fStat === "active"  && exp) return false;
+    if (fStat === "expired" && !exp) return false;
+    if (fStat === "locked"  && !k.hwid) return false;
+    if (fStat === "free"    && k.hwid) return false;
+    return true;
+  });
+
+  if (!filtered.length) {
+    document.getElementById("keysTbl").innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--txt3)">Tidak ada key</td></tr>`;
+    return;
+  }
+
+  document.getElementById("keysTbl").innerHTML = filtered.map(k => {
+    const exp     = k.expiresAt && now > k.expiresAt;
+    const rem     = k.expiresAt ? Math.max(0, k.expiresAt - now) : null;
+    const expStr  = k.expiresAt ? new Date(k.expiresAt).toLocaleString("id-ID",{dateStyle:"short",timeStyle:"short"}) : "Permanen";
+    const hwidEl  = k.hwid ? `<span class="pill locked">${k.hwid.slice(0,12)}…</span>` : `<span class="pill free">Kosong</span>`;
+    return `<tr>
+      <td><input type="checkbox" class="row-chk" data-key="${k.key}" onchange="updateSelCount()"></td>
+      <td style="color:var(--acc3);font-weight:600">${k.key}</td>
+      <td><span class="pill ${k.type}">${k.type}</span></td>
+      <td>${hwidEl}</td>
+      <td>${expStr}</td>
+      <td style="color:${exp?'var(--err)':'var(--txt2)'}">${exp ? "Expired" : rem ? fmtMs(rem) : "Permanen"}</td>
+      <td style="color:var(--txt3)">${k.note||"—"}</td>
+      <td>
+        <div style="display:flex;gap:5px">
+          <button class="btn btn-o btn-sm" onclick="openEditDur('${k.key}')">✏️</button>
+          <button class="btn btn-o btn-sm" onclick="doResetHwid('${k.key}')">↺</button>
+          <button class="btn btn-d btn-sm" onclick="doDelKey('${k.key}')">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join("");
+}
+
+function toggleAllChk(el) {
+  document.querySelectorAll(".row-chk").forEach(c => c.checked = el.checked);
+  updateSelCount();
+}
+function updateSelCount() {
+  const n = document.querySelectorAll(".row-chk:checked").length;
+  document.getElementById("selCount").textContent = n + " terpilih";
+}
+async function bulkDelSelected() {
+  const keys = [...document.querySelectorAll(".row-chk:checked")].map(c => c.dataset.key);
+  if (!keys.length) { toast("⚠ Pilih key dulu"); return; }
+  if (!confirm(`Hapus ${keys.length} key?`)) return;
+  const d = await apiFetch("/admin/bulkdelete", { method: "DELETE", body: JSON.stringify({ mode: "list", keys }) });
+  if (d.ok) { toast(`🗑 ${d.deleted} key dihapus`); loadKeys(); loadStats(); }
+  else toast("❌ " + d.error);
+}
+async function bulkDel(mode) {
+  const label = { expired: "semua key expired", all: "SEMUA key" }[mode] || mode;
+  if (!confirm(`Hapus ${label}?`)) return;
+  const d = await apiFetch("/admin/bulkdelete", { method: "DELETE", body: JSON.stringify({ mode }) });
+  if (d.ok) { toast(`🗑 ${d.deleted} key dihapus`); loadKeys(); loadStats(); }
+  else toast("❌ " + d.error);
+}
+
+// ── EDIT DURATION ────────────────────────────────────────────────
+function openEditDur(key) {
+  editDurTarget = key;
+  document.getElementById("editDurKey").textContent = key;
+  document.getElementById("editDurCard").style.display = "block";
+  document.getElementById("editDurCard").scrollIntoView({ behavior: "smooth" });
+}
+async function doEditDur() {
+  const mode = document.getElementById("editDurMode").value;
+  const val  = Number(document.getElementById("editDurVal").value);
+  let body   = { key: editDurTarget };
+  if (mode === "add")  body.addHours = val;
+  if (mode === "sub")  body.addHours = -val;
+  if (mode === "set")  body.setHours = val;
+  if (mode === "perm") body.setHours = 0;
+  const d = await apiFetch("/admin/editduration", { method: "PATCH", body: JSON.stringify(body) });
+  if (d.ok) { toast("✅ Durasi diubah!"); document.getElementById("editDurCard").style.display = "none"; loadKeys(); }
+  else toast("❌ " + d.error);
+}
+
+async function doDelKey(key) {
   if (!confirm(`Hapus key ${key}?`)) return;
   const d = await apiFetch("/admin/delete", { method: "DELETE", body: JSON.stringify({ key }) });
   if (d.ok) { toast("🗑 Key dihapus"); loadKeys(); loadStats(); }
   else toast("❌ " + d.error);
 }
-
-async function resetHwid(key) {
+async function doResetHwid(key) {
   const d = await apiFetch("/admin/resetHwid", { method: "POST", body: JSON.stringify({ key }) });
   if (d.ok) { toast("🔄 HWID direset!"); loadKeys(); }
   else toast("❌ " + d.error);
 }
 
-// ─── BLACKLIST ────────────────────────────────────────────────────
-async function addBlacklist() {
-  const hwid   = document.getElementById("blHwid").value.trim();
+// ── BLACKLIST ────────────────────────────────────────────────────
+async function doBlacklist() {
+  const hwid = document.getElementById("blHwid").value.trim();
   const reason = document.getElementById("blReason").value.trim();
   if (!hwid) { toast("⚠ Masukkan HWID"); return; }
   const d = await apiFetch("/admin/blacklist", { method: "POST", body: JSON.stringify({ hwid, reason }) });
-  if (d.ok) { toast("🚫 HWID diblacklist!"); document.getElementById("blHwid").value = ""; loadBlacklist(); loadStats(); }
+  if (d.ok) { toast("🚫 HWID diblacklist!"); loadBlacklist(); loadStats(); document.getElementById("blHwid").value = ""; }
+  else toast("❌ " + d.error);
+}
+async function loadBlacklist() {
+  const d = await apiFetch("/admin/blacklist");
+  const tb = document.getElementById("banTbl");
+  if (!d.ok || !d.list.length) { tb.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--txt3)">Kosong</td></tr>`; return; }
+  tb.innerHTML = d.list.map(b => `<tr><td style="color:var(--err)">${b.hwid}</td><td>${b.reason||"—"}</td><td>${new Date(b.bannedAt).toLocaleString("id-ID")}</td></tr>`).join("");
+}
+
+// ── ANNOUNCEMENT ────────────────────────────────────────────────
+const annTypeColors = { info: "var(--info)", warn: "var(--warn)", danger: "var(--err)" };
+document.getElementById("annType").addEventListener("change", updateAnnPreview);
+document.getElementById("annText").addEventListener("input", updateAnnPreview);
+
+function updateAnnPreview() {
+  const type = document.getElementById("annType").value;
+  const text = document.getElementById("annText").value;
+  const prev = document.getElementById("annPreview");
+  if (text) {
+    prev.style.display = "block";
+    prev.className = type;
+    prev.textContent = text;
+  } else { prev.style.display = "none"; }
+}
+
+async function saveAnn() {
+  const text   = document.getElementById("annText").value;
+  const type   = document.getElementById("annType").value;
+  const active = document.getElementById("annActive").checked;
+  const d = await apiFetch("/admin/announcement", { method: "POST", body: JSON.stringify({ text, type, active }) });
+  if (d.ok) toast("✅ Announcement disimpan!"); else toast("❌ " + d.error);
+}
+async function clearAnn() {
+  const d = await apiFetch("/admin/announcement", { method: "POST", body: JSON.stringify({ text: "", type: "info", active: false }) });
+  if (d.ok) { document.getElementById("annText").value = ""; document.getElementById("annPreview").style.display = "none"; toast("✅ Banner dihapus"); }
+}
+
+// ── CONFIG ───────────────────────────────────────────────────────
+async function saveCfg() {
+  const trialHours = Number(document.getElementById("cfgTrialHours").value);
+  const d = await apiFetch("/admin/config", { method: "POST", body: JSON.stringify({ trialHours }) });
+  if (d.ok) { toast(`✅ Trial duration diset ke ${trialHours} jam`); document.getElementById("cfgStatus").textContent = `Tersimpan: trial = ${trialHours} jam`; }
   else toast("❌ " + d.error);
 }
 
-async function loadBlacklist() {
-  const tbody = document.getElementById("banTbody");
-  tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--txt3)">Loading...</td></tr>`;
-  const d = await apiFetch("/admin/blacklist");
-  if (!d.ok || !d.list.length) {
-    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--txt3)">Kosong</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = d.list.map(b => `<tr>
-    <td style="color:var(--err)">${b.hwid}</td>
-    <td>${b.reason || "—"}</td>
-    <td>${new Date(b.bannedAt).toLocaleString("id-ID")}</td>
-  </tr>`).join("");
+// ── SCRIPT STATUS EDITOR ─────────────────────────────────────────
+let scriptRows = [];
+
+async function loadScriptEditor() {
+  const d = await apiFetch("/admin/scripts");
+  if (d.ok) { scriptRows = d.scripts; renderScriptEditor(); renderScriptPreview(); }
 }
 
-// ─── TABS ────────────────────────────────────────────────────────
+function renderScriptEditor() {
+  document.getElementById("scriptEditorList").innerHTML = scriptRows.map((s, i) => `
+    <div class="script-editor-row">
+      <input class="ibox" value="${s.name}" oninput="scriptRows[${i}].name=this.value;renderScriptPreview()" placeholder="Nama script">
+      <select class="ibox" onchange="scriptRows[${i}].status=this.value;renderScriptPreview()">
+        <option value="working"   ${s.status==="working"  ?"selected":""}>✅ Working</option>
+        <option value="high_risk" ${s.status==="high_risk"?"selected":""}>⚠️ High Risk</option>
+        <option value="ban_wave"  ${s.status==="ban_wave" ?"selected":""}>🚫 Ban Wave</option>
+        <option value="offline"   ${s.status==="offline"  ?"selected":""}>⬛ Offline</option>
+      </select>
+      <input class="ibox" value="${s.note||""}" oninput="scriptRows[${i}].note=this.value;renderScriptPreview()" placeholder="Catatan (opsional)">
+      <button class="btn btn-d btn-sm" onclick="scriptRows.splice(${i},1);renderScriptEditor();renderScriptPreview()">✕</button>
+    </div>`).join("");
+}
+
+function addScriptRow() {
+  scriptRows.push({ name: "Script Baru", status: "working", note: "" });
+  renderScriptEditor(); renderScriptPreview();
+}
+
+function renderScriptPreview() {
+  renderScriptGrid(scriptRows, "scriptPreview");
+}
+
+async function saveScripts() {
+  const d = await apiFetch("/admin/scripts", { method: "POST", body: JSON.stringify(scriptRows) });
+  if (d.ok) toast("✅ Script status disimpan!"); else toast("❌ " + d.error);
+}
+
+// ── EXPORT CSV ───────────────────────────────────────────────────
+async function exportCSV() {
+  const d = await apiFetch("/admin/keys");
+  if (!d.ok) { toast("❌ Gagal export"); return; }
+  const header = ["Key","Tipe","HWID","ExpiresAt","CreatedAt","Note"];
+  const rows = d.keys.map(k => [
+    k.key, k.type, k.hwid||"", k.expiresAt ? new Date(k.expiresAt).toISOString() : "Permanen",
+    new Date(k.createdAt).toISOString(), k.note||""
+  ].map(v => `"${v}"`).join(","));
+  const csv  = [header.join(","), ...rows].join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `forkyhub-keys-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  toast("📥 CSV didownload!");
+}
+
+// ── TABS ─────────────────────────────────────────────────────────
 function switchTab(id, el) {
-  ["tabGen","tabKeys","tabBan","tabKill"].forEach(t => document.getElementById(t).style.display = "none");
+  ["tGen","tKeys","tBan","tKill","tAnn","tCfg","tScripts"].forEach(t => document.getElementById(t).style.display = "none");
   document.getElementById(id).style.display = "block";
   document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
   el.classList.add("active");
-  if (id === "tabKeys") loadKeys();
-  if (id === "tabBan")  loadBlacklist();
-  if (id === "tabKill") loadKillStatus();
+  if (id === "tKeys")    loadKeys();
+  if (id === "tBan")     loadBlacklist();
+  if (id === "tKill")    loadKillStatus();
+  if (id === "tScripts") loadScriptEditor();
 }
 
-// ─── UTILS ───────────────────────────────────────────────────────
-function copyTxt(id) { copyToClip(document.getElementById(id).textContent); toast("📋 Dicopy!"); }
-function copyToClip(t) { try { navigator.clipboard.writeText(t); } catch { const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); } }
-
-let toastTimer;
-function toast(msg) {
-  const el = document.getElementById("toast");
-  el.textContent = msg; el.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
-}
+// ── UTILS ────────────────────────────────────────────────────────
+function cp(id) { cpText(document.getElementById(id).textContent); toast("📋 Dicopy!"); }
+function cpText(t) { try { navigator.clipboard.writeText(t); } catch { const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove(); } }
+let toastT;
+function toast(m) { const e=document.getElementById("toast");e.textContent=m;e.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("show"),2800); }
 </script>
 </body>
 </html>
