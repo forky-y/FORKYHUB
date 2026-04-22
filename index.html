@@ -254,6 +254,7 @@ tr:hover td{background:rgba(99,102,241,.04)}
       <div class="tab" onclick="switchTab('tAnn',this)">📢 Announcement</div>
       <div class="tab" onclick="switchTab('tCfg',this)">⚙️ Config</div>
       <div class="tab" onclick="switchTab('tScripts',this)">📋 Script Status</div>
+      <div class="tab" onclick="switchTab('tTitles',this)">✏️ Title Editor</div>
     </div>
 
     <!-- TAB: GENERATE -->
@@ -430,6 +431,67 @@ tr:hover td{background:rgba(99,102,241,.04)}
       <div class="card" style="margin-top:0">
         <div class="sec">Preview (tampilan user)</div>
         <div class="script-grid" id="scriptPreview"></div>
+      </div>
+    </div>
+
+    <!-- TAB: TITLE EDITOR -->
+    <div id="tTitles" style="display:none">
+      <div class="card">
+        <div class="sec">Title Editor Script Roblox</div>
+        <div style="font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.7">
+          Edit semua teks/title yang muncul di script Roblox. Script akan otomatis mengambil nilai ini dari server.
+          Setiap field punya label penjelasan apa fungsinya di script.
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-size:10px;color:var(--acc3);font-family:var(--mono);margin-bottom:6px;letter-spacing:1px">WINDOW TITLE</div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">Judul utama window script (gradient cyan→biru)</div>
+            <input class="ibox" id="t_windowTitle" placeholder="ForkyHUB">
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--acc3);font-family:var(--mono);margin-bottom:6px;letter-spacing:1px">WINDOW SUBTITLE (Author)</div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">Sub-judul / nama versi script</div>
+            <input class="ibox" id="t_windowSubtitle" placeholder="AutoWalk V1.0">
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--acc3);font-family:var(--mono);margin-bottom:6px;letter-spacing:1px">OPEN BUTTON TITLE</div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">Teks pada tombol buka GUI (pojok layar)</div>
+            <input class="ibox" id="t_openBtnTitle" placeholder="Forky Hub">
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--acc3);font-family:var(--mono);margin-bottom:6px;letter-spacing:1px">DISCORD URL (Tag)</div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">Link Discord yang muncul sebagai tag di bawah window</div>
+            <input class="ibox" id="t_discordUrl" placeholder="https://dsc.gg/forky">
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--acc3);font-family:var(--mono);margin-bottom:6px;letter-spacing:1px">TAG 1</div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">Tag pertama di bawah window (contoh: Premium Version)</div>
+            <input class="ibox" id="t_tag1" placeholder="Premium Version">
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--acc3);font-family:var(--mono);margin-bottom:6px;letter-spacing:1px">TAG 2 (opsional)</div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">Tag kedua, kosongkan jika tidak perlu</div>
+            <input class="ibox" id="t_tag2" placeholder="(kosong = tidak tampil)">
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px">
+          <button class="btn btn-p" onclick="saveTitles()">💾 Simpan Titles</button>
+          <button class="btn btn-o" onclick="loadTitles()">↻ Refresh</button>
+        </div>
+        <div id="titleStatus" style="margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--txt3)">—</div>
+      </div>
+      <!-- Preview -->
+      <div class="card">
+        <div class="sec">Preview WindUI Script</div>
+        <div style="background:var(--bg3);border-radius:10px;padding:18px;font-family:var(--mono);font-size:12px;line-height:2">
+          <div style="color:var(--txt3)">-- WindUI akan menggunakan nilai berikut:</div>
+          <div><span style="color:var(--acc3)">Title</span> = <span style="color:var(--ok)" id="prev_windowTitle">"ForkyHUB"</span></div>
+          <div><span style="color:var(--acc3)">Author</span> = <span style="color:var(--ok)" id="prev_windowSubtitle">"AutoWalk V1.0"</span></div>
+          <div><span style="color:var(--acc3)">OpenButton</span> = <span style="color:var(--ok)" id="prev_openBtnTitle">"Forky Hub"</span></div>
+          <div><span style="color:var(--acc3)">Discord Tag</span> = <span style="color:var(--ok)" id="prev_discordUrl">"https://dsc.gg/forky"</span></div>
+          <div><span style="color:var(--acc3)">Tag 1</span> = <span style="color:var(--ok)" id="prev_tag1">"Premium Version"</span></div>
+          <div><span style="color:var(--acc3)">Tag 2</span> = <span style="color:var(--ok)" id="prev_tag2">"(kosong)"</span></div>
+        </div>
       </div>
     </div>
 
@@ -829,7 +891,10 @@ function renderScriptPreview() {
 
 async function saveScripts() {
   const d = await apiFetch("/admin/scripts", { method: "POST", body: JSON.stringify(scriptRows) });
-  if (d.ok) toast("✅ Script status disimpan!"); else toast("❌ " + d.error);
+  if (d.ok) {
+    const n = d.changes ? d.changes.length : 0;
+    toast("✅ Tersimpan" + (n ? " — " + n + " perubahan dikirim ke Discord!" : "!"));
+  } else toast("❌ " + d.error);
 }
 
 // ── EXPORT CSV ───────────────────────────────────────────────────
@@ -850,9 +915,67 @@ async function exportCSV() {
   toast("📥 CSV didownload!");
 }
 
+
+// ── TITLE EDITOR ─────────────────────────────────────────────────
+const TITLE_FIELDS = ["windowTitle","windowSubtitle","openBtnTitle","discordUrl","tag1","tag2"];
+const TITLE_DEFAULTS = {
+  windowTitle: "ForkyHUB",
+  windowSubtitle: "AutoWalk V1.0",
+  openBtnTitle: "Forky Hub",
+  discordUrl: "https://dsc.gg/forky",
+  tag1: "Premium Version",
+  tag2: ""
+};
+
+async function loadTitles() {
+  const d = await apiFetch("/admin/titles");
+  if (!d.ok) { toast("❌ Gagal load titles"); return; }
+  const t = d.titles || {};
+  TITLE_FIELDS.forEach(f => {
+    const el = document.getElementById("t_" + f);
+    if (el) el.value = t[f] !== undefined ? t[f] : "";
+  });
+  updateTitlePreview();
+  const st = document.getElementById("titleStatus");
+  if (st) st.textContent = t.updatedAt
+    ? "Terakhir disimpan: " + new Date(t.updatedAt).toLocaleString("id-ID")
+    : "Belum pernah disimpan";
+}
+
+async function saveTitles() {
+  const body = {};
+  TITLE_FIELDS.forEach(f => { body[f] = document.getElementById("t_" + f)?.value.trim() || ""; });
+  const d = await apiFetch("/admin/titles", { method: "POST", body: JSON.stringify(body) });
+  if (d.ok) {
+    toast("✅ Titles disimpan & notif dikirim ke Discord!");
+    const st = document.getElementById("titleStatus");
+    if (st) st.textContent = "Tersimpan: " + new Date().toLocaleString("id-ID");
+    updateTitlePreview();
+  } else toast("❌ " + d.error);
+}
+
+function updateTitlePreview() {
+  TITLE_FIELDS.forEach(f => {
+    const input = document.getElementById("t_" + f);
+    const prev  = document.getElementById("prev_" + f);
+    if (!prev) return;
+    const val = input?.value.trim() || "";
+    if (f === "tag2") {
+      prev.textContent = val ? '"' + val + '"' : "(kosong = tidak tampil)";
+    } else {
+      prev.textContent = '"' + (val || TITLE_DEFAULTS[f] || "") + '"';
+    }
+  });
+}
+
+// Live preview update on input
+document.addEventListener("input", function(e) {
+  if (e.target && e.target.id && e.target.id.startsWith("t_")) updateTitlePreview();
+});
+
 // ── TABS ─────────────────────────────────────────────────────────
 function switchTab(id, el) {
-  ["tGen","tKeys","tBan","tKill","tAnn","tCfg","tScripts"].forEach(t => document.getElementById(t).style.display = "none");
+  ["tGen","tKeys","tBan","tKill","tAnn","tCfg","tScripts","tTitles"].forEach(t => document.getElementById(t).style.display = "none");
   document.getElementById(id).style.display = "block";
   document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
   el.classList.add("active");
@@ -860,6 +983,7 @@ function switchTab(id, el) {
   if (id === "tBan")     loadBlacklist();
   if (id === "tKill")    loadKillStatus();
   if (id === "tScripts") loadScriptEditor();
+  if (id === "tTitles")  loadTitles();
 }
 
 // ── UTILS ────────────────────────────────────────────────────────
