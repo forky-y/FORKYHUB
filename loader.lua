@@ -11,9 +11,9 @@ _G.ForkyHUB.Games = {
         name = "Eagle Nation",
         url = "https://gitlab.com/forky1/forkyHUB/-/raw/main/eagle.lua"
     },
-    [121500015379301] = {
-        name = "FishGod",
-        url = ""
+    [131378148336503] = {
+        name = "DDS",
+        url = "https://gitlab.com/forky1/forkyHUB/-/raw/main/dds.lua"
     },
     [2753915549] = {
         name = "BloxFruits",
