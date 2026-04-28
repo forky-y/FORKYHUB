@@ -162,9 +162,9 @@ tr:hover td{background:rgba(99,102,241,.04)}
 <!-- Login Overlay (admin) -->
 <div id="loginOverlay" style="display:none">
   <div class="lbox">
-    <div style="font-size:32px;margin-bottom:12px">ðŸ”</div>
+    <div style="font-size:32px;margin-bottom:12px">🔐</div>
     <h2>Admin Panel</h2>
-    <p>ForkyHUB Ultra â€” masukkan password</p>
+    <p>ForkyHUB Ultra — masukkan password</p>
     <input class="ibox" id="loginPw" type="password" placeholder="Password...">
     <button class="btn btn-p btn-full" style="margin-top:10px" onclick="doLogin()">Masuk</button>
   </div>
@@ -174,7 +174,7 @@ tr:hover td{background:rgba(99,102,241,.04)}
 <div class="wrap">
   <header>
     <div class="logo-wrap">
-      <div class="logo-icon">ðŸ”‘</div>
+      <div class="logo-icon">🔑</div>
       <div class="logo-txt">Forky<span>HUB</span></div>
     </div>
     <div class="ver">Ultra v4.0</div>
@@ -183,7 +183,7 @@ tr:hover td{background:rgba(99,102,241,.04)}
   <!-- ANNOUNCEMENT BANNER -->
   <div id="annBanner"></div>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• USER PAGE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ══════════════════ USER PAGE ══════════════════ -->
   <div id="userPage">
     <!-- Script Status -->
     <div class="sec" id="scriptSecLabel" style="display:none">Status Script</div>
@@ -197,11 +197,11 @@ tr:hover td{background:rgba(99,102,241,.04)}
     <div class="sec">Ambil Trial Key</div>
     <div class="card">
       <div style="font-size:13px;color:var(--txt2);margin-bottom:14px;line-height:1.7">Klik tombol di bawah untuk mendapatkan trial key gratis. Key akan otomatis terkunci ke perangkat kamu saat pertama kali dipakai.</div>
-      <button class="btn btn-p" onclick="doGetTrial()">ðŸŽ Ambil Trial Key</button>
+      <button class="btn btn-p" onclick="doGetTrial()">🎁 Ambil Trial Key</button>
       <div id="trialResult" style="display:none;margin-top:18px">
         <div class="kbox">
-          <div><div class="kval" id="trialKey">â€”</div><div class="ksub" id="trialExp">â€”</div></div>
-          <button class="btn btn-o btn-sm" onclick="cp('trialKey')">ðŸ“‹ Copy</button>
+          <div><div class="kval" id="trialKey">—</div><div class="ksub" id="trialExp">—</div></div>
+          <button class="btn btn-o btn-sm" onclick="cp('trialKey')">📋 Copy</button>
         </div>
         <div class="cd"><div class="cdu"><div class="cdn" id="cdH">00</div><div class="cdl">Jam</div></div><div class="cdu"><div class="cdn" id="cdM">00</div><div class="cdl">Menit</div></div><div class="cdu"><div class="cdn" id="cdS">00</div><div class="cdl">Detik</div></div></div>
       </div>
@@ -213,48 +213,48 @@ tr:hover td{background:rgba(99,102,241,.04)}
       <div class="irow">
         <input class="ibox" id="chkKey" placeholder="Key kamu (FORKYHUB-TRIAL-... / FORKYHUB-PREM-...)">
         <input class="ibox" id="chkHwid" placeholder="HWID kamu" style="max-width:220px">
-        <button class="btn btn-o" onclick="doCheckKey()">ðŸ” Cek</button>
+        <button class="btn btn-o" onclick="doCheckKey()">🔍 Cek</button>
       </div>
       <div id="chkResult" style="display:none">
         <div class="sep"></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
-          <div style="color:var(--txt3);font-family:var(--mono)">Status</div><div id="cr_status">â€”</div>
-          <div style="color:var(--txt3);font-family:var(--mono)">Tipe</div><div id="cr_type">â€”</div>
-          <div style="color:var(--txt3);font-family:var(--mono)">HWID</div><div id="cr_hwid">â€”</div>
-          <div style="color:var(--txt3);font-family:var(--mono)">Sisa Waktu</div><div id="cr_remain">â€”</div>
+          <div style="color:var(--txt3);font-family:var(--mono)">Status</div><div id="cr_status">—</div>
+          <div style="color:var(--txt3);font-family:var(--mono)">Tipe</div><div id="cr_type">—</div>
+          <div style="color:var(--txt3);font-family:var(--mono)">HWID</div><div id="cr_hwid">—</div>
+          <div style="color:var(--txt3);font-family:var(--mono)">Sisa Waktu</div><div id="cr_remain">—</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• ADMIN PAGE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ══════════════════ ADMIN PAGE ══════════════════ -->
   <div id="adminPage" style="display:none">
     <!-- Kill Switch Banner -->
     <div id="killBanner" class="kcard off" style="display:none">
-      <div><div id="killTitle" style="font-size:15px;font-weight:700">â€”</div><div id="killSub" style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-top:3px">â€”</div></div>
-      <button class="btn btn-sm" id="killBannerBtn" onclick="toggleKill()">â€”</button>
+      <div><div id="killTitle" style="font-size:15px;font-weight:700">—</div><div id="killSub" style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-top:3px">—</div></div>
+      <button class="btn btn-sm" id="killBannerBtn" onclick="toggleKill()">—</button>
     </div>
 
     <!-- Stats -->
     <div class="sg">
-      <div class="sc"><div class="sn" id="st_total">â€”</div><div class="sl">Total Keys</div></div>
-      <div class="sc"><div class="sn" id="st_prem">â€”</div><div class="sl">Premium</div></div>
-      <div class="sc"><div class="sn" id="st_trial">â€”</div><div class="sl">Trial</div></div>
-      <div class="sc"><div class="sn" id="st_locked">â€”</div><div class="sl">HWID Locked</div></div>
-      <div class="sc"><div class="sn" id="st_exp">â€”</div><div class="sl">Expired</div></div>
-      <div class="sc"><div class="sn" id="st_ban">â€”</div><div class="sl">Blacklist</div></div>
+      <div class="sc"><div class="sn" id="st_total">—</div><div class="sl">Total Keys</div></div>
+      <div class="sc"><div class="sn" id="st_prem">—</div><div class="sl">Premium</div></div>
+      <div class="sc"><div class="sn" id="st_trial">—</div><div class="sl">Trial</div></div>
+      <div class="sc"><div class="sn" id="st_locked">—</div><div class="sl">HWID Locked</div></div>
+      <div class="sc"><div class="sn" id="st_exp">—</div><div class="sl">Expired</div></div>
+      <div class="sc"><div class="sn" id="st_ban">—</div><div class="sl">Blacklist</div></div>
     </div>
 
     <!-- Tabs -->
     <div class="tabs">
-      <div class="tab active" onclick="switchTab('tGen',this)">âš¡ Generate</div>
-      <div class="tab" onclick="switchTab('tKeys',this)">ðŸ— Keys</div>
-      <div class="tab" onclick="switchTab('tBan',this)">ðŸš« Blacklist</div>
-      <div class="tab" onclick="switchTab('tKill',this)">ðŸ”´ Kill Switch</div>
-      <div class="tab" onclick="switchTab('tAnn',this)">ðŸ“¢ Announcement</div>
-      <div class="tab" onclick="switchTab('tCfg',this)">âš™ï¸ Config</div>
-      <div class="tab" onclick="switchTab('tScripts',this)">ðŸ“‹ Script Status</div>
-      <div class="tab" onclick="switchTab('tTitles',this)">âœï¸ Title Editor</div>
+      <div class="tab active" onclick="switchTab('tGen',this)">⚡ Generate</div>
+      <div class="tab" onclick="switchTab('tKeys',this)">🗝 Keys</div>
+      <div class="tab" onclick="switchTab('tBan',this)">🚫 Blacklist</div>
+      <div class="tab" onclick="switchTab('tKill',this)">🔴 Kill Switch</div>
+      <div class="tab" onclick="switchTab('tAnn',this)">📢 Announcement</div>
+      <div class="tab" onclick="switchTab('tCfg',this)">⚙️ Config</div>
+      <div class="tab" onclick="switchTab('tScripts',this)">📋 Script Status</div>
+      <div class="tab" onclick="switchTab('tTitles',this)">✏️ Title Editor</div>
     </div>
 
     <!-- TAB: GENERATE -->
@@ -271,7 +271,7 @@ tr:hover td{background:rgba(99,102,241,.04)}
           <div><div style="font-size:10px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">CATATAN</div>
             <input class="ibox" id="gNote" placeholder="Nama buyer, order ID..."></div>
         </div>
-        <button class="btn btn-p" onclick="doGenKey()">âœ¨ Generate Keys</button>
+        <button class="btn btn-p" onclick="doGenKey()">✨ Generate Keys</button>
         <div id="genOut" style="display:none;margin-top:18px">
           <div class="sep"></div>
           <div class="sec">Hasil</div>
@@ -286,15 +286,15 @@ tr:hover td{background:rgba(99,102,241,.04)}
         <div style="padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
           <div style="font-weight:700;font-size:15px">Database Keys</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-o btn-sm" onclick="loadKeys()">â†» Refresh</button>
-            <button class="btn btn-o btn-sm" onclick="exportCSV()">ðŸ“¥ Export CSV</button>
-            <button class="btn btn-d btn-sm" onclick="bulkDel('expired')">ðŸ—‘ Hapus Expired</button>
+            <button class="btn btn-o btn-sm" onclick="loadKeys()">↻ Refresh</button>
+            <button class="btn btn-o btn-sm" onclick="exportCSV()">📥 Export CSV</button>
+            <button class="btn btn-d btn-sm" onclick="bulkDel('expired')">🗑 Hapus Expired</button>
           </div>
         </div>
         <!-- Search + Filter -->
         <div style="padding:12px 20px;border-bottom:1px solid var(--line)">
           <div class="search-row">
-            <input class="ibox" id="srchKey" placeholder="ðŸ” Cari key / HWID / note..." oninput="renderKeys()">
+            <input class="ibox" id="srchKey" placeholder="🔍 Cari key / HWID / note..." oninput="renderKeys()">
             <select class="ibox" id="srchType" onchange="renderKeys()" style="max-width:160px">
               <option value="">Semua Tipe</option>
               <option value="premium">Premium</option>
@@ -316,7 +316,7 @@ tr:hover td{background:rgba(99,102,241,.04)}
           </table>
         </div>
         <div style="padding:12px 20px;border-top:1px solid var(--line);display:flex;gap:8px">
-          <button class="btn btn-d btn-sm" onclick="bulkDelSelected()">ðŸ—‘ Hapus Terpilih</button>
+          <button class="btn btn-d btn-sm" onclick="bulkDelSelected()">🗑 Hapus Terpilih</button>
           <span id="selCount" style="font-size:12px;color:var(--txt3);font-family:var(--mono);align-self:center">0 terpilih</span>
         </div>
       </div>
@@ -324,7 +324,7 @@ tr:hover td{background:rgba(99,102,241,.04)}
       <div id="editDurCard" style="display:none;margin-top:14px">
         <div class="card">
           <div class="sec">Edit Durasi Key</div>
-          <div style="font-family:var(--mono);font-size:12px;color:var(--acc3);margin-bottom:12px" id="editDurKey">â€”</div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--acc3);margin-bottom:12px" id="editDurKey">—</div>
           <div class="irow">
             <select class="ibox" id="editDurMode" style="max-width:200px">
               <option value="add">Tambah jam</option>
@@ -333,8 +333,8 @@ tr:hover td{background:rgba(99,102,241,.04)}
               <option value="perm">Jadikan Permanen</option>
             </select>
             <input class="ibox" id="editDurVal" type="number" placeholder="Jumlah jam" style="max-width:160px">
-            <button class="btn btn-p" onclick="doEditDur()">âœ… Simpan</button>
-            <button class="btn btn-o" onclick="document.getElementById('editDurCard').style.display='none'">âœ• Batal</button>
+            <button class="btn btn-p" onclick="doEditDur()">✅ Simpan</button>
+            <button class="btn btn-o" onclick="document.getElementById('editDurCard').style.display='none'">✕ Batal</button>
           </div>
         </div>
       </div>
@@ -347,13 +347,13 @@ tr:hover td{background:rgba(99,102,241,.04)}
         <div class="irow">
           <input class="ibox" id="blHwid" placeholder="HWID yang diblokir">
           <input class="ibox" id="blReason" placeholder="Alasan" style="max-width:200px">
-          <button class="btn btn-d" onclick="doBlacklist()">ðŸš« Blacklist</button>
+          <button class="btn btn-d" onclick="doBlacklist()">🚫 Blacklist</button>
         </div>
       </div>
       <div class="card" style="padding:0;overflow:hidden">
         <div style="padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between">
           <div style="font-weight:700">Daftar Blacklist</div>
-          <button class="btn btn-o btn-sm" onclick="loadBlacklist()">â†» Refresh</button>
+          <button class="btn btn-o btn-sm" onclick="loadBlacklist()">↻ Refresh</button>
         </div>
         <div class="tbl-wrap"><table>
           <thead><tr><th>HWID</th><th>Alasan</th><th>Waktu</th></tr></thead>
@@ -369,10 +369,10 @@ tr:hover td{background:rgba(99,102,241,.04)}
         <div style="font-size:13px;color:var(--txt2);line-height:1.8;margin-bottom:18px">Kill Switch mematikan <strong>seluruh validasi</strong> di Worker secara instan. Semua user yang mencoba validasi key akan mendapat error.</div>
         <input class="ibox" id="killMsg" placeholder="Pesan untuk user (opsional)" style="margin-bottom:12px">
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn btn-d" onclick="setKill(true)">ðŸ”´ Aktifkan Kill Switch</button>
-          <button class="btn btn-ok" onclick="setKill(false)">ðŸŸ¢ Nonaktifkan</button>
+          <button class="btn btn-d" onclick="setKill(true)">🔴 Aktifkan Kill Switch</button>
+          <button class="btn btn-ok" onclick="setKill(false)">🟢 Nonaktifkan</button>
         </div>
-        <div id="killStatus" style="margin-top:16px;font-family:var(--mono);font-size:12px;color:var(--txt3)">Status: â€”</div>
+        <div id="killStatus" style="margin-top:16px;font-family:var(--mono);font-size:12px;color:var(--txt3)">Status: —</div>
       </div>
     </div>
 
@@ -383,16 +383,16 @@ tr:hover td{background:rgba(99,102,241,.04)}
         <div style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.7">Pesan ini akan muncul sebagai banner di halaman user (atas halaman).</div>
         <div class="irow" style="margin-bottom:10px">
           <select class="ibox" id="annType" style="max-width:160px">
-            <option value="info">â„¹ï¸ Info (Biru)</option>
-            <option value="warn">âš ï¸ Warning (Kuning)</option>
-            <option value="danger">ðŸ”´ Danger (Merah)</option>
+            <option value="info">ℹ️ Info (Biru)</option>
+            <option value="warn">⚠️ Warning (Kuning)</option>
+            <option value="danger">🔴 Danger (Merah)</option>
           </select>
           <label class="chk"><input type="checkbox" id="annActive" checked> Aktifkan</label>
         </div>
         <textarea class="ibox" id="annText" placeholder="Teks announcement..." style="height:80px;padding:10px;resize:vertical;line-height:1.6"></textarea>
         <div style="display:flex;gap:10px;margin-top:12px">
-          <button class="btn btn-p" onclick="saveAnn()">ðŸ’¾ Simpan Announcement</button>
-          <button class="btn btn-o" onclick="clearAnn()">âœ• Hapus Banner</button>
+          <button class="btn btn-p" onclick="saveAnn()">💾 Simpan Announcement</button>
+          <button class="btn btn-o" onclick="clearAnn()">✕ Hapus Banner</button>
         </div>
         <div class="sep"></div>
         <div class="sec">Preview</div>
@@ -408,11 +408,11 @@ tr:hover td{background:rgba(99,102,241,.04)}
           <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:8px">DURASI TRIAL KEY (JAM)</div>
           <div class="irow">
             <input class="ibox" id="cfgTrialHours" type="number" value="6" min="1" style="max-width:160px">
-            <button class="btn btn-p" onclick="saveCfg()">ðŸ’¾ Simpan</button>
+            <button class="btn btn-p" onclick="saveCfg()">💾 Simpan</button>
           </div>
           <div style="font-size:12px;color:var(--txt3);margin-top:6px;font-family:var(--mono)">Default: 6 jam. Ubah ini untuk semua trial key yang dibuat setelah ini.</div>
         </div>
-        <div id="cfgStatus" style="font-size:12px;font-family:var(--mono);color:var(--txt3)">â€”</div>
+        <div id="cfgStatus" style="font-size:12px;font-family:var(--mono);color:var(--txt3)">—</div>
       </div>
     </div>
 
@@ -423,8 +423,8 @@ tr:hover td{background:rgba(99,102,241,.04)}
         <div style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.7">Daftar ini muncul di halaman user dan halaman login. Tambah, edit, atau hapus script sesuai kebutuhan.</div>
         <div id="scriptEditorList"></div>
         <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
-          <button class="btn btn-o" onclick="addScriptRow()">âž• Tambah Script</button>
-          <button class="btn btn-p" onclick="saveScripts()">ðŸ’¾ Simpan Semua</button>
+          <button class="btn btn-o" onclick="addScriptRow()">➕ Tambah Script</button>
+          <button class="btn btn-p" onclick="saveScripts()">💾 Simpan Semua</button>
         </div>
       </div>
       <!-- Preview -->
@@ -445,7 +445,7 @@ tr:hover td{background:rgba(99,102,241,.04)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div>
             <div style="font-size:10px;color:var(--acc3);font-family:var(--mono);margin-bottom:6px;letter-spacing:1px">WINDOW TITLE</div>
-            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">Judul utama window script (gradient cyanâ†’biru)</div>
+            <div style="font-size:11px;color:var(--txt3);font-family:var(--mono);margin-bottom:6px">Judul utama window script (gradient cyan→biru)</div>
             <input class="ibox" id="t_windowTitle" placeholder="ForkyHUB">
           </div>
           <div>
@@ -475,10 +475,10 @@ tr:hover td{background:rgba(99,102,241,.04)}
           </div>
         </div>
         <div style="display:flex;gap:10px;margin-top:20px">
-          <button class="btn btn-p" onclick="saveTitles()">ðŸ’¾ Simpan Titles</button>
-          <button class="btn btn-o" onclick="loadTitles()">â†» Refresh</button>
+          <button class="btn btn-p" onclick="saveTitles()">💾 Simpan Titles</button>
+          <button class="btn btn-o" onclick="loadTitles()">↻ Refresh</button>
         </div>
-        <div id="titleStatus" style="margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--txt3)">â€”</div>
+        <div id="titleStatus" style="margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--txt3)">—</div>
       </div>
       <!-- Preview -->
       <div class="card">
@@ -499,16 +499,15 @@ tr:hover td{background:rgba(99,102,241,.04)}
 </div><!-- /wrap -->
 
 <script>
-// â”€â”€ CONFIG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const WORKER = "https://forkyhub-worker-production.forkyhub.workers.dev";
-const API_BASE = "https://forkyhub-worker-production.forkyhub.workers.dev";
-let adminToken = null;
+// ── CONFIG ──────────────────────────────────────────────────────
+const WORKER = "https://forkyhub-worker.forkyhub.workers.dev";
+let ADMIN_TOKEN = null;
 let killActive  = false;
 let allKeys     = [];
 let cdInt       = null;
 let editDurTarget = null;
 
-// â”€â”€ BOOT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── BOOT ────────────────────────────────────────────────────────
 function boot() {
   if (location.hash === "#admin") {
     document.getElementById("userPage").style.display  = "none";
@@ -523,7 +522,7 @@ function boot() {
 window.addEventListener("hashchange", boot);
 boot();
 
-// â”€â”€ PUBLIC DATA (announcement + scripts + trial hours) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── PUBLIC DATA (announcement + scripts + trial hours) ──────────
 async function loadPublic() {
   try {
     const d = await fetch(`${WORKER}/public`).then(r => r.json());
@@ -544,15 +543,15 @@ async function loadPublic() {
 }
 
 function renderScriptGrid(scripts, targetId) {
-  const statusLabel = { working: "Working âœ“", high_risk: "High Risk âš ", ban_wave: "Ban Wave âœ—", offline: "Offline â€”" };
+  const statusLabel = { working: "Working ✓", high_risk: "High Risk ⚠", ban_wave: "Ban Wave ✗", offline: "Offline —" };
   document.getElementById(targetId).innerHTML = scripts.map(s => `
     <div class="script-card">
       <div class="sc-dot ${s.status}"></div>
-      <div><div class="sc-name">${s.name}</div><div class="sc-status">${statusLabel[s.status] || s.status}${s.note ? " Â· " + s.note : ""}</div></div>
+      <div><div class="sc-name">${s.name}</div><div class="sc-status">${statusLabel[s.status] || s.status}${s.note ? " · " + s.note : ""}</div></div>
     </div>`).join("");
 }
 
-// â”€â”€ SERVER STATUS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── SERVER STATUS ────────────────────────────────────────────────
 async function checkStatus() {
   const dot = document.getElementById("svrDot");
   const txt = document.getElementById("svrTxt");
@@ -560,25 +559,25 @@ async function checkStatus() {
     const d = await fetch(`${WORKER}/status`).then(r => r.json());
     if (d.kill) {
       dot.className = "dot err"; txt.style.color = "var(--err)";
-      txt.textContent = "âš ï¸ Script dinonaktifkan: " + (d.message || "Maintenance");
+      txt.textContent = "⚠️ Script dinonaktifkan: " + (d.message || "Maintenance");
     } else {
       dot.className = "dot ok"; txt.style.color = "var(--ok)";
-      txt.textContent = "Server online â€” " + new Date(d.ts).toLocaleTimeString("id-ID");
+      txt.textContent = "Server online — " + new Date(d.ts).toLocaleTimeString("id-ID");
     }
   } catch { dot.className = "dot err"; txt.style.color = "var(--err)"; txt.textContent = "Server tidak bisa dihubungi"; }
 }
 
-// â”€â”€ GET TRIAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── GET TRIAL ────────────────────────────────────────────────────
 async function doGetTrial() {
   try {
     const d = await fetch(`${WORKER}/trial`).then(r => r.json());
-    if (!d.ok) { toast("âŒ " + (d.message || d.error)); return; }
+    if (!d.ok) { toast("❌ " + (d.message || d.error)); return; }
     document.getElementById("trialKey").textContent = d.key;
     document.getElementById("trialExp").textContent = d.expiresAt ? "Berlaku hingga " + new Date(d.expiresAt).toLocaleString("id-ID") : "Permanen";
     document.getElementById("trialResult").style.display = "block";
     if (d.expiresAt) startCD(d.expiresAt);
-    cpText(d.key); toast("âœ… Key diambil & dicopy!");
-  } catch { toast("âŒ Gagal menghubungi server"); }
+    cpText(d.key); toast("✅ Key diambil & dicopy!");
+  } catch { toast("❌ Gagal menghubungi server"); }
 }
 
 function startCD(exp) {
@@ -593,27 +592,27 @@ function startCD(exp) {
   tick(); cdInt = setInterval(tick, 1000);
 }
 
-// â”€â”€ CHECK KEY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── CHECK KEY ────────────────────────────────────────────────────
 async function doCheckKey() {
   const key  = document.getElementById("chkKey").value.trim();
   const hwid = document.getElementById("chkHwid").value.trim();
-  if (!key || !hwid) { toast("âš  Isi key dan HWID"); return; }
+  if (!key || !hwid) { toast("⚠ Isi key dan HWID"); return; }
   try {
     const d = await fetch(`${WORKER}/validate?key=${encodeURIComponent(key)}&hwid=${encodeURIComponent(hwid)}`).then(r => r.json());
     document.getElementById("chkResult").style.display = "block";
     const fmtMs = ms => { if(!ms||ms<=0) return "Expired"; const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000); return h>=24?`${Math.floor(h/24)}d ${h%24}h`:`${h}h ${m}m ${s}s`; };
-    document.getElementById("cr_status").innerHTML = d.valid ? `<span style="color:var(--ok)">âœ… Valid</span>` : `<span style="color:var(--err)">âŒ ${d.error||"Invalid"}</span>`;
-    document.getElementById("cr_type").textContent   = d.type ? d.type.toUpperCase() : "â€”";
-    document.getElementById("cr_hwid").textContent   = d.hwid ? d.hwid.slice(0,20)+"â€¦" : "Belum terkunci";
+    document.getElementById("cr_status").innerHTML = d.valid ? `<span style="color:var(--ok)">✅ Valid</span>` : `<span style="color:var(--err)">❌ ${d.error||"Invalid"}</span>`;
+    document.getElementById("cr_type").textContent   = d.type ? d.type.toUpperCase() : "—";
+    document.getElementById("cr_hwid").textContent   = d.hwid ? d.hwid.slice(0,20)+"…" : "Belum terkunci";
     document.getElementById("cr_remain").textContent = d.remainMs != null ? fmtMs(d.remainMs) : (d.expiresAt ? "Expired" : "Permanen");
-  } catch { toast("âŒ Gagal"); }
+  } catch { toast("❌ Gagal"); }
 }
 
 // ================================================================
 //  ADMIN
 // ================================================================
 async function doLogin() {
-  adminToken = document.getElementById("loginPw").value;
+  ADMIN_TOKEN = document.getElementById("loginPw").value;
   document.getElementById("loginOverlay").style.display = "none";
   await loadAdminAll();
 }
@@ -621,7 +620,7 @@ async function doLogin() {
 async function apiFetch(path, opts = {}) {
   const r = await fetch(WORKER + path, {
     ...opts,
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${adminToken}`, ...(opts.headers||{}) },
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${ADMIN_TOKEN}`, ...(opts.headers||{}) },
   });
   return r.json();
 }
@@ -630,7 +629,7 @@ async function loadAdminAll() { await Promise.all([loadStats(), loadKillStatus()
 
 async function loadStats() {
   const d = await apiFetch("/admin/stats");
-  if (!d.ok) { toast("âŒ Password salah / Worker error"); return; }
+  if (!d.ok) { toast("❌ Password salah / Worker error"); return; }
   const s = d.stats;
   document.getElementById("st_total").textContent  = s.total;
   document.getElementById("st_prem").textContent   = s.premium;
@@ -647,7 +646,7 @@ async function loadKillStatus() {
   killActive = d.kill;
   updateKillUI();
   const el = document.getElementById("killStatus");
-  el.textContent = "Kill Switch: " + (d.kill ? "ðŸ”´ AKTIF â€” " + (d.message || "Tanpa pesan") : "ðŸŸ¢ Tidak aktif");
+  el.textContent = "Kill Switch: " + (d.kill ? "🔴 AKTIF — " + (d.message || "Tanpa pesan") : "🟢 Tidak aktif");
   el.style.color = d.kill ? "var(--err)" : "var(--ok)";
 }
 
@@ -660,9 +659,9 @@ function updateKillUI() {
   const b = document.getElementById("killBanner");
   b.style.display = "flex";
   b.className = "kcard " + (killActive ? "on" : "off");
-  document.getElementById("killTitle").textContent = killActive ? "âš ï¸ Kill Switch AKTIF â€” Script dimatikan" : "âœ… Script Berjalan Normal";
+  document.getElementById("killTitle").textContent = killActive ? "⚠️ Kill Switch AKTIF — Script dimatikan" : "✅ Script Berjalan Normal";
   document.getElementById("killSub").textContent   = killActive ? "Semua validasi diblokir" : "Semua sistem online";
-  document.getElementById("killBannerBtn").textContent = killActive ? "ðŸŸ¢ Hidupkan" : "ðŸ”´ Matikan";
+  document.getElementById("killBannerBtn").textContent = killActive ? "🟢 Hidupkan" : "🔴 Matikan";
   document.getElementById("killBannerBtn").className   = "btn btn-sm " + (killActive ? "btn-ok" : "btn-d");
 }
 
@@ -671,11 +670,11 @@ function toggleKill() { setKill(!killActive); }
 async function setKill(active) {
   const msg = document.getElementById("killMsg").value;
   const d = await apiFetch("/admin/killswitch", { method: "POST", body: JSON.stringify({ active, message: msg }) });
-  if (d.ok) { killActive = active; updateKillUI(); await loadKillStatus(); toast(active ? "ðŸ”´ Kill Switch aktif!" : "ðŸŸ¢ Script hidup kembali!"); }
-  else toast("âŒ " + d.error);
+  if (d.ok) { killActive = active; updateKillUI(); await loadKillStatus(); toast(active ? "🔴 Kill Switch aktif!" : "🟢 Script hidup kembali!"); }
+  else toast("❌ " + d.error);
 }
 
-// â”€â”€ GENERATE KEY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── GENERATE KEY ────────────────────────────────────────────────
 async function doGenKey() {
   const d = await apiFetch("/admin/keygen", { method: "POST", body: JSON.stringify({
     type: document.getElementById("gType").value,
@@ -683,22 +682,22 @@ async function doGenKey() {
     amount: Number(document.getElementById("gAmt").value) || 1,
     note: document.getElementById("gNote").value,
   })});
-  if (!d.ok) { toast("âŒ " + d.error); return; }
+  if (!d.ok) { toast("❌ " + d.error); return; }
   document.getElementById("genList").innerHTML = d.keys.map(k => `
     <div class="kbox" style="margin-bottom:8px">
-      <div><div class="kval">${k.key}</div><div class="ksub">${k.expiresAt ? new Date(k.expiresAt).toLocaleString("id-ID") : "Permanen"} Â· ${k.type}</div></div>
-      <button class="btn btn-o btn-sm" onclick="cpText('${k.key}');toast('ðŸ“‹ Copied!')">ðŸ“‹</button>
+      <div><div class="kval">${k.key}</div><div class="ksub">${k.expiresAt ? new Date(k.expiresAt).toLocaleString("id-ID") : "Permanen"} · ${k.type}</div></div>
+      <button class="btn btn-o btn-sm" onclick="cpText('${k.key}');toast('📋 Copied!')">📋</button>
     </div>`).join("");
   document.getElementById("genOut").style.display = "block";
-  toast(`âœ… ${d.keys.length} key dibuat!`);
+  toast(`✅ ${d.keys.length} key dibuat!`);
   loadStats();
 }
 
-// â”€â”€ KEYS TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── KEYS TABLE ───────────────────────────────────────────────────
 async function loadKeys() {
   document.getElementById("keysTbl").innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--txt3)">Loading...</td></tr>`;
   const d = await apiFetch("/admin/keys");
-  if (!d.ok) { toast("âŒ Gagal"); return; }
+  if (!d.ok) { toast("❌ Gagal"); return; }
   allKeys = d.keys;
   renderKeys();
 }
@@ -708,7 +707,7 @@ function renderKeys() {
   const fType  = document.getElementById("srchType").value;
   const fStat  = document.getElementById("srchStatus").value;
   const now    = Date.now();
-  const fmtMs  = ms => { if(!ms||ms<=0) return "â€”"; const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000); return h>=24?`${Math.floor(h/24)}d ${h%24}h`:`${h}h ${m}m`; };
+  const fmtMs  = ms => { if(!ms||ms<=0) return "—"; const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000); return h>=24?`${Math.floor(h/24)}d ${h%24}h`:`${h}h ${m}m`; };
 
   const filtered = allKeys.filter(k => {
     const exp = k.expiresAt && now > k.expiresAt;
@@ -730,7 +729,7 @@ function renderKeys() {
     const exp     = k.expiresAt && now > k.expiresAt;
     const rem     = k.expiresAt ? Math.max(0, k.expiresAt - now) : null;
     const expStr  = k.expiresAt ? new Date(k.expiresAt).toLocaleString("id-ID",{dateStyle:"short",timeStyle:"short"}) : "Permanen";
-    const hwidEl  = k.hwid ? `<span class="pill locked">${k.hwid.slice(0,12)}â€¦</span>` : `<span class="pill free">Kosong</span>`;
+    const hwidEl  = k.hwid ? `<span class="pill locked">${k.hwid.slice(0,12)}…</span>` : `<span class="pill free">Kosong</span>`;
     return `<tr>
       <td><input type="checkbox" class="row-chk" data-key="${k.key}" onchange="updateSelCount()"></td>
       <td style="color:var(--acc3);font-weight:600">${k.key}</td>
@@ -738,12 +737,12 @@ function renderKeys() {
       <td>${hwidEl}</td>
       <td>${expStr}</td>
       <td style="color:${exp?'var(--err)':'var(--txt2)'}">${exp ? "Expired" : rem ? fmtMs(rem) : "Permanen"}</td>
-      <td style="color:var(--txt3)">${k.note||"â€”"}</td>
+      <td style="color:var(--txt3)">${k.note||"—"}</td>
       <td>
         <div style="display:flex;gap:5px">
-          <button class="btn btn-o btn-sm" onclick="openEditDur('${k.key}')">âœï¸</button>
-          <button class="btn btn-o btn-sm" onclick="doResetHwid('${k.key}')">â†º</button>
-          <button class="btn btn-d btn-sm" onclick="doDelKey('${k.key}')">âœ•</button>
+          <button class="btn btn-o btn-sm" onclick="openEditDur('${k.key}')">✏️</button>
+          <button class="btn btn-o btn-sm" onclick="doResetHwid('${k.key}')">↺</button>
+          <button class="btn btn-d btn-sm" onclick="doDelKey('${k.key}')">✕</button>
         </div>
       </td>
     </tr>`;
@@ -760,21 +759,21 @@ function updateSelCount() {
 }
 async function bulkDelSelected() {
   const keys = [...document.querySelectorAll(".row-chk:checked")].map(c => c.dataset.key);
-  if (!keys.length) { toast("âš  Pilih key dulu"); return; }
+  if (!keys.length) { toast("⚠ Pilih key dulu"); return; }
   if (!confirm(`Hapus ${keys.length} key?`)) return;
   const d = await apiFetch("/admin/bulkdelete", { method: "DELETE", body: JSON.stringify({ mode: "list", keys }) });
-  if (d.ok) { toast(`ðŸ—‘ ${d.deleted} key dihapus`); loadKeys(); loadStats(); }
-  else toast("âŒ " + d.error);
+  if (d.ok) { toast(`🗑 ${d.deleted} key dihapus`); loadKeys(); loadStats(); }
+  else toast("❌ " + d.error);
 }
 async function bulkDel(mode) {
   const label = { expired: "semua key expired", all: "SEMUA key" }[mode] || mode;
   if (!confirm(`Hapus ${label}?`)) return;
   const d = await apiFetch("/admin/bulkdelete", { method: "DELETE", body: JSON.stringify({ mode }) });
-  if (d.ok) { toast(`ðŸ—‘ ${d.deleted} key dihapus`); loadKeys(); loadStats(); }
-  else toast("âŒ " + d.error);
+  if (d.ok) { toast(`🗑 ${d.deleted} key dihapus`); loadKeys(); loadStats(); }
+  else toast("❌ " + d.error);
 }
 
-// â”€â”€ EDIT DURATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── EDIT DURATION ────────────────────────────────────────────────
 function openEditDur(key) {
   editDurTarget = key;
   document.getElementById("editDurKey").textContent = key;
@@ -790,39 +789,39 @@ async function doEditDur() {
   if (mode === "set")  body.setHours = val;
   if (mode === "perm") body.setHours = 0;
   const d = await apiFetch("/admin/editduration", { method: "PATCH", body: JSON.stringify(body) });
-  if (d.ok) { toast("âœ… Durasi diubah!"); document.getElementById("editDurCard").style.display = "none"; loadKeys(); }
-  else toast("âŒ " + d.error);
+  if (d.ok) { toast("✅ Durasi diubah!"); document.getElementById("editDurCard").style.display = "none"; loadKeys(); }
+  else toast("❌ " + d.error);
 }
 
 async function doDelKey(key) {
   if (!confirm(`Hapus key ${key}?`)) return;
   const d = await apiFetch("/admin/delete", { method: "DELETE", body: JSON.stringify({ key }) });
-  if (d.ok) { toast("ðŸ—‘ Key dihapus"); loadKeys(); loadStats(); }
-  else toast("âŒ " + d.error);
+  if (d.ok) { toast("🗑 Key dihapus"); loadKeys(); loadStats(); }
+  else toast("❌ " + d.error);
 }
 async function doResetHwid(key) {
   const d = await apiFetch("/admin/resetHwid", { method: "POST", body: JSON.stringify({ key }) });
-  if (d.ok) { toast("ðŸ”„ HWID direset!"); loadKeys(); }
-  else toast("âŒ " + d.error);
+  if (d.ok) { toast("🔄 HWID direset!"); loadKeys(); }
+  else toast("❌ " + d.error);
 }
 
-// â”€â”€ BLACKLIST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── BLACKLIST ────────────────────────────────────────────────────
 async function doBlacklist() {
   const hwid = document.getElementById("blHwid").value.trim();
   const reason = document.getElementById("blReason").value.trim();
-  if (!hwid) { toast("âš  Masukkan HWID"); return; }
+  if (!hwid) { toast("⚠ Masukkan HWID"); return; }
   const d = await apiFetch("/admin/blacklist", { method: "POST", body: JSON.stringify({ hwid, reason }) });
-  if (d.ok) { toast("ðŸš« HWID diblacklist!"); loadBlacklist(); loadStats(); document.getElementById("blHwid").value = ""; }
-  else toast("âŒ " + d.error);
+  if (d.ok) { toast("🚫 HWID diblacklist!"); loadBlacklist(); loadStats(); document.getElementById("blHwid").value = ""; }
+  else toast("❌ " + d.error);
 }
 async function loadBlacklist() {
   const d = await apiFetch("/admin/blacklist");
   const tb = document.getElementById("banTbl");
   if (!d.ok || !d.list.length) { tb.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--txt3)">Kosong</td></tr>`; return; }
-  tb.innerHTML = d.list.map(b => `<tr><td style="color:var(--err)">${b.hwid}</td><td>${b.reason||"â€”"}</td><td>${new Date(b.bannedAt).toLocaleString("id-ID")}</td></tr>`).join("");
+  tb.innerHTML = d.list.map(b => `<tr><td style="color:var(--err)">${b.hwid}</td><td>${b.reason||"—"}</td><td>${new Date(b.bannedAt).toLocaleString("id-ID")}</td></tr>`).join("");
 }
 
-// â”€â”€ ANNOUNCEMENT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── ANNOUNCEMENT ────────────────────────────────────────────────
 const annTypeColors = { info: "var(--info)", warn: "var(--warn)", danger: "var(--err)" };
 document.getElementById("annType").addEventListener("change", updateAnnPreview);
 document.getElementById("annText").addEventListener("input", updateAnnPreview);
@@ -843,22 +842,22 @@ async function saveAnn() {
   const type   = document.getElementById("annType").value;
   const active = document.getElementById("annActive").checked;
   const d = await apiFetch("/admin/announcement", { method: "POST", body: JSON.stringify({ text, type, active }) });
-  if (d.ok) toast("âœ… Announcement disimpan!"); else toast("âŒ " + d.error);
+  if (d.ok) toast("✅ Announcement disimpan!"); else toast("❌ " + d.error);
 }
 async function clearAnn() {
   const d = await apiFetch("/admin/announcement", { method: "POST", body: JSON.stringify({ text: "", type: "info", active: false }) });
-  if (d.ok) { document.getElementById("annText").value = ""; document.getElementById("annPreview").style.display = "none"; toast("âœ… Banner dihapus"); }
+  if (d.ok) { document.getElementById("annText").value = ""; document.getElementById("annPreview").style.display = "none"; toast("✅ Banner dihapus"); }
 }
 
-// â”€â”€ CONFIG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── CONFIG ───────────────────────────────────────────────────────
 async function saveCfg() {
   const trialHours = Number(document.getElementById("cfgTrialHours").value);
   const d = await apiFetch("/admin/config", { method: "POST", body: JSON.stringify({ trialHours }) });
-  if (d.ok) { toast(`âœ… Trial duration diset ke ${trialHours} jam`); document.getElementById("cfgStatus").textContent = `Tersimpan: trial = ${trialHours} jam`; }
-  else toast("âŒ " + d.error);
+  if (d.ok) { toast(`✅ Trial duration diset ke ${trialHours} jam`); document.getElementById("cfgStatus").textContent = `Tersimpan: trial = ${trialHours} jam`; }
+  else toast("❌ " + d.error);
 }
 
-// â”€â”€ SCRIPT STATUS EDITOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── SCRIPT STATUS EDITOR ─────────────────────────────────────────
 let scriptRows = [];
 
 async function loadScriptEditor() {
@@ -871,13 +870,13 @@ function renderScriptEditor() {
     <div class="script-editor-row">
       <input class="ibox" value="${s.name}" oninput="scriptRows[${i}].name=this.value;renderScriptPreview()" placeholder="Nama script">
       <select class="ibox" onchange="scriptRows[${i}].status=this.value;renderScriptPreview()">
-        <option value="working"   ${s.status==="working"  ?"selected":""}>âœ… Working</option>
-        <option value="high_risk" ${s.status==="high_risk"?"selected":""}>âš ï¸ High Risk</option>
-        <option value="ban_wave"  ${s.status==="ban_wave" ?"selected":""}>ðŸš« Ban Wave</option>
-        <option value="offline"   ${s.status==="offline"  ?"selected":""}>â¬› Offline</option>
+        <option value="working"   ${s.status==="working"  ?"selected":""}>✅ Working</option>
+        <option value="high_risk" ${s.status==="high_risk"?"selected":""}>⚠️ High Risk</option>
+        <option value="ban_wave"  ${s.status==="ban_wave" ?"selected":""}>🚫 Ban Wave</option>
+        <option value="offline"   ${s.status==="offline"  ?"selected":""}>⬛ Offline</option>
       </select>
       <input class="ibox" value="${s.note||""}" oninput="scriptRows[${i}].note=this.value;renderScriptPreview()" placeholder="Catatan (opsional)">
-      <button class="btn btn-d btn-sm" onclick="scriptRows.splice(${i},1);renderScriptEditor();renderScriptPreview()">âœ•</button>
+      <button class="btn btn-d btn-sm" onclick="scriptRows.splice(${i},1);renderScriptEditor();renderScriptPreview()">✕</button>
     </div>`).join("");
 }
 
@@ -894,14 +893,14 @@ async function saveScripts() {
   const d = await apiFetch("/admin/scripts", { method: "POST", body: JSON.stringify(scriptRows) });
   if (d.ok) {
     const n = d.changes ? d.changes.length : 0;
-    toast("âœ… Tersimpan" + (n ? " â€” " + n + " perubahan dikirim ke Discord!" : "!"));
-  } else toast("âŒ " + d.error);
+    toast("✅ Tersimpan" + (n ? " — " + n + " perubahan dikirim ke Discord!" : "!"));
+  } else toast("❌ " + d.error);
 }
 
-// â”€â”€ EXPORT CSV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── EXPORT CSV ───────────────────────────────────────────────────
 async function exportCSV() {
   const d = await apiFetch("/admin/keys");
-  if (!d.ok) { toast("âŒ Gagal export"); return; }
+  if (!d.ok) { toast("❌ Gagal export"); return; }
   const header = ["Key","Tipe","HWID","ExpiresAt","CreatedAt","Note"];
   const rows = d.keys.map(k => [
     k.key, k.type, k.hwid||"", k.expiresAt ? new Date(k.expiresAt).toISOString() : "Permanen",
@@ -913,11 +912,11 @@ async function exportCSV() {
   a.href = URL.createObjectURL(blob);
   a.download = `forkyhub-keys-${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
-  toast("ðŸ“¥ CSV didownload!");
+  toast("📥 CSV didownload!");
 }
 
 
-// â”€â”€ TITLE EDITOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── TITLE EDITOR ─────────────────────────────────────────────────
 const TITLE_FIELDS = ["windowTitle","windowSubtitle","openBtnTitle","discordUrl","tag1","tag2"];
 const TITLE_DEFAULTS = {
   windowTitle: "ForkyHUB",
@@ -930,7 +929,7 @@ const TITLE_DEFAULTS = {
 
 async function loadTitles() {
   const d = await apiFetch("/admin/titles");
-  if (!d.ok) { toast("âŒ Gagal load titles"); return; }
+  if (!d.ok) { toast("❌ Gagal load titles"); return; }
   const t = d.titles || {};
   TITLE_FIELDS.forEach(f => {
     const el = document.getElementById("t_" + f);
@@ -948,11 +947,11 @@ async function saveTitles() {
   TITLE_FIELDS.forEach(f => { body[f] = document.getElementById("t_" + f)?.value.trim() || ""; });
   const d = await apiFetch("/admin/titles", { method: "POST", body: JSON.stringify(body) });
   if (d.ok) {
-    toast("âœ… Titles disimpan & notif dikirim ke Discord!");
+    toast("✅ Titles disimpan & notif dikirim ke Discord!");
     const st = document.getElementById("titleStatus");
     if (st) st.textContent = "Tersimpan: " + new Date().toLocaleString("id-ID");
     updateTitlePreview();
-  } else toast("âŒ " + d.error);
+  } else toast("❌ " + d.error);
 }
 
 function updateTitlePreview() {
@@ -974,7 +973,7 @@ document.addEventListener("input", function(e) {
   if (e.target && e.target.id && e.target.id.startsWith("t_")) updateTitlePreview();
 });
 
-// â”€â”€ TABS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── TABS ─────────────────────────────────────────────────────────
 function switchTab(id, el) {
   ["tGen","tKeys","tBan","tKill","tAnn","tCfg","tScripts","tTitles"].forEach(t => document.getElementById(t).style.display = "none");
   document.getElementById(id).style.display = "block";
@@ -986,6 +985,12 @@ function switchTab(id, el) {
   if (id === "tScripts") loadScriptEditor();
   if (id === "tTitles")  loadTitles();
 }
+
+// ── UTILS ────────────────────────────────────────────────────────
+function cp(id) { cpText(document.getElementById(id).textContent); toast("📋 Dicopy!"); }
+function cpText(t) { try { navigator.clipboard.writeText(t); } catch { const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove(); } }
+let toastT;
+function toast(m) { const e=document.getElementById("toast");e.textContent=m;e.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("show"),2800); }
 </script>
 </body>
 </html>
