@@ -500,8 +500,9 @@ tr:hover td{background:rgba(99,102,241,.04)}
 
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────
-const WORKER = "https://forkyhub-worker.forkyhub.workers.dev";
-let ADMIN_TOKEN = null;
+const WORKER = "https://forkyhub-worker-production.forkyhub.workers.dev";
+const API_BASE = "https://forkyhub-worker-production.forkyhub.workers.dev";
+let adminToken = null;
 let killActive  = false;
 let allKeys     = [];
 let cdInt       = null;
@@ -612,7 +613,7 @@ async function doCheckKey() {
 //  ADMIN
 // ================================================================
 async function doLogin() {
-  ADMIN_TOKEN = document.getElementById("loginPw").value;
+  adminToken = document.getElementById("loginPw").value;
   document.getElementById("loginOverlay").style.display = "none";
   await loadAdminAll();
 }
@@ -620,7 +621,7 @@ async function doLogin() {
 async function apiFetch(path, opts = {}) {
   const r = await fetch(WORKER + path, {
     ...opts,
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${ADMIN_TOKEN}`, ...(opts.headers||{}) },
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${adminToken}`, ...(opts.headers||{}) },
   });
   return r.json();
 }
@@ -975,7 +976,7 @@ document.addEventListener("input", function(e) {
 
 // ── TABS ─────────────────────────────────────────────────────────
 function switchTab(id, el) {
-  ["tGen","tKeys","tBan","tKill","tAnn","tCfg","tScripts","tTitles"].forEach(t => document.getElementById(t).style.display = "none");
+  ["tGen","tKeys","tBan","tKill","tAnn","tCfg","tScripts","tTitles","tWebhooks"].forEach(t => document.getElementById(t).style.display = "none");
   document.getElementById(id).style.display = "block";
   document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
   el.classList.add("active");
@@ -984,13 +985,223 @@ function switchTab(id, el) {
   if (id === "tKill")    loadKillStatus();
   if (id === "tScripts") loadScriptEditor();
   if (id === "tTitles")  loadTitles();
+  if (id === "tWebhooks") loadWebhooks();
 }
 
-// ── UTILS ────────────────────────────────────────────────────────
-function cp(id) { cpText(document.getElementById(id).textContent); toast("📋 Dicopy!"); }
-function cpText(t) { try { navigator.clipboard.writeText(t); } catch { const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove(); } }
-let toastT;
-function toast(m) { const e=document.getElementById("toast");e.textContent=m;e.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("show"),2800); }
+// ── WEBHOOK MANAGEMENT ──────────────────────────────────────────
+async function loadWebhooks() {
+  try {
+    const res = await fetch(`${API_BASE}/admin/webhooks`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const d = await res.json();
+    if (d.ok) {
+      renderWebhookList(d.webhooks);
+    } else {
+      toast("❌ " + d.error);
+    }
+  } catch (e) {
+    toast("❌ Network error");
+  }
+}
+
+function renderWebhookList(webhooks) {
+  const el = document.getElementById("webhookList");
+  if (!webhooks || webhooks.length === 0) {
+    el.innerHTML = '<div style="text-align:center;color:var(--txt3);font-family:var(--mono);padding:20px">Belum ada webhook yang dikonfigurasi</div>';
+    return;
+  }
+
+  let html = '<div style="display:grid;gap:8px">';
+  webhooks.forEach(wh => {
+    const maskedUrl = wh.webhookUrl.replace(/\/[^\/]*$/, '/***masked***');
+    const created = new Date(wh.createdAt).toLocaleString('id-ID');
+    html += `
+      <div class="kbox">
+        <div style="flex:1">
+          <div class="kval">${wh.scriptType}</div>
+          <div class="ksub">${maskedUrl} • Dibuat: ${created}</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-o btn-sm" onclick="testWebhook('${wh.scriptType}')">🧪 Test</button>
+          <button class="btn btn-w btn-sm" onclick="editWebhook('${wh.scriptType}', '${wh.webhookUrl}')">✏️ Edit</button>
+          <button class="btn btn-d btn-sm" onclick="deleteWebhook('${wh.scriptType}')">🗑️ Delete</button>
+        </div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+async function addWebhook() {
+  const scriptType = document.getElementById("whScriptType").value.trim();
+  const webhookUrl = document.getElementById("whUrl").value.trim();
+
+  if (!scriptType || !webhookUrl) {
+    toast("❌ Script type dan webhook URL harus diisi");
+    return;
+  }
+
+  if (!webhookUrl.startsWith('https://discord.com/api/webhooks/')) {
+    toast("❌ Hanya Discord webhook URL yang diperbolehkan");
+    return;
+  }
+
+  if (scriptType.length < 3 || scriptType.length > 50) {
+    toast("❌ Script type harus 3-50 karakter");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/webhooks/add`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${adminToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ scriptType, webhookUrl })
+    });
+    const d = await res.json();
+    if (d.ok) {
+      toast("✅ Webhook berhasil ditambahkan!");
+      document.getElementById("whScriptType").value = '';
+      document.getElementById("whUrl").value = '';
+      loadWebhooks();
+    } else {
+      toast("❌ " + d.error);
+    }
+  } catch (e) {
+    toast("❌ Network error");
+  }
+}
+
+async function testWebhook(scriptType) {
+  try {
+    const res = await fetch(`${API_BASE}/admin/webhooks/test`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${adminToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ scriptType })
+    });
+    const d = await res.json();
+    if (d.ok) {
+      toast("✅ Test webhook berhasil dikirim!");
+    } else {
+      toast("❌ " + d.error);
+    }
+  } catch (e) {
+    toast("❌ Network error");
+  }
+}
+
+function editWebhook(scriptType, currentUrl) {
+  const newUrl = prompt("Edit webhook URL untuk " + scriptType + ":", currentUrl);
+  if (!newUrl || newUrl === currentUrl) return;
+
+  if (!newUrl.startsWith('https://discord.com/api/webhooks/')) {
+    toast("❌ Hanya Discord webhook URL yang diperbolehkan");
+    return;
+  }
+
+  updateWebhook(scriptType, newUrl);
+}
+
+async function updateWebhook(scriptType, webhookUrl) {
+  try {
+    const res = await fetch(`${API_BASE}/admin/webhooks/update`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${adminToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ scriptType, webhookUrl })
+    });
+    const d = await res.json();
+    if (d.ok) {
+      toast("✅ Webhook berhasil diupdate!");
+      loadWebhooks();
+    } else {
+      toast("❌ " + d.error);
+    }
+  } catch (e) {
+    toast("❌ Network error");
+  }
+}
+
+async function deleteWebhook(scriptType) {
+  if (!confirm("Yakin hapus webhook untuk " + scriptType + "?")) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/webhooks/delete`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${adminToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ scriptType })
+    });
+    const d = await res.json();
+    if (d.ok) {
+      toast("✅ Webhook berhasil dihapus!");
+      loadWebhooks();
+    } else {
+      toast("❌ " + d.error);
+    }
+  } catch (e) {
+    toast("❌ Network error");
+  }
+}
+
+async function showWebhookLogs() {
+  const modal = document.getElementById("logsModal");
+  modal.style.display = "block";
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/webhooks/logs`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const d = await res.json();
+    if (d.ok) {
+      renderWebhookLogs(d.logs);
+    } else {
+      document.getElementById("webhookLogs").innerHTML = '<div style="color:var(--err);padding:10px">❌ ' + d.error + '</div>';
+    }
+  } catch (e) {
+    document.getElementById("webhookLogs").innerHTML = '<div style="color:var(--err);padding:10px">❌ Network error</div>';
+  }
+}
+
+function renderWebhookLogs(logs) {
+  const el = document.getElementById("webhookLogs");
+  if (!logs || logs.length === 0) {
+    el.innerHTML = '<div style="text-align:center;color:var(--txt3);padding:20px">Belum ada aktivitas webhook</div>';
+    return;
+  }
+
+  let html = '<div style="display:grid;gap:6px">';
+  logs.forEach(log => {
+    const time = new Date(log.timestamp).toLocaleString('id-ID');
+    const action = log.action.toUpperCase();
+    const color = action === 'ADD' ? 'var(--ok)' : action === 'UPDATE' ? 'var(--warn)' : 'var(--err)';
+    html += `
+      <div style="background:var(--bg3);padding:8px 12px;border-radius:6px;font-size:10px;border-left:3px solid ${color}">
+        <div style="color:${color};font-weight:600">${action} ${log.scriptType}</div>
+        <div style="color:var(--txt3);margin-top:2px">${time} • ${log.adminIP}</div>
+        ${log.oldUrl ? `<div style="color:var(--txt3);margin-top:2px">Old: ${log.oldUrl.replace(/\/[^\/]*$/, '/***')}</div>` : ''}
+        ${log.newUrl ? `<div style="color:var(--txt3);margin-top:2px">New: ${log.newUrl.replace(/\/[^\/]*$/, '/***')}</div>` : ''}
+      </div>
+    `;
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function hideWebhookLogs() {
+  document.getElementById("logsModal").style.display = "none";
+}
 </script>
 </body>
 </html>
