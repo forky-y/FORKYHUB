@@ -12,8 +12,8 @@ _G.ForkyHUB.Games = {
         url = "https://gitlab.com/forky1/forkyHUB/-/raw/main/eagle.lua"
     },
     [131378148336503] = {
-        name = "DDS",
-        url = "https://pastefy.app/DESS9bmM/raw"
+        name = "Drag Drive Simulator",
+        url = "https://gitlab.com/forky1/forkyHUB/-/raw/main/ddds.lua"
     },
     [2753915549] = {
         name = "BloxFruits",
