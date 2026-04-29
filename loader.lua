@@ -13,7 +13,7 @@ _G.ForkyHUB.Games = {
     },
     [131378148336503] = {
         name = "DDS",
-        url = "https://gitlab.com/forky1/forkyHUB/-/raw/main/dds.lua"
+        url = "https://pastefy.app/DESS9bmM/raw"
     },
     [2753915549] = {
         name = "BloxFruits",
